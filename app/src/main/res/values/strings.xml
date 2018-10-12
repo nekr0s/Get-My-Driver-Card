@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Get-My-Driver-Card</string>
+    <string name="logout_text">Log out</string>
+    <string name="sign_in_google">Sign in with google</string>
+    <string name="sign_in_facebook">Sign in with facebook</string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="no_account">No account yet? Create one</string>
+    <string name="or_line">------------------- or ------------------</string>
+    <string name="password_criteria">Must contain numbers, letters and at least 1 special character</string>
+    <string name="valid_email_address">Please enter valid e-mail address.</string>
+    <string name="facebook_app_id">268763730411020</string>
+</resources>
