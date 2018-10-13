@@ -9,7 +9,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nekr0s.get_my_driver_card.Validators.LoginValidator;
+import com.example.nekr0s.get_my_driver_card.models.User;
+import com.example.nekr0s.get_my_driver_card.validator.LoginValidator;
+import com.example.nekr0s.get_my_driver_card.validator.base.Validator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,7 +48,7 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     SmartUser mCurrentUser;
     SmartLoginConfig mConfig;
     SmartLogin mSmartLogin;
-    private final LoginValidator validator = new LoginValidator();
+    private final Validator<User> mValidator = new LoginValidator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,11 +99,7 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     // to be inspected (not complete)
     public SmartUser doCustomSignup() {
         SmartUser user = new SmartUser();
-        if (validator.isValid(mEmailEditText.getText().toString())) {
-            user.setEmail(mEmailEditText.getText().toString());
-        } else {
-            Toast.makeText(this, "Email length is less than 6 symbols", Toast.LENGTH_SHORT).show();
-        }
+        user.setEmail(mEmailEditText.getText().toString());
         return user;
     }
 
@@ -124,6 +122,11 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     @OnClick(R.id.button_login_custom)
     void customLoginClicked() {
         mSmartLogin = SmartLoginFactory.build(LoginType.CustomLogin);
+        User user = new User(mEmailEditText.getText().toString(), mPasswordEditText.getText().toString());
+        if (!mValidator.isValid(user)) {
+            Toast.makeText(this, "Invalid form.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         mSmartLogin.login(mConfig);
     }
 
