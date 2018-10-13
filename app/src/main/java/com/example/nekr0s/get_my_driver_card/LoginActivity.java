@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nekr0s.get_my_driver_card.Validators.LoginValidator;
-import com.example.nekr0s.get_my_driver_card.Validators.Validator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,6 +46,7 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     SmartUser mCurrentUser;
     SmartLoginConfig mConfig;
     SmartLogin mSmartLogin;
+    private final LoginValidator validator = new LoginValidator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,9 +94,14 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     }
 
     @Override
+    // to be inspected (not complete)
     public SmartUser doCustomSignup() {
         SmartUser user = new SmartUser();
-        user.setEmail(mEmailEditText.getText().toString());
+        if (validator.isValid(mEmailEditText.getText().toString())) {
+            user.setEmail(mEmailEditText.getText().toString());
+        } else {
+            Toast.makeText(this, "Email length is less than 6 symbols", Toast.LENGTH_SHORT).show();
+        }
         return user;
     }
 
@@ -105,25 +110,25 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     }
 
     @OnClick(R.id.button_login_facebook)
-    void facebookLoginClicked(){
+    void facebookLoginClicked() {
         mSmartLogin = SmartLoginFactory.build(LoginType.Facebook);
         mSmartLogin.login(mConfig);
     }
 
     @OnClick(R.id.button_login_google)
-    void googleLoginClicked(){
+    void googleLoginClicked() {
         mSmartLogin = SmartLoginFactory.build(LoginType.Google);
         mSmartLogin.login(mConfig);
     }
 
     @OnClick(R.id.button_login_custom)
-    void customLoginClicked(){
+    void customLoginClicked() {
         mSmartLogin = SmartLoginFactory.build(LoginType.CustomLogin);
         mSmartLogin.login(mConfig);
     }
 
     @OnClick(R.id.text_no_account)
-    void customCreateAccountClicked(){
+    void customCreateAccountClicked() {
         mSmartLogin = SmartLoginFactory.build(LoginType.CustomSignup);
         mSmartLogin.signup(mConfig);
         //test
