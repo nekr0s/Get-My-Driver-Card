@@ -9,6 +9,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nekr0s.get_my_driver_card.Validators.LoginValidator;
+import com.example.nekr0s.get_my_driver_card.Validators.Validator;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
