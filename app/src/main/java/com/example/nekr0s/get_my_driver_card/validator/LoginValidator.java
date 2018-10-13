@@ -7,8 +7,10 @@ import com.example.nekr0s.get_my_driver_card.validator.base.Validator;
 public class LoginValidator implements Validator<User> {
 
     @Override
-    public boolean isValid(User object) {
-        return false;
+    public boolean isValid(User user) {
+        return user != null &&
+                isEmailLengthValid(user) &&
+                isPasswordLengthValid(user);
     }
 
     private boolean isEmailLengthValid(User user) {
