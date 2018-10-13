@@ -123,5 +123,6 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     void customCreateAccountClicked(){
         mSmartLogin = SmartLoginFactory.build(LoginType.CustomSignup);
         mSmartLogin.signup(mConfig);
+        //test
     }
 }
