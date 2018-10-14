@@ -134,6 +134,11 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     void customCreateAccountClicked() {
         mSmartLogin = SmartLoginFactory.build(LoginType.CustomSignup);
         mSmartLogin.signup(mConfig);
-        //test
+        User user = new User(mEmailEditText.getText().toString(), mPasswordEditText.getText().toString());
+        if(!mValidator.isValid(user)){
+            Toast.makeText(this, "Invalid form.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mSmartLogin.login(mConfig);
     }
 }
