@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/colorAccent"
+    android:background="@drawable/road"
     android:fitsSystemWindows="true"
     android:gravity="center"
     android:orientation="vertical">
@@ -13,12 +13,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:autofillHints="@string/valid_email_address"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="@color/common_google_signin_btn_text_dark_focused"
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white" />
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textColorHint="@color/common_google_signin_btn_text_dark_focused" />
 
     <EditText
         android:id="@+id/password_edittext"
@@ -26,18 +26,18 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:autofillHints="@string/password_criteria"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="@color/common_google_signin_btn_text_dark_focused"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:textColorHint="@color/white" />
+        android:textColorHint="@color/common_google_signin_btn_text_dark_focused" />
 
     <Button
         android:id="@+id/button_login_custom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/black80percent"
         android:text="@string/sign_in"
         android:textColor="@color/colorPrimary" />
 
@@ -55,7 +55,8 @@
         android:id="@+id/text_or_line"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:gravity="center"
         android:text="@string/or_line"
         android:textColor="@color/colorPrimary"
@@ -66,7 +67,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@color/colorPrimaryDark"
+        android:layout_marginBottom="2dp"
+        android:background="@color/facebook_brand_color"
         android:drawableStart="@drawable/facebook_vector"
         android:paddingStart="7dp"
         android:paddingEnd="7dp"
@@ -78,10 +80,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/google_plus_brand_color"
         android:drawableStart="@drawable/google_plus_vector"
         android:paddingStart="7dp"
         android:paddingEnd="7dp"
         android:text="@string/sign_in_google"
         android:textColor="@color/colorPrimary" />
+
 </LinearLayout>
