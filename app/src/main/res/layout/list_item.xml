@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:todo_card="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    todo_card:cardUseCompatPadding="true">
+
+    <ImageView
+        android:id="@+id/status_color"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="7dp"
+        android:src="@android:color/holo_green_light" />
+
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/request_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingStart="80dp"
+            android:text="@string/request_id"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            todo_card:ignore="RtlSymmetry" />
+
+        <TextView
+            android:id="@+id/request_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="80dp"
+            android:text="@string/request_type"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            todo_card:ignore="RtlSymmetry" />
+
+        <TextView
+            android:id="@+id/request_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="80dp"
+            android:text="@string/request_status"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            todo_card:ignore="RtlSymmetry" />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

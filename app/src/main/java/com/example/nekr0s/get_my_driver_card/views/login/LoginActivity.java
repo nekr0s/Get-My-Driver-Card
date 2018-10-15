@@ -1,4 +1,4 @@
-package com.example.nekr0s.get_my_driver_card;
+package com.example.nekr0s.get_my_driver_card.views.login;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -9,9 +9,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nekr0s.get_my_driver_card.Constants;
+import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.validator.LoginValidator;
 import com.example.nekr0s.get_my_driver_card.validator.base.Validator;
+import com.example.nekr0s.get_my_driver_card.views.list.ListActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -80,7 +83,7 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     @Override
     public void onLoginSuccess(SmartUser user) {
         Toast.makeText(this, user.toString(), Toast.LENGTH_SHORT).show();
-        navToHome();
+        navToHome(user);
     }
 
     @Override
@@ -103,8 +106,13 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         return user;
     }
 
-    private void navToHome() {
+    private void navToHome(SmartUser user) {
         Toast.makeText(this, "Navigating to Home", Toast.LENGTH_SHORT).show();
+        User customUser = new User(user.getEmail(), mPasswordEditText.getText().toString());
+        Intent intent = new Intent(this, ListActivity.class);
+        intent.putExtra(Constants.USER_OBJ_EXTRA, customUser);
+        startActivity(intent);
+        finish();
     }
 
     @OnClick(R.id.button_login_facebook)
@@ -135,7 +143,7 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         mSmartLogin = SmartLoginFactory.build(LoginType.CustomSignup);
         mSmartLogin.signup(mConfig);
         User user = new User(mEmailEditText.getText().toString(), mPasswordEditText.getText().toString());
-        if(!mValidator.isValid(user)){
+        if (!mValidator.isValid(user)) {
             Toast.makeText(this, "Invalid form.", Toast.LENGTH_SHORT).show();
             return;
         }

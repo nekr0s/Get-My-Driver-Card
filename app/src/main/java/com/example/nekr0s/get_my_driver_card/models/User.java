@@ -1,12 +1,23 @@
 package com.example.nekr0s.get_my_driver_card.models;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
+    private int id;
     private String email;
     private String password;
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getEmail() {
