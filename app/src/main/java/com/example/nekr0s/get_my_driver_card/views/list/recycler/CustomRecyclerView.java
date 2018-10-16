@@ -45,6 +45,10 @@ public class CustomRecyclerView extends RecyclerView.Adapter<CustomRecyclerView.
         return mRequests.size();
     }
 
+    public void setOnRequestClickListener(OnItemClickListener onRequestClickListener) {
+        this.mOnRequestClickListener = onRequestClickListener;
+    }
+
     protected static class ItemViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.request_id)
@@ -62,7 +66,7 @@ public class CustomRecyclerView extends RecyclerView.Adapter<CustomRecyclerView.
         private Request mRequest;
         private OnItemClickListener mOnClickListener;
 
-        public ItemViewHolder(@NonNull View itemView) {
+        ItemViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -73,6 +77,7 @@ public class CustomRecyclerView extends RecyclerView.Adapter<CustomRecyclerView.
             mId.setText(String.valueOf(mRequest.getRequestId()));
             mType.setText(mRequest.getRequestType());
             mStatus.setText(mRequest.getStatusString());
+            mStatusColor.setColorFilter(mRequest.color());
         }
 
         @OnClick
