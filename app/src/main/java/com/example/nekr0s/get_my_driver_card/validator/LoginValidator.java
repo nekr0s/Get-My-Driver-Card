@@ -1,6 +1,6 @@
 package com.example.nekr0s.get_my_driver_card.validator;
 
-import com.example.nekr0s.get_my_driver_card.Constants;
+import com.example.nekr0s.get_my_driver_card.constants.Constants;
 import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.validator.base.Validator;
 

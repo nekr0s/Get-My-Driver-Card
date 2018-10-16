@@ -1,4 +1,4 @@
-package com.example.nekr0s.get_my_driver_card;
+package com.example.nekr0s.get_my_driver_card.constants;
 
 public class Constants {
     public static final int EMAIL_MIN_LENGTH = 6;
@@ -19,4 +19,19 @@ public class Constants {
     public static final int REQUEST_TYPE_NEW = 101;
     public static final int REQUEST_TYPE_EXCHANGE = 102;
     public static final int REQUEST_TYPE_REPLACE = 103;
+
+    // Language rules
+    public static final String BULGARIAN_LATIN_RULES ="::[А-ЪЬЮ-ъьюяѢѣѪѫ];" +
+            "Б > B;" +
+            "б > b;" +
+            "В > V;" +
+            "ТС > TS;" +
+            "Тс > Ts;" +
+            "ч > ch;" +
+            "ШТ > SHT;" +
+            "Шт > Sht;" +
+            "шт > sht;" +
+            "{Ш}[[б-джзй-нп-тф-щь][аеиоуъюяѣѫ]] > Sh;" +
+            "Я > YA;" +
+            "я > ya;";
 }

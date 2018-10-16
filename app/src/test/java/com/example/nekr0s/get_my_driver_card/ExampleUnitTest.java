@@ -1,5 +1,7 @@
 package com.example.nekr0s.get_my_driver_card;
 
+import com.example.nekr0s.get_my_driver_card.models.translator.Translator;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -10,8 +12,15 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class ExampleUnitTest {
+
     @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+    public void Bulgarian_To_Latin_Should_Be_Correct() {
+        Translator translator = new Translator();
+
+        String input = "Тестчето на тестовете";
+
+        String result = "Testcheto na testovete";
+
+        assertEquals(translator.translate(input), result);
     }
 }

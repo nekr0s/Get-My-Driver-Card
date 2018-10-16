@@ -2,7 +2,7 @@ package com.example.nekr0s.get_my_driver_card.models;
 
 import android.graphics.Color;
 
-import com.example.nekr0s.get_my_driver_card.Constants;
+import com.example.nekr0s.get_my_driver_card.constants.Constants;
 
 public class Request {
     private long requestId;
