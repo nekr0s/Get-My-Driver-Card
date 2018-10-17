@@ -20,19 +20,6 @@ public class Constants {
     public static final int REQUEST_TYPE_EXCHANGE = 102;
     public static final int REQUEST_TYPE_REPLACE = 103;
 
-    // Language rules
-    public static final String BULGARIAN_LATIN_RULES = "::[А-ЪЬЮ-ъьюяѢѣѪѫ];" +
-            "Б > B;" +
-            "б > b;" +
-            "В > V;" +
-            "ТС > TS;" +
-            "Тс > Ts;" +
-            "ч > ch;" +
-            "ШТ > SHT;" +
-            "Шт > Sht;" +
-            "шт > sht;" +
-            "{Ш}[[б-джзй-нп-тф-щь][аеиоуъюяѣѫ]] > Sh;" +
-            "Я > YA;" +
-            "я > ya;";
+    // Server address - change depending on situation
     public static final String BASE_SERVER_URL = "192.168.0.101:8080/api";
 }
