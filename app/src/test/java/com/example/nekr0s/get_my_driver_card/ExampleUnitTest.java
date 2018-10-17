@@ -17,9 +17,9 @@ public class ExampleUnitTest {
     public void Bulgarian_To_Latin_Should_Be_Correct() {
         Translator translator = new Translator();
 
-        String input = "Тестчето на тестовете";
+        String input = "Александър";
 
-        String result = "Testcheto na testovete";
+        String result = "Aleksandar";
 
         assertEquals(translator.translate(input), result);
     }

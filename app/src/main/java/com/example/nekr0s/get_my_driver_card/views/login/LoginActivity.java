@@ -9,7 +9,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nekr0s.get_my_driver_card.constants.Constants;
+import com.example.nekr0s.get_my_driver_card.utils.BCrypt;
+import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.validator.LoginValidator;
@@ -130,11 +131,6 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     @OnClick(R.id.button_login_custom)
     void customLoginClicked() {
         mSmartLogin = SmartLoginFactory.build(LoginType.CustomLogin);
-        User user = new User(mEmailEditText.getText().toString(), mPasswordEditText.getText().toString());
-        if (!mValidator.isValid(user)) {
-            Toast.makeText(this, "Invalid form.", Toast.LENGTH_SHORT).show();
-            return;
-        }
         mSmartLogin.login(mConfig);
     }
 
@@ -142,7 +138,8 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     void customCreateAccountClicked() {
         mSmartLogin = SmartLoginFactory.build(LoginType.CustomSignup);
         mSmartLogin.signup(mConfig);
-        User user = new User(mEmailEditText.getText().toString(), mPasswordEditText.getText().toString());
+        User user = new User(mEmailEditText.getText().toString(),
+                BCrypt.hashpw(mPasswordEditText.getText().toString(), BCrypt.gensalt()));
         if (!mValidator.isValid(user)) {
             Toast.makeText(this, "Invalid form.", Toast.LENGTH_SHORT).show();
             return;

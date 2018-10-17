@@ -21,7 +21,7 @@ public class Card {
         this.lastName = lastName;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        setDateOfBirth(getID());
+        setDateOfBirth(ID);
         setCyrillicNames(firstName, lastName);
     }
 

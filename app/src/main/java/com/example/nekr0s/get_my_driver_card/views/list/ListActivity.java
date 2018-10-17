@@ -3,7 +3,7 @@ package com.example.nekr0s.get_my_driver_card.views.list;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.nekr0s.get_my_driver_card.constants.Constants;
+import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.User;
 
@@ -32,7 +32,5 @@ public class ListActivity extends AppCompatActivity {
         // Toolbar
         setSupportActionBar(toolbar);
 
-        String input = "тестче";
-        String result = translator.translate(input);
     }
 }
