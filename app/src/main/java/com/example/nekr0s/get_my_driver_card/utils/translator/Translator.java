@@ -1,10 +1,13 @@
-package com.example.nekr0s.get_my_driver_card.models.translator;
+package com.example.nekr0s.get_my_driver_card.utils.translator;
+
+import android.support.annotation.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-// Beta version
+// Translator - transliterates bulgarian cyrillic names to their latin equivalent.
+// Based on The Law of Transliteration https://slovored.com/transliteration/rules.html
 public class Translator {
 
     private final Map<Character, String> hashMap = new HashMap<Character, String>() {{
@@ -15,10 +18,10 @@ public class Translator {
         put('г', "g");
         put('д', "d");
         put('е', "e");
-        put('ж', "j");
+        put('ж', "zh");
         put('з', "z");
         put('и', "i");
-        put('й', "i");
+        put('й', "y");
         put('к', "k");
         put('л', "l");
         put('м', "m");
@@ -31,16 +34,16 @@ public class Translator {
         put('у', "u");
         put('ф', "f");
         put('х', "h");
-        put('ц', "c");
+        put('ц', "ts");
         put('ч', "ch");
         put('ш', "sh");
         put('щ', "sht");
         put('ъ', "a");
         put('ь', "y");
+        put('ю', "yu");
         put('я', "ya");
 
     }};
-    private final int size = 32;
 
     public Translator() {
 
@@ -50,11 +53,25 @@ public class Translator {
         StringBuilder builder = new StringBuilder();
         String toCheck = name.toLowerCase();
         for (int i = 0; i < toCheck.length(); i++) {
-            if (i == 0)
-                builder.append(Objects.requireNonNull(hashMap.get(toCheck.charAt(i))).toUpperCase());
-            else
-                builder.append(hashMap.get(toCheck.charAt(i)));
+            try {
+                if (i == 0 || toCheck.charAt(i - 1) == ' ')
+                    builder.append(formatComplexLetter(hashMap.get(toCheck.charAt(i))));
+                else builder.append(hashMap.get(toCheck.charAt(i)));
+            } catch (NullPointerException e) {
+                return "Error";
+            }
         }
+//        return builder.substring(0, 1).toUpperCase() + builder.substring(1);
         return builder.toString();
+    }
+
+    @NonNull
+    private String formatComplexLetter(String letter) {
+        if (letter.length() > 1) {
+            return letter.substring(0, 1).toUpperCase() +
+                    letter.substring(1);
+        } else {
+            return letter.toUpperCase();
+        }
     }
 }

@@ -13,7 +13,7 @@ public class Constants {
     public static final int REQUEST_APPROVED = 1;
     public static final int REQUEST_NOT_APPROVED = 2;
     public static final int REQUEST_WAITING = 3;
-    public static final int REQUEST_FINISHED = 200;
+    public static final int REQUEST_FINISHED = 4;
 
     // Request type
     public static final int REQUEST_TYPE_NEW = 101;

@@ -1,8 +1,6 @@
 package com.example.nekr0s.get_my_driver_card.models;
 
-import com.example.nekr0s.get_my_driver_card.models.translator.Translator;
-
-import java.util.Date;
+import com.example.nekr0s.get_my_driver_card.utils.translator.Translator;
 
 public class Card {
     private String ID;

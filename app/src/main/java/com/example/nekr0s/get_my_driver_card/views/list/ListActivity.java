@@ -10,7 +10,7 @@ import com.example.nekr0s.get_my_driver_card.models.User;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import com.example.nekr0s.get_my_driver_card.models.translator.Translator;
+import com.example.nekr0s.get_my_driver_card.utils.translator.Translator;
 
 public class ListActivity extends AppCompatActivity {
 
