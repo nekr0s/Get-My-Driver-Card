@@ -23,7 +23,7 @@ public class TranslatorUnitTests {
     }
 
     @Test
-    public void Invalid_Input_ShouldNot_Transliterate_InvalidSymbols() {
+    public void Input_WithInvalidSymbols_ShouldSkip_Transliterate_InvalidSymbols() {
         Translator translator = new Translator();
 
         String input = "666Александър$$$";
