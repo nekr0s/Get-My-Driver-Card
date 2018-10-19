@@ -28,9 +28,9 @@ public class ExampleUnitTest {
     public void Invalid_Input_Should_Return_Error_String() {
         Translator translator = new Translator();
 
-        String input = "666";
+        String input = "666Alexander";
 
-        String result = "Error";
+        String result = "Invalid symbols detected.";
 
         assertEquals(translator.translate(input), result);
     }
