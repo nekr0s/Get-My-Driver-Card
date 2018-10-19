@@ -7,11 +7,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Example local unit test, which will execute on the development machine (host).
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * Tests dedicated strictly to the Translator class
  */
-public class ExampleUnitTest {
+public class TranslatorUnitTests {
 
     @Test
     public void Bulgarian_To_Latin_Should_Be_Correct() {
@@ -21,17 +19,19 @@ public class ExampleUnitTest {
 
         String result = "Yana Ivanova";
 
-        assertEquals(translator.translate(input), result);
+        assertEquals(result, translator.translate(input));
     }
 
     @Test
-    public void Invalid_Input_Should_Return_Error_String() {
+    public void Invalid_Input_ShouldNot_Transliterate_InvalidSymbols() {
         Translator translator = new Translator();
 
-        String input = "666Alexander";
+        String input = "666Александър$$$";
 
-        String result = "Invalid symbols detected.";
+        String actual = translator.translate(input);
 
-        assertEquals(translator.translate(input), result);
+        String result = "666Aleksandar$$$";
+
+        assertEquals(result, actual);
     }
 }

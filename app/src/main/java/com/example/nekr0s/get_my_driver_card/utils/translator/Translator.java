@@ -51,10 +51,10 @@ public class Translator {
     public String translate(String name) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < name.length(); i++) {
-            try {
+            if (hashMap.get(name.charAt(i)) == null) {
                 builder.append(formatLetter(hashMap.get(name.toUpperCase().charAt(i)), name, i));
-            } catch (NullPointerException e) {
-                return "Invalid symbols detected.";
+            } else {
+                builder.append(hashMap.get(name.charAt(i)));
             }
         }
         return builder.toString();
@@ -62,6 +62,7 @@ public class Translator {
 
     @NonNull
     private String formatLetter(String letter, String name, int i) {
+        if (letter == null) return String.valueOf(name.charAt(i));
         if (i > 0 && name.charAt(i - 1) != ' ') return letter.toLowerCase();
         return letter;
     }
