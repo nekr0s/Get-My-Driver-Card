@@ -2,8 +2,8 @@ package com.example.nekr0s.get_my_driver_card.models;
 
 import com.example.nekr0s.get_my_driver_card.utils.translator.Translator;
 
-public class Card {
-    private String ID;
+public class UserInfo {
+    private long EGN;
     private String firstName;
     private String lastName;
     private String firstNameCyrillic;
@@ -11,24 +11,23 @@ public class Card {
     private String dateOfBirth;
     private String address;
     private String phoneNumber;
-    private String email;
 
-    public Card(String ID, String firstName, String lastName, String address, String phoneNumber) {
-        this.ID = ID;
+    public UserInfo(long EGN, String firstName, String lastName, String address, String phoneNumber) {
+        this.EGN = EGN;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        setDateOfBirth(ID);
+        setDateOfBirth(EGN);
         setCyrillicNames(firstName, lastName);
     }
 
-    public String getID() {
-        return ID;
+    public long getEGN() {
+        return EGN;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setEGN(long EGN) {
+        this.EGN = EGN;
     }
 
     public String getFirstName() {
@@ -59,10 +58,11 @@ public class Card {
         return dateOfBirth;
     }
 
-    private void setDateOfBirth(String id) {
-        String year = "19" + id.substring(0, 2);
-        String month = id.substring(2, 4);
-        String day = id.substring(4, 6);
+    private void setDateOfBirth(long EGN) {
+        String egnString = String.valueOf(EGN);
+        String year = "19" + egnString.substring(0, 2);
+        String month = egnString.substring(2, 4);
+        String day = egnString.substring(4, 6);
         this.dateOfBirth = day + '.' + month + '.' + year;
     }
 
@@ -80,14 +80,6 @@ public class Card {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     private void setCyrillicNames(String firstName, String lastName) {

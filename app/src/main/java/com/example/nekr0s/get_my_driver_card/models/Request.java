@@ -5,21 +5,23 @@ import android.graphics.Color;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
 
 public class Request {
-    private long requestId;
+    private int requestId;
     private int status;
     private int type;
+    private User user;
 
-    public Request(long requestId, int status, int type) {
+    public Request(int requestId, int status, int type, User user) {
         this.requestId = requestId;
         this.status = status;
         this.type = type;
+        this.user = user;
     }
 
     public long getRequestId() {
         return requestId;
     }
 
-    public void setRequestId(long requestId) {
+    public void setRequestId(int requestId) {
         this.requestId = requestId;
     }
 
@@ -37,6 +39,14 @@ public class Request {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     // methods
@@ -69,9 +79,9 @@ public class Request {
             case Constants.REQUEST_TYPE_NEW:
                 return "Brand new card";
             case Constants.REQUEST_TYPE_EXCHANGE:
-                return "Card exchange";
+                return "UserInfo exchange";
             case Constants.REQUEST_TYPE_REPLACE:
-                return "Card replace";
+                return "UserInfo replace";
         }
         return "Invalid";
     }
