@@ -2,68 +2,59 @@ package com.example.nekr0s.get_my_driver_card.utils.translator;
 
 import android.support.annotation.NonNull;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 
 // Translator - transliterates bulgarian cyrillic names to their latin equivalent.
 // Based on The Law of Transliteration https://slovored.com/transliteration/rules.html
 public class Translator {
 
-    private final Map<Character, String> hashMap = new HashMap<Character, String>() {{
-        put(' ', " ");
-        put('А', "A");
-        put('Б', "B");
-        put('В', "V");
-        put('Г', "G");
-        put('Д', "D");
-        put('Е', "E");
-        put('Ж', "Zh");
-        put('З', "Z");
-        put('И', "I");
-        put('Й', "I");
-        put('К', "K");
-        put('Л', "L");
-        put('М', "M");
-        put('Н', "N");
-        put('О', "O");
-        put('П', "P");
-        put('Р', "R");
-        put('С', "S");
-        put('Т', "T");
-        put('У', "U");
-        put('Ф', "F");
-        put('Х', "H");
-        put('Ц', "Ts");
-        put('Ч', "Ch");
-        put('Ш', "Sh");
-        put('Щ', "Sht");
-        put('Ъ', "A");
-        put('Ь', "Y");
-        put('Ю', "Yu");
-        put('Я', "Ya");
+    private BufferedReader bufferedReader;
+    private JsonObject object;
 
-    }};
-
-    public Translator() {
-
+    public Translator() throws FileNotFoundException {
+        try {
+            bufferedReader = new BufferedReader(
+                    new InputStreamReader(new FileInputStream(
+                            "src/main/assets/charset.json"),
+                            "windows-1251"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        Gson gson = new Gson();
+        object = gson.fromJson(bufferedReader, JsonObject.class);
     }
 
     public String translate(String name) {
         StringBuilder builder = new StringBuilder();
+        String upperCaseName = name.toUpperCase();
         for (int i = 0; i < name.length(); i++) {
-            if (hashMap.get(name.charAt(i)) == null) {
-                builder.append(formatLetter(hashMap.get(name.toUpperCase().charAt(i)), name, i));
+            if (object.get(String.valueOf(name.charAt(i))) == null) {
+                builder.append(formatLetter(
+                        object.get(String.valueOf(upperCaseName.charAt(i))), name, i));
             } else {
-                builder.append(hashMap.get(name.charAt(i)));
+                builder.append(object.get(String.valueOf(name.charAt(i))).getAsString());
             }
         }
         return builder.toString();
     }
 
     @NonNull
-    private String formatLetter(String letter, String name, int i) {
-        if (letter == null) return String.valueOf(name.charAt(i));
+    private String formatLetter(JsonElement jsonElement, String name, int i) {
+        if (jsonElement == null) return String.valueOf(name.charAt(i));
+        String letter = jsonElement.getAsString();
         if (i > 0 && name.charAt(i - 1) != ' ') return letter.toLowerCase();
         return letter;
+    }
+
+    public JsonObject getObject() {
+        return object;
     }
 }

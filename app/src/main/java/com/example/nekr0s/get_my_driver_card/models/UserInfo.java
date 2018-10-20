@@ -2,6 +2,8 @@ package com.example.nekr0s.get_my_driver_card.models;
 
 import com.example.nekr0s.get_my_driver_card.utils.translator.Translator;
 
+import java.io.FileNotFoundException;
+
 public class UserInfo {
     private long EGN;
     private String firstName;
@@ -19,7 +21,6 @@ public class UserInfo {
         this.address = address;
         this.phoneNumber = phoneNumber;
         setDateOfBirth(EGN);
-        setCyrillicNames(firstName, lastName);
     }
 
     public long getEGN() {
@@ -82,9 +83,9 @@ public class UserInfo {
         this.phoneNumber = phoneNumber;
     }
 
-    private void setCyrillicNames(String firstName, String lastName) {
+    private void setCyrillicNames(String firstName, String lastName) throws FileNotFoundException {
         Translator translator = new Translator();
-        this.firstNameCyrillic = translator.translate(firstName);
-        this.lastNameCyrillic = translator.translate(lastName);
+//        this.firstNameCyrillic = translator.translate(firstName);
+//        this.lastNameCyrillic = translator.translate(lastName);
     }
 }

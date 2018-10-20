@@ -17,7 +17,7 @@ public class ListActivity extends AppCompatActivity {
     @BindView(R.id.userToolbar)
     android.support.v7.widget.Toolbar toolbar;
 
-    Translator translator = new Translator();
+//    Translator translator = new Translator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

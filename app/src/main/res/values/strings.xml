@@ -11,6 +11,7 @@
     <string name="password_criteria">Must contain numbers, letters and at least 1 special character</string>
     <string name="valid_email_address">Please enter valid e-mail address.</string>
     <string name="facebook_app_id">2170595886486985</string>
+    <string name="fb_login_protocol_scheme">fb2170595886486985</string>
     <string name="request_id">Request EGN:</string>
     <string name="request_type">Type:</string>
     <string name="request_status">Status:</string>
