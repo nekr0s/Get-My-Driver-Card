@@ -8,26 +8,19 @@ import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 
 // Translator - transliterates bulgarian cyrillic names to their latin equivalent.
 // Based on The Law of Transliteration https://slovored.com/transliteration/rules.html
 public class Translator {
 
-    private BufferedReader bufferedReader;
     private JsonObject object;
 
-    public Translator() throws FileNotFoundException {
-        try {
-            bufferedReader = new BufferedReader(
-                    new InputStreamReader(new FileInputStream(
-                            "src/main/assets/charset.json"),
-                            "windows-1251"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+    public Translator() throws Exception {
+        BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(
+                        "src/main/assets/charset.json"),
+                        "windows-1251"));
         Gson gson = new Gson();
         object = gson.fromJson(bufferedReader, JsonObject.class);
     }
