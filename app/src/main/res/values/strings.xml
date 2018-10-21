@@ -15,4 +15,6 @@
     <string name="request_id">Request EGN:</string>
     <string name="request_type">Type:</string>
     <string name="request_status">Status:</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

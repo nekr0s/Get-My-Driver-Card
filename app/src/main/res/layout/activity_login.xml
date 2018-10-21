@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:autoText="false"
         android:autofillHints="@string/valid_email_address"
         android:backgroundTint="@color/common_google_signin_btn_text_dark_focused"
         android:ems="10"

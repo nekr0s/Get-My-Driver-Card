@@ -83,7 +83,7 @@ public class UserInfo {
         this.phoneNumber = phoneNumber;
     }
 
-    private void setCyrillicNames(String firstName, String lastName) throws FileNotFoundException {
+    private void setCyrillicNames(String firstName, String lastName) throws Exception {
         Translator translator = new Translator();
 //        this.firstNameCyrillic = translator.translate(firstName);
 //        this.lastNameCyrillic = translator.translate(lastName);
