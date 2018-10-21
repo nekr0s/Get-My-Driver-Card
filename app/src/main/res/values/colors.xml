@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#F8FEF8</color>
-    <color name="colorPrimaryDark">#D7BEA8</color>
+    <color name="colorPrimaryDark">#eb000000</color>
     <color name="colorAccent">#06dd0d</color>
     <color name="colorPrimaryShadow">#f2f2f2</color>
     <color name="black80percent">#99000000</color>
+    <color name="blue80percent">#8130f1ff</color>
+    <color name="bluenontransp">#cd30f1ff</color>
 </resources>

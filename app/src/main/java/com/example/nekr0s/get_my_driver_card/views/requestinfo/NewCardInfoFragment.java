@@ -66,7 +66,7 @@ public class NewCardInfoFragment extends Fragment {
         return view;
     }
 
-    public void sendback(String sendBackText) {
+    public void sendback(String sendBackText){
         if (mListener != null) {
             mListener.onFragmentInteraction(sendBackText);
         }

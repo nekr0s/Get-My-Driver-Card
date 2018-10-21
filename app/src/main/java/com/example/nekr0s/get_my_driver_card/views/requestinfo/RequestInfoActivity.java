@@ -29,11 +29,13 @@ public class RequestInfoActivity extends AppCompatActivity implements NewCardInf
     @BindView(R.id.button)
     Button button;
 
+   // private CardInfoPresenter mPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_info);
         ButterKnife.bind(this);
+       // mPresenter = new CardInfoPresenter((MvpView) this);
 
         button.setOnClickListener(new OnClickListener() {
             @Override
