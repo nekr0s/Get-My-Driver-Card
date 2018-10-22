@@ -48,34 +48,12 @@ public class ListActivity extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.new_card})
-    public void openInfoActivityNew() {
+    // One onclick method for all fab buttons
+    @OnClick({R.id.new_card, R.id.exchange, R.id.replace, R.id.renew})
+    public void openInfoActivityNew(FloatingActionButton fab) {
         Intent intent = new Intent(this, RequestInfoActivity.class);
-        intent.putExtra(RequestInfoActivity.EXTRA_KEY, mFAB_NewCard.getLabelText());
+        intent.putExtra(RequestInfoActivity.EXTRA_KEY, fab.getLabelText());
         startActivity(intent);
     }
-
-    @OnClick({R.id.exchange})
-    public void openInfoActivityExchange() {
-        Intent intent = new Intent(this, RequestInfoActivity.class);
-        intent.putExtra(RequestInfoActivity.EXTRA_KEY, mFAB_Exchange.getLabelText());
-        startActivity(intent);
-    }
-
-    @OnClick({R.id.replace})
-    public void openInfoActivityReplace() {
-        Intent intent = new Intent(this, RequestInfoActivity.class);
-        intent.putExtra(RequestInfoActivity.EXTRA_KEY, mFAB_Replace.getLabelText());
-        startActivity(intent);
-    }
-
-    @OnClick({R.id.renew})
-    public void openInfoActivityRenew() {
-        Intent intent = new Intent(this, RequestInfoActivity.class);
-        intent.putExtra(RequestInfoActivity.EXTRA_KEY, mFAB_Renew.getLabelText());
-        startActivity(intent);
-    }
-
-
 }
 
