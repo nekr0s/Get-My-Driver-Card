@@ -1,4 +1,4 @@
-package com.example.nekr0s.get_my_driver_card.views.requestinfo;
+package com.example.nekr0s.get_my_driver_card.views.create;
 
 public interface CardInfoContract {
 

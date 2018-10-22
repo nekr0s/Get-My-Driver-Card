@@ -62,7 +62,7 @@
         >
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/menu_item"
+            android:id="@+id/renew"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_renew"
@@ -72,7 +72,7 @@
             fab:fab_label="RENEW" />
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/menu_item1"
+            android:id="@+id/replace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_replace"
@@ -82,7 +82,7 @@
             fab:fab_label="REPLACE" />
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/menu_item2"
+            android:id="@+id/exchange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_exchange"
@@ -92,7 +92,7 @@
             fab:fab_label="EXCHANGE" />
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/menu_item3"
+            android:id="@+id/new_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_colorNormal="#c730f1ff"

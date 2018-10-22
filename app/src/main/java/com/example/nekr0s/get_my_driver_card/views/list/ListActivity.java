@@ -1,23 +1,18 @@
 package com.example.nekr0s.get_my_driver_card.views.list;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.support.v7.app.AppCompatActivity;
 
-import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.User;
+import com.example.nekr0s.get_my_driver_card.utils.Constants;
+import com.example.nekr0s.get_my_driver_card.views.create.RequestInfoActivity;
+import com.github.clans.fab.FloatingActionButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import com.example.nekr0s.get_my_driver_card.utils.translator.Translator;
-import com.example.nekr0s.get_my_driver_card.views.requestinfo.RequestInfoActivity;
-import com.github.clans.fab.FloatingActionButton;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -25,19 +20,19 @@ public class ListActivity extends AppCompatActivity {
     android.support.v7.widget.Toolbar toolbar;
 
 
-    @BindView(R.id.menu_item)
+    @BindView(R.id.renew)
     FloatingActionButton mFAB_Renew;
 
-    @BindView(R.id.menu_item1)
+    @BindView(R.id.replace)
     FloatingActionButton mFAB_Replace;
 
-    @BindView(R.id.menu_item2)
+    @BindView(R.id.exchange)
     FloatingActionButton mFAB_Exchange;
 
-    @BindView(R.id.menu_item3)
+    @BindView(R.id.new_card)
     FloatingActionButton mFAB_NewCard;
 
-//    Translator translator = new Translator();
+    //    Translator translator = new Translator();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,11 +46,36 @@ public class ListActivity extends AppCompatActivity {
         // Toolbar
         setSupportActionBar(toolbar);
 
-        }
-        @OnClick(R.id.menu_item3)
-        public void openInfoActivity(){
-            Intent intent = new Intent(this,RequestInfoActivity.class);
-            startActivity(intent);
-
     }
+
+    @OnClick({R.id.new_card})
+    public void openInfoActivityNew() {
+        Intent intent = new Intent(this, RequestInfoActivity.class);
+        intent.putExtra(RequestInfoActivity.EXTRA_KEY, mFAB_NewCard.getLabelText());
+        startActivity(intent);
+    }
+
+    @OnClick({R.id.exchange})
+    public void openInfoActivityExchange() {
+        Intent intent = new Intent(this, RequestInfoActivity.class);
+        intent.putExtra(RequestInfoActivity.EXTRA_KEY, mFAB_Exchange.getLabelText());
+        startActivity(intent);
+    }
+
+    @OnClick({R.id.replace})
+    public void openInfoActivityReplace() {
+        Intent intent = new Intent(this, RequestInfoActivity.class);
+        intent.putExtra(RequestInfoActivity.EXTRA_KEY, mFAB_Replace.getLabelText());
+        startActivity(intent);
+    }
+
+    @OnClick({R.id.renew})
+    public void openInfoActivityRenew() {
+        Intent intent = new Intent(this, RequestInfoActivity.class);
+        intent.putExtra(RequestInfoActivity.EXTRA_KEY, mFAB_Renew.getLabelText());
+        startActivity(intent);
+    }
+
+
 }
+
