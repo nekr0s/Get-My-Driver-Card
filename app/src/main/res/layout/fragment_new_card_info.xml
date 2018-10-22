@@ -10,7 +10,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
         android:background="@drawable/wallpap"
     android:orientation="vertical"
-    tools:context=".views.create.fragments.NewCardFragment">
+        tools:context=".views.create.fragments.NewCardFragment"
+        android:focusableInTouchMode="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please fill the information for your request:"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:padding="16dp"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
 
     <android.support.design.widget.TextInputLayout
@@ -27,7 +38,8 @@
             android:inputType="textPersonName"
             android:paddingBottom="18dp"
             android:textSize="23sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/white" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -44,7 +56,8 @@
             android:hint="@string/last_name"
             android:inputType="textPersonName"
             android:paddingBottom="18dp"
-            android:textSize="23sp" />
+            android:textSize="23sp"
+            android:textColor="@color/white" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -60,7 +73,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/personal_number"
                 android:inputType="text|number"
-                android:textSize="23sp" />
+                android:textSize="23sp"
+                android:textColor="@color/white" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -77,7 +91,8 @@
                 android:hint="@string/full_address"
                 android:inputType="textLongMessage"
                 android:paddingBottom="18dp"
-                android:textSize="23sp" />
+                android:textSize="23sp"
+                android:textColor="@color/white" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -94,7 +109,8 @@
                 android:hint="@string/phone_number"
                 android:inputType="phone"
                 android:paddingBottom="18dp"
-                android:textSize="23sp" />
+                android:textSize="23sp"
+                android:textColor="@color/white" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -112,7 +128,8 @@
                 android:inputType="date"
                 android:padding="18dp"
                 android:paddingBottom="18dp"
-                android:textSize="23sp" />
+                android:textSize="23sp"
+                android:textColor="@color/white" />
 
         </android.support.design.widget.TextInputLayout>
 

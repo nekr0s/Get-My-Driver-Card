@@ -40,7 +40,7 @@ public class RequestInfoActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
-        transaction.addToBackStack(null);
+//        transaction.addToBackStack(null);
         transaction.add(R.id.fragment_container, mFragment, "new_fragment").commit();
     }
 
