@@ -7,4 +7,5 @@
     <color name="black80percent">#99000000</color>
     <color name="blue80percent">#8130f1ff</color>
     <color name="bluenontransp">#cd30f1ff</color>
+    <color name="red">#f70c04</color>
 </resources>
