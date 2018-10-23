@@ -3,20 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.create.CardCreateActivity"
-    android:background="@drawable/wallpap">
-
-    <include
-        android:id="@+id/userToolbar"
-        layout="@layout/toolbarnontransp"
-        />
-
-
+    android:background="@android:color/darker_gray"
+    tools:context=".views.create.CardCreateActivity">
+    
     <FrameLayout
-        android:layout_below="@id/userToolbar"
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/userToolbar">
 
     </FrameLayout>
 </RelativeLayout>
