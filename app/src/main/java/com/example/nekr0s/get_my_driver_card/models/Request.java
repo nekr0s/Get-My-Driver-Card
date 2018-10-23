@@ -6,6 +6,7 @@ import com.example.nekr0s.get_my_driver_card.utils.enums.RequestStatus;
 import com.example.nekr0s.get_my_driver_card.utils.enums.RequestType;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Request {
     private int requestId;
@@ -100,7 +101,7 @@ public class Request {
     }
 
     private void setRequestDate(LocalDateTime requestDate) {
-        this.requestDate = requestDate.getDayOfMonth() + "." + requestDate.getMonthValue() + "."
-                + requestDate.getYear() + " " + requestDate.getHour() + ":" + requestDate.getMinute();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+        this.requestDate = requestDate.format(formatter);
     }
 }

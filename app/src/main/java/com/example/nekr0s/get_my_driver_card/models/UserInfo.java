@@ -2,10 +2,9 @@ package com.example.nekr0s.get_my_driver_card.models;
 
 import com.example.nekr0s.get_my_driver_card.utils.translator.Translator;
 
-import java.io.FileNotFoundException;
-
 public class UserInfo {
-    private long EGN;
+    private int userInfoId;
+    private String personalNumber;
     private String firstName;
     private String lastName;
     private String firstNameCyrillic;
@@ -14,21 +13,14 @@ public class UserInfo {
     private String address;
     private String phoneNumber;
 
-    public UserInfo(long EGN, String firstName, String lastName, String address, String phoneNumber) {
-        this.EGN = EGN;
+    public UserInfo(String personalNumber, String firstName, String lastName, String address,
+                    String phoneNumber, int userInfoId) {
+        this.userInfoId = userInfoId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        setDateOfBirth(EGN);
-    }
-
-    public long getEGN() {
-        return EGN;
-    }
-
-    public void setEGN(long EGN) {
-        this.EGN = EGN;
+        this.personalNumber = personalNumber;
     }
 
     public String getFirstName() {
@@ -85,7 +77,23 @@ public class UserInfo {
 
     private void setCyrillicNames(String firstName, String lastName) throws Exception {
         Translator translator = new Translator();
-//        this.firstNameCyrillic = translator.translate(firstName);
-//        this.lastNameCyrillic = translator.translate(lastName);
+        this.firstNameCyrillic = translator.translate(firstName);
+        this.lastNameCyrillic = translator.translate(lastName);
+    }
+
+    public String getPersonalNumber() {
+        return personalNumber;
+    }
+
+    public void setPersonalNumber(String personalNumber) {
+        this.personalNumber = personalNumber;
+    }
+
+    public int getUserInfoId() {
+        return userInfoId;
+    }
+
+    public void setUserInfoId(int userInfoId) {
+        this.userInfoId = userInfoId;
     }
 }

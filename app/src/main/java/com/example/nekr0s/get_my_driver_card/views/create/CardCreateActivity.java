@@ -15,7 +15,7 @@ import com.example.nekr0s.get_my_driver_card.views.create.fragments.ReplaceFragm
 
 import butterknife.ButterKnife;
 
-public class RequestInfoActivity extends AppCompatActivity {
+public class CardCreateActivity extends AppCompatActivity {
 
     public static final String EXTRA_KEY = "NAVIGATE_EXTRA";
 

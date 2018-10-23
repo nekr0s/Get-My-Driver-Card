@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".views.list.ListActivity" />
-        <activity android:name=".views.create.RequestInfoActivity" />
+        <activity android:name=".views.create.CardCreateActivity" />
     </application>
 
 </manifest>

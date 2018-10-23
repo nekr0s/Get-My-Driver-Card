@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
-import com.example.nekr0s.get_my_driver_card.views.create.RequestInfoActivity;
+import com.example.nekr0s.get_my_driver_card.views.create.CardCreateActivity;
 import com.github.clans.fab.FloatingActionButton;
 
 import butterknife.BindView;
@@ -51,8 +51,8 @@ public class ListActivity extends AppCompatActivity {
     // One onclick method for all fab buttons
     @OnClick({R.id.new_card, R.id.exchange, R.id.replace, R.id.renew})
     public void openInfoActivityNew(FloatingActionButton fab) {
-        Intent intent = new Intent(this, RequestInfoActivity.class);
-        intent.putExtra(RequestInfoActivity.EXTRA_KEY, fab.getLabelText());
+        Intent intent = new Intent(this, CardCreateActivity.class);
+        intent.putExtra(CardCreateActivity.EXTRA_KEY, fab.getLabelText());
         startActivity(intent);
     }
 }

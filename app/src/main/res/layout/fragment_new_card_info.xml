@@ -12,7 +12,7 @@
         android:background="@color/white"
         android:focusableInTouchMode="true"
         android:orientation="vertical"
-        tools:context=".views.create.RequestInfoActivity">
+        tools:context=".views.create.CardCreateActivity">
 
         <TextView
             android:layout_width="wrap_content"
