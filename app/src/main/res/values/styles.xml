@@ -7,8 +7,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/LonelyBlue</item>
 
-        <item name="android:textColorHint">@android:color/darker_gray</item>
-        <item name="colorControlNormal">@android:color/darker_gray</item>
+        <item name="android:textColorHint">#414A4C</item>
+        <item name="colorControlNormal">#414A4C </item>
     </style>
 
 </resources>
