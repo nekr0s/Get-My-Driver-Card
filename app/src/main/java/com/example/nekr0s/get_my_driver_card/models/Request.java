@@ -5,16 +5,20 @@ import android.graphics.Color;
 import com.example.nekr0s.get_my_driver_card.utils.enums.RequestStatus;
 import com.example.nekr0s.get_my_driver_card.utils.enums.RequestType;
 
+import java.time.LocalDateTime;
+
 public class Request {
     private int requestId;
     private RequestStatus status;
     private RequestType type;
+    private String requestDate;
     private User user;
 
     public Request(int requestId, RequestStatus status, RequestType type, User user) {
         this.requestId = requestId;
         this.status = status;
         this.type = type;
+        setRequestDate(LocalDateTime.now());
         this.user = user;
     }
 
@@ -89,5 +93,14 @@ public class Request {
                 return "Renew card";
         }
         return "Invalid";
+    }
+
+    public String getRequestDate() {
+        return requestDate;
+    }
+
+    private void setRequestDate(LocalDateTime requestDate) {
+        this.requestDate = requestDate.getDayOfMonth() + "." + requestDate.getMonthValue() + "."
+                + requestDate.getYear() + " " + requestDate.getHour() + ":" + requestDate.getMinute();
     }
 }
