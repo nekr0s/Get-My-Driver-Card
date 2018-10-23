@@ -2,6 +2,7 @@ package com.example.nekr0s.get_my_driver_card.views.create.fragments;
 
 
 import android.os.Bundle;
+import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -34,6 +35,9 @@ public class ExchangeFragment extends Fragment {
 
     @BindView(R.id.driving_licence_number)
     TextInputLayout mTIL_driving_licence_number;
+
+    @BindView(R.id.exchange_next_button)
+    MaterialButton mNextButton;
 
 
     public static Fragment newInstance() {
