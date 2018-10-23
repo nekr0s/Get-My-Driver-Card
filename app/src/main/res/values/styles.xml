@@ -6,9 +6,9 @@
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/LonelyBlue</item>
-
         <item name="android:textColorHint">@color/Onyx</item>
         <item name="colorControlNormal">@color/Onyx</item>
+        <item name="textAppearanceButton">@style/TextAppearance.MaterialComponents.Button</item>
     </style>
 
     <style name="Theme.Transparent" parent="Theme.AppCompat.NoActionBar">
