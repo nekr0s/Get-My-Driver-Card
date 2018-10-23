@@ -29,4 +29,5 @@
     <string name="tachograph_card_number">Tachograph card number</string>
     <string name="driver_licence_country_of_issuing">Driver licence country of issuing</string>
     <string name="driving_licence_number">Driving licence number</string>
+    <string name="checkbox">Checkbox</string>
 </resources>

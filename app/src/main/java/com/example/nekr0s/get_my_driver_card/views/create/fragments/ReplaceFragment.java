@@ -6,13 +6,25 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 
 import com.example.nekr0s.get_my_driver_card.R;
+import com.example.nekr0s.get_my_driver_card.models.Reason;
+import com.example.nekr0s.get_my_driver_card.views.create.adapter.ReasonsAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+import java.util.Objects;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ReplaceFragment extends Fragment {
+
+    @BindView(R.id.reason_list_view)
+    ListView listView;
+
+    private int preselectedIndex = -1;
 
 
     public ReplaceFragment() {
@@ -28,12 +40,42 @@ public class ReplaceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_replace, container, false);
+        View view = inflater.inflate(R.layout.fragment_replace, container, false);
+
+        ButterKnife.bind(this, view);
+
+        final ReasonsAdapter adapter = new ReasonsAdapter(getActivity());
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                checkBoxLogic(adapter.getItem(position), adapter, position);
+            }
+        });
+
+        return view;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        getActivity().finish();
+        Objects.requireNonNull(getActivity()).finish();
+    }
+
+    private void checkBoxLogic(Reason reason, ReasonsAdapter adapter, int position) {
+        if (reason.isSelected()) reason.setSelected(false);
+        else reason.setSelected(true);
+
+        adapter.update(position, reason);
+
+        if (preselectedIndex > -1) {
+            Reason preRecord = adapter.getItem(preselectedIndex);
+            preRecord.setSelected(false);
+
+            adapter.update(preselectedIndex, preRecord);
+        }
+
+        preselectedIndex = position;
     }
 }

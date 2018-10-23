@@ -5,11 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/layout_bg"
+    android:layout_gravity="center"
+    android:background="@color/white"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    android:layout_gravity="center"
-    tools:context=".views.create.RequestInfoActivity">
+    tools:context=".views.create.CardCreateActivity">
 
     <TextView
         android:id="@+id/exchange_text"
