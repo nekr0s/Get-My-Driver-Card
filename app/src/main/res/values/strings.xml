@@ -29,5 +29,9 @@
     <string name="tachograph_card_number">Tachograph card number</string>
     <string name="driver_licence_country_of_issuing">Driver licence country of issuing</string>
     <string name="driving_licence_number">Driving licence number</string>
+    <string name="country_of_issuing">Country of issuing</string>
+    <string name="tachograph_card_issuing_authority">Tachograph card issuing authority</string>
+    <string name="tachograph_card_number_previous">Tachograph card number</string>
+    <string name="date_of_expiry">Date of expiry</string>
     <string name="checkbox">Checkbox</string>
 </resources>
