@@ -4,12 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.create.RequestInfoActivity"
-    android:background="@drawable/wallpap">
+    android:background="@android:color/darker_gray">
 
-    <include
-        android:id="@+id/userToolbar"
-        layout="@layout/toolbarnontransp"
-        />
 
 
     <FrameLayout

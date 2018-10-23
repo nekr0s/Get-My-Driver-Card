@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:padding="16dp"
             android:text="@string/new_card_screen_message"
-            android:textColor="@color/LonelyBlue"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
 
