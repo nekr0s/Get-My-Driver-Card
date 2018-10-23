@@ -1,65 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:background="@drawable/wallpap"
-    android:orientation="vertical"
-        tools:context=".views.create.fragments.NewCardFragment"
-        android:focusableInTouchMode="true">
+        android:background="@color/white"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        tools:context=".views.create.RequestInfoActivity">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/new_card_screen_message"
-            android:textColor="@color/white"
             android:layout_gravity="center"
             android:padding="16dp"
+            android:text="@string/new_card_screen_message"
+            android:textColor="@color/LonelyBlue"
             android:textSize="18sp"
             android:textStyle="bold" />
 
 
         <android.support.design.widget.TextInputLayout
-        android:id="@+id/first_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        app:errorEnabled="true">
-
-        <android.support.design.widget.TextInputEditText
+            android:id="@+id/first_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/first_name"
-            android:inputType="textPersonName"
-            android:paddingBottom="18dp"
-            android:textSize="23sp"
-            android:textStyle="bold"
-            android:textColor="@color/white" />
+            android:padding="16dp"
+            app:errorEnabled="true">
 
-    </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/first_name"
+                android:inputType="textPersonName"
+                android:paddingBottom="18dp" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/last_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        app:errorEnabled="true">
+        </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputEditText
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/last_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/last_name"
-            android:inputType="textPersonName"
-            android:paddingBottom="18dp"
-            android:textSize="23sp"
-            android:textColor="@color/white" />
+            android:padding="16dp"
+            app:errorEnabled="true">
 
-    </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/last_name"
+                android:inputType="textPersonName"
+                android:paddingBottom="18dp" />
+
+        </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/personal_number"
@@ -72,16 +68,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/personal_number"
-                android:inputType="text|number"
-                android:textSize="23sp"
-                android:textColor="@color/white" />
+                android:inputType="text|number" />
 
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/address_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:padding="16dp"
             app:errorEnabled="true">
 
@@ -90,9 +84,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/full_address"
                 android:inputType="textLongMessage"
-                android:paddingBottom="18dp"
-                android:textSize="23sp"
-                android:textColor="@color/white" />
+                android:paddingBottom="18dp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -108,9 +100,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/phone_number"
                 android:inputType="phone"
-                android:paddingBottom="18dp"
-                android:textSize="23sp"
-                android:textColor="@color/white" />
+                android:paddingBottom="18dp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -126,13 +116,10 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/date_of_birth"
                 android:inputType="date"
-                android:padding="18dp"
-                android:paddingBottom="18dp"
-                android:textSize="23sp"
-                android:textColor="@color/white" />
+                android:paddingBottom="18dp" />
 
         </android.support.design.widget.TextInputLayout>
 
-</LinearLayout>
+    </LinearLayout>
 
 </ScrollView>
