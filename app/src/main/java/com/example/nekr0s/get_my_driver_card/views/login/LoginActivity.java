@@ -3,7 +3,11 @@ package com.example.nekr0s.get_my_driver_card.views.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Patterns;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -12,9 +16,10 @@ import android.widget.Toast;
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
-import com.example.nekr0s.get_my_driver_card.validator.LoginValidator;
-import com.example.nekr0s.get_my_driver_card.validator.base.Validator;
 import com.example.nekr0s.get_my_driver_card.views.list.ListActivity;
+
+import java.util.Objects;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,10 +53,17 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     @BindView(R.id.password_edittext)
     EditText mPasswordEditText;
 
+
     SmartUser mCurrentUser;
     SmartLoginConfig mConfig;
     SmartLogin mSmartLogin;
-    private final Validator<User> mValidator = new LoginValidator();
+
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    "(?=.*[a-zA-Z])" +      //any letter
+                    "(?=\\S+$)" +           //no white spaces
+                    ".{4,}" +               //at least 4 characters
+                    "$");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,12 +156,86 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
 //            return;
 //        }
 //        mSmartLogin.login(mConfig);
-        openDialog();
+        final AlertDialog.Builder mBuilder = new AlertDialog.Builder(LoginActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.layout_dialog, null);
+
+
+        final TextInputLayout mTIL_email_register = mView.findViewById(R.id.text_input_email_register);
+
+        final TextInputLayout mTIL_password_register = mView.findViewById(R.id.text_input_password_one);
+
+        final TextInputLayout mTIL_password_confirm = mView.findViewById(R.id.text_input_password_two);
+
+        Button mConfirmButton = mView.findViewById(R.id.register_confirm_button);
+
+
+        mConfirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!validateEmail(mTIL_email_register) | !validatePassword(mTIL_password_register)
+                        | !validatePasswordTwo(mTIL_password_confirm)) {
+                    return;
+                } else {
+                    navToHomeRegister();
+                }
+
+            }
+        });
+        mBuilder.setView(mView);
+        AlertDialog dialog = mBuilder.create();
+        dialog.show();
     }
 
-    public void openDialog() {
-        RegisterDialog registerDialog = new RegisterDialog();
-        registerDialog.show(getSupportFragmentManager(), "register dialog");
+    private boolean validateEmail(TextInputLayout mTIL_email_register) {
+        String emailInput = Objects.requireNonNull(mTIL_email_register.getEditText()).getText().toString().trim();
 
+        if (emailInput.isEmpty()) {
+            mTIL_email_register.setError("Field can't be empty");
+            return false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
+            mTIL_email_register.setError("Please enter a valid email address");
+            return false;
+        } else {
+            mTIL_email_register.setError(null);
+            return true;
+        }
     }
+
+    private boolean validatePassword(TextInputLayout mTIL_password_register) {
+        String passwordInput = Objects.requireNonNull(mTIL_password_register.getEditText()).getText().toString().trim();
+
+        if (passwordInput.isEmpty()) {
+            mTIL_password_register.setError("Field can't be empty");
+            return false;
+        } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
+            mTIL_password_register.setError("Password too weak");
+            return false;
+        } else {
+            mTIL_password_register.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validatePasswordTwo(TextInputLayout mTIL_confirm_password) {
+        String passwordInput = Objects.requireNonNull(mTIL_confirm_password.getEditText()).getText().toString().trim();
+
+        if (passwordInput.isEmpty()) {
+            mTIL_confirm_password.setError("Field can't be empty");
+            return false;
+        } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
+            mTIL_confirm_password.setError("Password too weak");
+            return false;
+        } else {
+            mTIL_confirm_password.setError(null);
+            return true;
+        }
+    }
+
+    private void navToHomeRegister() {
+        Intent intent = new Intent(this, ListActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
 }

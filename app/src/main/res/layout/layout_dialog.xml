@@ -56,6 +56,6 @@
         android:id="@+id/register_confirm_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Confirm" />
+        android:text="@string/register_button" />
 
 </LinearLayout>
