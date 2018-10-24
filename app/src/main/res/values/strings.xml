@@ -37,4 +37,5 @@
     <string name="state_date_when_that_happened">State date - DD.MM.YYYY</string>
     <string name="state_the_place_where_that_happened">State the place where that happened</string>
     <string name="next">NEXT</string>
+    <string name="renew_tachograph_card">I want to renew my tachograph card because:</string>
 </resources>

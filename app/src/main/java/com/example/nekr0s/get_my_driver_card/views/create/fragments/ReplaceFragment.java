@@ -35,7 +35,7 @@ public class ReplaceFragment extends Fragment {
     @BindView(R.id.replace_reason_button)
     MaterialButton mNextButton;
 
-    private int preselectedIndex = -1;
+    private int mPreselectedIndex = -1;
 
 
     public ReplaceFragment() {
@@ -83,14 +83,14 @@ public class ReplaceFragment extends Fragment {
 
         adapter.update(position, reason);
 
-        if (preselectedIndex > -1) {
-            Reason preRecord = adapter.getItem(preselectedIndex);
+        if (mPreselectedIndex > -1) {
+            Reason preRecord = adapter.getItem(mPreselectedIndex);
             preRecord.setSelected(false);
 
-            adapter.update(preselectedIndex, preRecord);
+            adapter.update(mPreselectedIndex, preRecord);
         }
 
-        preselectedIndex = position;
+        mPreselectedIndex = position;
     }
 
     private boolean isLostOrStolen(String reasonName) {

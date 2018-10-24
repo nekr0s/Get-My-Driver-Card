@@ -28,6 +28,12 @@ public class ReasonsAdapter extends BaseAdapter {
         inflater = activity.getLayoutInflater();
     }
 
+    public ReasonsAdapter(Activity activity, List<Reason> reasons) {
+        this.activity = activity;
+        this.reasons = reasons;
+        inflater = activity.getLayoutInflater();
+    }
+
     @Override
     public int getCount() {
         return reasons.size();
@@ -68,6 +74,8 @@ public class ReasonsAdapter extends BaseAdapter {
         reasons.set(position, reason);
         notifyDataSetChanged();
     }
+
+
 
     private void initReasons() {
         reasons = new ArrayList<>(Arrays.asList(
