@@ -1,18 +1,17 @@
 package com.example.nekr0s.get_my_driver_card.views.login;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nekr0s.get_my_driver_card.utils.BCrypt;
-import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.User;
+import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.validator.LoginValidator;
 import com.example.nekr0s.get_my_driver_card.validator.base.Validator;
 import com.example.nekr0s.get_my_driver_card.views.list.ListActivity;
@@ -136,14 +135,21 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
 
     @OnClick(R.id.text_no_account)
     void customCreateAccountClicked() {
-        mSmartLogin = SmartLoginFactory.build(LoginType.CustomSignup);
-        mSmartLogin.signup(mConfig);
-        User user = new User(mEmailEditText.getText().toString(),
-                BCrypt.hashpw(mPasswordEditText.getText().toString(), BCrypt.gensalt()));
-        if (!mValidator.isValid(user)) {
-            Toast.makeText(this, "Invalid form.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        mSmartLogin.login(mConfig);
+//        mSmartLogin = SmartLoginFactory.build(LoginType.CustomSignup);
+//        mSmartLogin.signup(mConfig);
+//        User user = new User(mEmailEditText.getText().toString(),
+//                BCrypt.hashpw(mPasswordEditText.getText().toString(), BCrypt.gensalt()));
+//        if (!mValidator.isValid(user)) {
+//            Toast.makeText(this, "Invalid form.", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        mSmartLogin.login(mConfig);
+        openDialog();
+    }
+
+    public void openDialog() {
+        RegisterDialog registerDialog = new RegisterDialog();
+        registerDialog.show(getSupportFragmentManager(), "register dialog");
+
     }
 }

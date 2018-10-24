@@ -38,4 +38,7 @@
     <string name="state_the_place_where_that_happened">State the place where that happened</string>
     <string name="next">NEXT</string>
     <string name="renew_tachograph_card">I want to renew my tachograph card because:</string>
+    <string name="EmailRegister">Email</string>
+    <string name="passwordRegister">Password</string>
+    <string name="confirm_password">Confirm Password</string>
 </resources>
