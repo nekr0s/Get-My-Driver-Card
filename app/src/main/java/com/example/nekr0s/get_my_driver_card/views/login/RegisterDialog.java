@@ -2,15 +2,16 @@ package com.example.nekr0s.get_my_driver_card.views.login;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.nekr0s.get_my_driver_card.R;
-import com.example.nekr0s.get_my_driver_card.utils.Dialog.CustomListener;
+import com.example.nekr0s.get_my_driver_card.utils.dialog.CustomListener;
 import com.example.nekr0s.get_my_driver_card.validator.TextInputLayoutValidator;
 import com.example.nekr0s.get_my_driver_card.validator.base.CreateValidator;
 
@@ -34,31 +35,21 @@ public class RegisterDialog extends AppCompatDialogFragment {
 
     private final CreateValidator<TextInputLayout> mTILValidator = new TextInputLayoutValidator();
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//        AlertDialog dialog = builder.create();
-//        dialog.show();
-//        Button button = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
-//        button.setOnClickListener(new CustomListener(dialog, mTILValidator));
 
         LayoutInflater inflater = Objects.requireNonNull(getActivity()).getLayoutInflater();
         View view = inflater.inflate(R.layout.layout_dialog, null);
-
-        builder.setView(view)
-
-                .setTitle("Create new account")
-
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                })
-                .setPositiveButton("register", new CustomListener(getContext(), getDialog(), mTILValidator));
+        AlertDialog dialog = builder.create();
+        dialog.setView(view);
+        dialog.show();
+        Button button = view.findViewById(R.id.register_confirm_button);
+        button.setOnClickListener(new CustomListener(view.getContext(), dialog, mTILValidator));
 
 
         ButterKnife.bind(this, view);
-        return builder.create();
+        return dialog;
     }
 }

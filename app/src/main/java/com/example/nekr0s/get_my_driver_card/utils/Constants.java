@@ -11,4 +11,5 @@ public class Constants {
     // Server address - change depending on situation
     public static final String BASE_SERVER_URL = "192.168.0.101:8080/api";
 
+    public static final int EMPTY_FIELD = 404;
 }

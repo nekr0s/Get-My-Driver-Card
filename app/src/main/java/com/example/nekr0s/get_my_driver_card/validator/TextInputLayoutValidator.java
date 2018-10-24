@@ -12,9 +12,6 @@ public class TextInputLayoutValidator implements CreateValidator<TextInputLayout
 
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
-                    //"(?=.*[0-9])" +         //at least 1 digit
-                    //"(?=.*[a-z])" +         //at least 1 lower case letter
-                    //"(?=.*[A-Z])" +         //at least 1 upper case letter
                     "(?=.*[a-zA-Z])" +      //any letter
                     "(?=\\S+$)" +           //no white spaces
                     ".{4,}" +               //at least 4 characters
@@ -23,7 +20,7 @@ public class TextInputLayoutValidator implements CreateValidator<TextInputLayout
     @Override
     public boolean isValid(TextInputLayout email, TextInputLayout password
             , TextInputLayout confirmPassword) {
-        return email != null && password != null && password.equals(confirmPassword) &&
+        return password.equals(confirmPassword) &&
                 validateEmail(email) &&
                 validatePassword(password) &&
                 validatePasswordTwo(confirmPassword);
@@ -59,17 +56,17 @@ public class TextInputLayoutValidator implements CreateValidator<TextInputLayout
         }
     }
 
-    private boolean validatePasswordTwo(TextInputLayout mtil_confirm_password) {
-        String passwordInput = Objects.requireNonNull(mtil_confirm_password.getEditText()).getText().toString().trim();
+    private boolean validatePasswordTwo(TextInputLayout mTIL_confirm_password) {
+        String passwordInput = Objects.requireNonNull(mTIL_confirm_password.getEditText()).getText().toString().trim();
 
         if (passwordInput.isEmpty()) {
-            mtil_confirm_password.setError("Field can't be empty");
+            mTIL_confirm_password.setError("Field can't be empty");
             return false;
         } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
-            mtil_confirm_password.setError("Password too weak");
+            mTIL_confirm_password.setError("Password too weak");
             return false;
         } else {
-            mtil_confirm_password.setError(null);
+            mTIL_confirm_password.setError(null);
             return true;
         }
     }

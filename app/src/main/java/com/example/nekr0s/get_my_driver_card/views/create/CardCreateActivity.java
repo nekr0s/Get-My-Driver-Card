@@ -44,6 +44,7 @@ public class CardCreateActivity extends AppCompatActivity {
         transaction.add(R.id.fragment_container, mFragment, "new_fragment").commit();
     }
 
+    // Maybe Reflection
     private void whichFragmentToOpen(String fragmentName) {
         switch (fragmentName) {
             case "NEW CARD":
