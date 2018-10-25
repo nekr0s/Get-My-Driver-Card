@@ -1,8 +1,10 @@
 package com.example.nekr0s.get_my_driver_card.views.create.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,11 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.nekr0s.get_my_driver_card.R;
+import com.example.nekr0s.get_my_driver_card.views.CameraView.CameraActivity;
 
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class NewCardFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -41,6 +45,12 @@ public class NewCardFragment extends Fragment {
 
     @BindView(R.id.date_of_birth)
     TextInputLayout mTIL_dateOfBirth;
+
+    @BindView(R.id.email_new_card)
+    TextInputLayout mTIL_email_address;
+
+    @BindView(R.id.new_card_next_button)
+    MaterialButton mNextButton;
 
 
     public static NewCardFragment newInstance() {
@@ -74,6 +84,13 @@ public class NewCardFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         Objects.requireNonNull(getActivity()).finish();
+    }
+
+    @OnClick(R.id.new_card_next_button)
+    void openCameraActivity() {
+        Intent intent = new Intent(getActivity(), CameraActivity.class);
+        startActivity(intent);
+
     }
 
 }
