@@ -161,73 +161,60 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
 
 
         final TextInputLayout mTIL_email_register = mView.findViewById(R.id.text_input_email_register);
-
         final TextInputLayout mTIL_password_register = mView.findViewById(R.id.text_input_password_one);
-
         final TextInputLayout mTIL_password_confirm = mView.findViewById(R.id.text_input_password_two);
 
         Button mConfirmButton = mView.findViewById(R.id.register_confirm_button);
-
-
+        mBuilder.setView(mView);
+        final AlertDialog dialog = mBuilder.create();
+        dialog.show();
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!validateEmail(mTIL_email_register) | !validatePassword(mTIL_password_register)
-                        | !validatePasswordTwo(mTIL_password_confirm)) {
-                    return;
-                } else {
-                    navToHomeRegister();
+                validateEmail(mTIL_email_register);
+                validatePassword(mTIL_password_register);
+                validatePasswordTwo(mTIL_password_confirm);
+                if (mTIL_email_register.getError() == null && mTIL_password_register.getError() == null
+                        && mTIL_password_confirm.getError() == null) {
+                    dialog.dismiss();
                 }
-
             }
         });
-        mBuilder.setView(mView);
-        AlertDialog dialog = mBuilder.create();
-        dialog.show();
     }
 
-    private boolean validateEmail(TextInputLayout mTIL_email_register) {
+    private void validateEmail(TextInputLayout mTIL_email_register) {
         String emailInput = Objects.requireNonNull(mTIL_email_register.getEditText()).getText().toString().trim();
 
         if (emailInput.isEmpty()) {
             mTIL_email_register.setError("Field can't be empty");
-            return false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
             mTIL_email_register.setError("Please enter a valid email address");
-            return false;
         } else {
             mTIL_email_register.setError(null);
-            return true;
         }
     }
 
-    private boolean validatePassword(TextInputLayout mTIL_password_register) {
+    private void validatePassword(TextInputLayout mTIL_password_register) {
         String passwordInput = Objects.requireNonNull(mTIL_password_register.getEditText()).getText().toString().trim();
 
         if (passwordInput.isEmpty()) {
             mTIL_password_register.setError("Field can't be empty");
-            return false;
         } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
             mTIL_password_register.setError("Password too weak");
-            return false;
         } else {
             mTIL_password_register.setError(null);
-            return true;
         }
     }
 
-    private boolean validatePasswordTwo(TextInputLayout mTIL_confirm_password) {
+    private void validatePasswordTwo(TextInputLayout mTIL_confirm_password) {
         String passwordInput = Objects.requireNonNull(mTIL_confirm_password.getEditText()).getText().toString().trim();
 
         if (passwordInput.isEmpty()) {
             mTIL_confirm_password.setError("Field can't be empty");
-            return false;
         } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
             mTIL_confirm_password.setError("Password too weak");
-            return false;
         } else {
             mTIL_confirm_password.setError(null);
-            return true;
         }
     }
 
