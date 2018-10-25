@@ -179,15 +179,18 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
                         mTIL_email_register.setError(ErrorCode.EMAIL_NOT_CORRECT.getString());
                         break;
                     case PASSWORD_NULL:
+                        mTIL_email_register.setError(null);
                         mTIL_password_register.setError(ErrorCode.PASSWORD_NULL.getString());
                         break;
                     case PASSWORD_TOO_SIMPLE:
                         mTIL_password_register.setError(ErrorCode.PASSWORD_TOO_SIMPLE.getString());
                         break;
                     case PASSWORDS_DONT_MATCH:
+                        mTIL_email_register.setError(null);
                         mTIL_password_confirm.setError(ErrorCode.PASSWORDS_DONT_MATCH.getString());
                         break;
                     case EVERYTHING_OK:
+                        mTIL_password_confirm.setError(null);
                         dialog.dismiss();
                         User user = new User(mEmailEditText.getText().toString(),
                                 BCrypt.hashpw(mPasswordEditText.getText().toString(), BCrypt.gensalt()));
