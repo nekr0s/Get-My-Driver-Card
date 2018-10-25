@@ -78,8 +78,15 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     @Override
     protected void onResume() {
         super.onResume();
+        mPresenter.subscribe(this);
         mCurrentUser = UserSessionManager.getCurrentUser(this);
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mPresenter.unsubscribe();
     }
 
     @Override
