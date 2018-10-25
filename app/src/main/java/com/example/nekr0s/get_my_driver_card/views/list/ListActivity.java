@@ -55,5 +55,6 @@ public class ListActivity extends AppCompatActivity {
         intent.putExtra(CardCreateActivity.EXTRA_KEY, fab.getLabelText());
         startActivity(intent);
     }
+
 }
 

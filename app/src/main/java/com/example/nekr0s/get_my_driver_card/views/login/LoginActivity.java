@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,11 +14,12 @@ import android.widget.Toast;
 
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.User;
+import com.example.nekr0s.get_my_driver_card.utils.BCrypt;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
+import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
+import com.example.nekr0s.get_my_driver_card.validator.UserCreateValidator;
+import com.example.nekr0s.get_my_driver_card.validator.base.CreateValidator;
 import com.example.nekr0s.get_my_driver_card.views.list.ListActivity;
-
-import java.util.Objects;
-import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,7 +33,8 @@ import studios.codelight.smartloginlibrary.UserSessionManager;
 import studios.codelight.smartloginlibrary.users.SmartUser;
 import studios.codelight.smartloginlibrary.util.SmartLoginException;
 
-public class LoginActivity extends AppCompatActivity implements SmartLoginCallbacks {
+public class LoginActivity extends AppCompatActivity implements SmartLoginCallbacks,
+        LoginContracts.View {
 
     @BindView(R.id.button_login_facebook)
     Button mFacebookLoginButton;
@@ -57,13 +58,8 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     SmartUser mCurrentUser;
     SmartLoginConfig mConfig;
     SmartLogin mSmartLogin;
-
-    private static final Pattern PASSWORD_PATTERN =
-            Pattern.compile("^" +
-                    "(?=.*[a-zA-Z])" +      //any letter
-                    "(?=\\S+$)" +           //no white spaces
-                    ".{4,}" +               //at least 4 characters
-                    "$");
+    private CreateValidator mValidator;
+    private LoginContracts.Presenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +69,7 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         ButterKnife.bind(this);
 
         mConfig = new SmartLoginConfig(this, this);
+        mValidator = new UserCreateValidator();
         mConfig.setFacebookAppId(getString(R.string.facebook_app_id));
         mConfig.setFacebookPermissions(null);
         mConfig.setGoogleApiClient(null);
@@ -149,8 +146,7 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     void customCreateAccountClicked() {
 //        mSmartLogin = SmartLoginFactory.build(LoginType.CustomSignup);
 //        mSmartLogin.signup(mConfig);
-//        User user = new User(mEmailEditText.getText().toString(),
-//                BCrypt.hashpw(mPasswordEditText.getText().toString(), BCrypt.gensalt()));
+
 //        if (!mValidator.isValid(user)) {
 //            Toast.makeText(this, "Invalid form.", Toast.LENGTH_SHORT).show();
 //            return;
@@ -171,58 +167,63 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validateEmail(mTIL_email_register);
-                validatePassword(mTIL_password_register);
-                validatePasswordTwo(mTIL_password_confirm);
-                if (mTIL_email_register.getError() == null && mTIL_password_register.getError() == null
-                        && mTIL_password_confirm.getError() == null) {
-                    dialog.dismiss();
+                ErrorCode result = mValidator
+                        .validate(mTIL_email_register.getEditText().getText().toString(),
+                                mTIL_password_register.getEditText().getText().toString(),
+                                mTIL_password_confirm.getEditText().getText().toString());
+                switch (result) {
+                    case EMAIL_NULL:
+                        mTIL_email_register.setError(ErrorCode.EMAIL_NULL.getString());
+                        break;
+                    case EMAIL_NOT_CORRECT:
+                        mTIL_email_register.setError(ErrorCode.EMAIL_NOT_CORRECT.getString());
+                        break;
+                    case PASSWORD_NULL:
+                        mTIL_password_register.setError(ErrorCode.PASSWORD_NULL.getString());
+                        break;
+                    case PASSWORD_TOO_SIMPLE:
+                        mTIL_password_register.setError(ErrorCode.PASSWORD_TOO_SIMPLE.getString());
+                        break;
+                    case PASSWORDS_DONT_MATCH:
+                        mTIL_password_confirm.setError(ErrorCode.PASSWORDS_DONT_MATCH.getString());
+                        break;
+                    case EVERYTHING_OK:
+                        dialog.dismiss();
+                        User user = new User(mEmailEditText.getText().toString(),
+                                BCrypt.hashpw(mPasswordEditText.getText().toString(), BCrypt.gensalt()));
+                        mPresenter.register(user);
+                        break;
                 }
             }
         });
     }
 
-    private void validateEmail(TextInputLayout mTIL_email_register) {
-        String emailInput = Objects.requireNonNull(mTIL_email_register.getEditText()).getText().toString().trim();
-
-        if (emailInput.isEmpty()) {
-            mTIL_email_register.setError("Field can't be empty");
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
-            mTIL_email_register.setError("Please enter a valid email address");
-        } else {
-            mTIL_email_register.setError(null);
-        }
+    @Override
+    public void setPresenter(LoginContracts.Presenter presenter) {
+        mPresenter = presenter;
     }
 
-    private void validatePassword(TextInputLayout mTIL_password_register) {
-        String passwordInput = Objects.requireNonNull(mTIL_password_register.getEditText()).getText().toString().trim();
-
-        if (passwordInput.isEmpty()) {
-            mTIL_password_register.setError("Field can't be empty");
-        } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
-            mTIL_password_register.setError("Password too weak");
-        } else {
-            mTIL_password_register.setError(null);
-        }
+    @Override
+    public void showLoading() {
+        Toast.makeText(this, "Loading...", Toast.LENGTH_LONG).show();
     }
 
-    private void validatePasswordTwo(TextInputLayout mTIL_confirm_password) {
-        String passwordInput = Objects.requireNonNull(mTIL_confirm_password.getEditText()).getText().toString().trim();
-
-        if (passwordInput.isEmpty()) {
-            mTIL_confirm_password.setError("Field can't be empty");
-        } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
-            mTIL_confirm_password.setError("Password too weak");
-        } else {
-            mTIL_confirm_password.setError(null);
-        }
+    @Override
+    public void hideLoading() {
+        Toast.makeText(this, "Done.", Toast.LENGTH_SHORT).show();
     }
 
-    private void navToHomeRegister() {
+    @Override
+    public void showError(Throwable throwable) {
+        Toast.makeText(this, "Error: " + throwable.getMessage(), Toast.LENGTH_LONG)
+                .show();
+    }
+
+    @Override
+    public void navigateToHome(User user) {
         Intent intent = new Intent(this, ListActivity.class);
+        intent.putExtra(Constants.USER_OBJ_EXTRA, user);
         startActivity(intent);
         finish();
     }
-
-
 }
