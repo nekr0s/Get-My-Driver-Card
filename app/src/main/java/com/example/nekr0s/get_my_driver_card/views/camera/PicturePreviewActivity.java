@@ -1,4 +1,4 @@
-package com.example.nekr0s.get_my_driver_card.views.CameraView;
+package com.example.nekr0s.get_my_driver_card.views.camera;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PicturePreviewActivity extends Activity {
+
     private static boolean mIsFrontFacing;
     private static WeakReference<byte[]> mImage;
 
@@ -21,11 +22,10 @@ public class PicturePreviewActivity extends Activity {
     ImageView mImageView;
 
     public static void setImage(@Nullable byte[] imageBytes, boolean isFrontFacing) {
+
         mIsFrontFacing = isFrontFacing;
 
-        mImage = (imageBytes != null)
-                ? new WeakReference<>(imageBytes)
-                : null;
+        mImage = (imageBytes != null) ? new WeakReference<>(imageBytes) : null;
     }
 
     @Override
@@ -35,9 +35,7 @@ public class PicturePreviewActivity extends Activity {
 
         ButterKnife.bind(this);
 
-        byte[] bitmap = (mImage == null)
-                ? null
-                : mImage.get();
+        byte[] bitmap = (mImage == null) ? null : mImage.get();
 
         if (bitmap == null) {
             finish();

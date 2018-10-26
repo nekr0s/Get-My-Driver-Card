@@ -1,4 +1,4 @@
-package com.example.nekr0s.get_my_driver_card.views.CameraView;
+package com.example.nekr0s.get_my_driver_card.views.camera;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -80,7 +80,6 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
         for (int grantResult : grantResults)
             valid = valid && grantResult == PackageManager.PERMISSION_GRANTED;
 
-        if (valid && !mCameraView.isStarted())
-            mCameraView.start();
+        if (valid && !mCameraView.isStarted()) mCameraView.start();
     }
 }

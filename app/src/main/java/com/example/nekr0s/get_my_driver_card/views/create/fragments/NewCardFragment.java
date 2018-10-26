@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.nekr0s.get_my_driver_card.R;
-import com.example.nekr0s.get_my_driver_card.views.CameraView.CameraActivity;
+import com.example.nekr0s.get_my_driver_card.views.camera.CameraActivity;
 
 import java.util.Objects;
 

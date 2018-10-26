@@ -28,11 +28,11 @@
         <activity android:name=".views.list.ListActivity" />
         <activity android:name=".views.create.CardCreateActivity" />
         <activity
-            android:name=".views.CameraView.CameraActivity"
+            android:name=".views.camera.CameraActivity"
             android:configChanges="orientation|screenLayout|keyboardHidden"
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait" />
-        <activity android:name=".views.CameraView.PicturePreviewActivity" />
+        <activity android:name=".views.camera.PicturePreviewActivity" />
     </application>
 
 </manifest>
