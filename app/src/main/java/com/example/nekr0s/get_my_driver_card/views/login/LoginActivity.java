@@ -13,7 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nekr0s.get_my_driver_card.R;
+import com.example.nekr0s.get_my_driver_card.async.AsyncSchedulerProvider;
 import com.example.nekr0s.get_my_driver_card.models.User;
+import com.example.nekr0s.get_my_driver_card.services.HttpUsersService;
 import com.example.nekr0s.get_my_driver_card.utils.BCrypt;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
@@ -70,6 +72,7 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
 
         mConfig = new SmartLoginConfig(this, this);
         mValidator = new UserCreateValidator();
+        mPresenter = new LoginPresenter(new HttpUsersService(), AsyncSchedulerProvider.getInstance());
         mConfig.setFacebookAppId(getString(R.string.facebook_app_id));
         mConfig.setFacebookPermissions(null);
         mConfig.setGoogleApiClient(null);
@@ -171,39 +174,36 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         mBuilder.setView(mView);
         final AlertDialog dialog = mBuilder.create();
         dialog.show();
-        mConfirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ErrorCode result = mValidator
-                        .validate(mTIL_email_register.getEditText().getText().toString(),
-                                mTIL_password_register.getEditText().getText().toString(),
-                                mTIL_password_confirm.getEditText().getText().toString());
-                switch (result) {
-                    case EMAIL_NULL:
-                        mTIL_email_register.setError(ErrorCode.EMAIL_NULL.getString());
-                        break;
-                    case EMAIL_NOT_CORRECT:
-                        mTIL_email_register.setError(ErrorCode.EMAIL_NOT_CORRECT.getString());
-                        break;
-                    case PASSWORD_NULL:
-                        mTIL_email_register.setError(null);
-                        mTIL_password_register.setError(ErrorCode.PASSWORD_NULL.getString());
-                        break;
-                    case PASSWORD_TOO_SIMPLE:
-                        mTIL_password_register.setError(ErrorCode.PASSWORD_TOO_SIMPLE.getString());
-                        break;
-                    case PASSWORDS_DONT_MATCH:
-                        mTIL_email_register.setError(null);
-                        mTIL_password_confirm.setError(ErrorCode.PASSWORDS_DONT_MATCH.getString());
-                        break;
-                    case EVERYTHING_OK:
-                        mTIL_password_confirm.setError(null);
-                        dialog.dismiss();
-                        User user = new User(mEmailEditText.getText().toString(),
-                                BCrypt.hashpw(mPasswordEditText.getText().toString(), BCrypt.gensalt()));
-                        mPresenter.register(user);
-                        break;
-                }
+        mConfirmButton.setOnClickListener(v -> {
+            ErrorCode result = mValidator
+                    .validate(mTIL_email_register.getEditText().getText().toString(),
+                            mTIL_password_register.getEditText().getText().toString(),
+                            mTIL_password_confirm.getEditText().getText().toString());
+            switch (result) {
+                case EMAIL_NULL:
+                    mTIL_email_register.setError(ErrorCode.EMAIL_NULL.getString());
+                    break;
+                case EMAIL_NOT_CORRECT:
+                    mTIL_email_register.setError(ErrorCode.EMAIL_NOT_CORRECT.getString());
+                    break;
+                case PASSWORD_NULL:
+                    mTIL_email_register.setError(null);
+                    mTIL_password_register.setError(ErrorCode.PASSWORD_NULL.getString());
+                    break;
+                case PASSWORD_TOO_SIMPLE:
+                    mTIL_password_register.setError(ErrorCode.PASSWORD_TOO_SIMPLE.getString());
+                    break;
+                case PASSWORDS_DONT_MATCH:
+                    mTIL_email_register.setError(null);
+                    mTIL_password_confirm.setError(ErrorCode.PASSWORDS_DONT_MATCH.getString());
+                    break;
+                case EVERYTHING_OK:
+                    mTIL_password_confirm.setError(null);
+                    dialog.dismiss();
+                    User user = new User(mEmailEditText.getText().toString(),
+                            BCrypt.hashpw(mPasswordEditText.getText().toString(), BCrypt.gensalt()));
+                    mPresenter.register(user);
+                    break;
             }
         });
     }

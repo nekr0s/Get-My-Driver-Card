@@ -19,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CameraActivity extends AppCompatActivity implements View.OnClickListener {
+
     @BindView(R.id.camera)
     CameraView mCameraView;
 

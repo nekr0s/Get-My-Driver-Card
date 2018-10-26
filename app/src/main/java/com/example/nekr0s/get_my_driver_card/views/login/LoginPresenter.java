@@ -14,7 +14,7 @@ public class LoginPresenter implements LoginContracts.Presenter {
     private final SchedulerProvider mSchedulerProvider;
     private LoginContracts.View mView;
 
-    public LoginPresenter(UsersService mUsersService, SchedulerProvider mSchedulerProvider) {
+    LoginPresenter(UsersService mUsersService, SchedulerProvider mSchedulerProvider) {
         this.mUsersService = mUsersService;
         this.mSchedulerProvider = mSchedulerProvider;
     }
