@@ -65,4 +65,7 @@
     <string name="change_my_photo">I want to change my photo</string>
     <string name="header_msg_replacement">I want a replacement because:</string>
     <string name="card_has_expired">My card has expired</string>
+    <string name="previous_card_info_header_msg">Please fill the information of your previous card:</string>
+    <string name="first_name_cyrillic">First Name (Cyrillic)</string>
+    <string name="last_name_cyrillic">Last Name (Cyryllic)</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.nekr0s.get_my_driver_card.views.create.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputLayout;
@@ -20,6 +21,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ReplaceFragment extends Fragment {
 
@@ -105,5 +107,11 @@ public class ReplaceFragment extends Fragment {
             mTIL_Date.setVisibility(View.GONE);
             mTIL_Place.setVisibility(View.GONE);
         }
+    }
+
+    @OnClick(R.id.replace_reason_button)
+    void openNextActivity() {
+        Intent intent = new Intent(getActivity(), PreviousCardInfoActivity.class);
+        startActivity(intent);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.nekr0s.get_my_driver_card.views.create.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.button.MaterialButton;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -101,5 +103,11 @@ public class RenewFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         getActivity().finish();
+    }
+
+    @OnClick(R.id.renew_next_button)
+    void openNextActivity() {
+        Intent intent = new Intent(getActivity(), PreviousCardInfoActivity.class);
+        startActivity(intent);
     }
 }

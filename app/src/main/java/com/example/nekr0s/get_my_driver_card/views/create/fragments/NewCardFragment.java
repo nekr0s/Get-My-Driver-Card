@@ -14,8 +14,6 @@ import android.view.ViewGroup;
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.views.camera.CameraActivity;
 
-import java.util.Objects;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -33,6 +31,12 @@ public class NewCardFragment extends Fragment {
 
     @BindView(R.id.last_name)
     TextInputLayout mTIL_lastName;
+
+    @BindView(R.id.first_name_cyrillic)
+    TextInputLayout mTIL_firstName_cyrillic;
+
+    @BindView(R.id.last_name_cyryllic)
+    TextInputLayout mTIL_lastName_cyrillic;
 
     @BindView(R.id.personal_number)
     TextInputLayout mTIL_personalNumber;
@@ -83,7 +87,7 @@ public class NewCardFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        Objects.requireNonNull(getActivity()).finish();
+//        Objects.requireNonNull(getActivity()).finish();
     }
 
     @OnClick(R.id.new_card_next_button)

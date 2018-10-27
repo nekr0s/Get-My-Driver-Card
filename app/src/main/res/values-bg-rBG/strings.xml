@@ -62,5 +62,8 @@
     <string name="change_my_photo">Искам да сменя снимката си</string>
     <string name="header_msg_replacement">Искам да заменя картата си защото:</string>
     <string name="card_has_expired">Картата ми изтече</string>
+    <string name="previous_card_info_header_msg">Моля попълнете информацията от предишната ви карта:</string>
+    <string name="first_name_cyrillic">Име (Кирилица)</string>
+    <string name="last_name_cyrillic">Фамилно име (Кирилица)</string>
 
 </resources>

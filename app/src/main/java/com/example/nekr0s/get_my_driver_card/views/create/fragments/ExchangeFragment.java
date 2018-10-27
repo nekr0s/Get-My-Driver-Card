@@ -13,6 +13,7 @@ import com.example.nekr0s.get_my_driver_card.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -167,5 +168,12 @@ public class ExchangeFragment extends Fragment {
 //
 //        }
 //    };
-
+@OnClick(R.id.exchange_next_button)
+void openNextFragment() {
+    NewCardFragment nextFrag = new NewCardFragment();
+    getActivity().getSupportFragmentManager().beginTransaction()
+            .replace(R.id.fragment_container, nextFrag, "newCardFragment")
+            .addToBackStack(null)
+            .commit();
+}
 }

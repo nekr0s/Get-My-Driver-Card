@@ -33,6 +33,7 @@
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait" />
         <activity android:name=".views.camera.PicturePreviewActivity" />
+        <activity android:name=".views.create.fragments.PreviousCardInfoActivity" />
     </application>
 
 </manifest>
