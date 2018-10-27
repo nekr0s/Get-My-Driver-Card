@@ -53,9 +53,10 @@ public class RenewFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         final ReasonsAdapter adapter = new ReasonsAdapter(getActivity(), Arrays.asList(
-                new Reason(false, "My card is due to expire."),
-                new Reason(false, "My card is suspended."),
-                new Reason(false, "I want to withdraw my card.")
+                new Reason(false, getString(R.string.duetoexpire)),
+                new Reason(false, getString(R.string.card_has_expired)),
+                new Reason(false, getString(R.string.card_is_suspended)),
+                new Reason(false, getString(R.string.card_is_withdrawn))
         ));
         mRenewCheckboxList.setAdapter(adapter);
 

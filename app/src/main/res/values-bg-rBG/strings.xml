@@ -16,13 +16,13 @@
     <string name="request_status">Статус:</string>
     <string name="first_name">Име</string>
     <string name="last_name">Фамилно име</string>
-    <string name="personal_number">ЕГН:</string>
+    <string name="personal_number">ЕГН или ЛЧН</string>
     <string name="full_address">Пълен Адрес</string>
     <string name="phone_number">Телефонен Номер</string>
     <string name="date_of_birth">" Дата на раждане - ДД.ММ.ГГГГ"</string>
     <string name="new_card_screen_message">Моля попълнете информацията за вашата заявка:</string>
     <string name="exchange_fragment_message">Моля попълнете информацията отдолу:</string>
-    <string name="eu_country_of_issuing">EU страна на издаване</string>
+    <string name="eu_country_of_issuing">Държава издател на тахографска карта</string>
     <string name="tachograph_card_number">Номер на тахографска карта</string>
     <string name="driver_licence_country_of_issuing">Държава издател на шофьорска книжка</string>
     <string name="driving_licence_number">Номер на шофьорска книжка</string>
@@ -40,4 +40,27 @@
     <string name="confirm_password">Повтори паролата</string>
     <string name="register_button">Регистрация</string>
     <string name="email_address">Имейл адрес</string>
+    <string name="fab_renew">ОБНОВЛЕНИЕ</string>
+    <string name="EMAIL_NULL">Имейла не може да бъде празен.</string>
+    <string name="EMAIL_NOT_CORRECT">Имейла не е валиден.</string>
+    <string name="PASSWORD_NULL">Паролата не може да бъде празна.</string>
+    <string name="PASSWORD_TOO_SIMPE">Паролата е прекалено слаба.</string>
+    <string name="PASSWORDS_DONT_MATCH">Паролите не съвпадат.</string>
+    <string name="REPLACEMENT">ЗАМЯНА НА КАРТА</string>
+    <string name="EXCHANGE">РАЗМЯНА НА КАРТА</string>
+    <string name="NEW_CARD">ИСКАМ НОВА КАРТА</string>
+    <string name="header_message">Все още нямате заявки , ако искате да направите заявка - натиснете бутона в десния долен ъгъл.</string>
+    <string name="duetoexpire">Картата ми ще изтече</string>
+    <string name="card_is_suspended">Картата ми бе спряна</string>
+    <string name="card_is_withdrawn">Картата ми е оттеглена</string>
+    <string name="card_has_been_stolen">Картата ми е открадната</string>
+    <string name="lost_my_card">Загубих картата си</string>
+    <string name="card_is_malfunctioning">Картата ми не функционира добре</string>
+    <string name="card_has_been_damaged">Картата ми е повредена</string>
+    <string name="change_my_address">Искам да сменя адреса си</string>
+    <string name="change_my_name">Искам да сменя името си</string>
+    <string name="change_my_photo">Искам да сменя снимката си</string>
+    <string name="header_msg_replacement">Искам да заменя картата си защото:</string>
+    <string name="card_has_expired">Картата ми изтече</string>
+
 </resources>

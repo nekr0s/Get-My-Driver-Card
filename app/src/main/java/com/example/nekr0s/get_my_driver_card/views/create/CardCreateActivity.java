@@ -53,12 +53,27 @@ public class CardCreateActivity extends AppCompatActivity {
             case "EXCHANGE":
                 mFragment = ExchangeFragment.newInstance();
                 break;
-            case "REPLACE":
+            case "REPLACEMENT":
                 mFragment = ReplaceFragment.newInstance();
                 break;
-            case "RENEW":
+            case "RENEWAL":
                 mFragment = RenewFragment.newInstance();
                 break;
+
+            case "ИСКАМ НОВА КАРТА":
+                mFragment = NewCardFragment.newInstance();
+                break;
+            case "РАЗМЯНА НА КАРТА":
+                mFragment = ExchangeFragment.newInstance();
+                break;
+            case "ЗАМЯНА НА КАРТА":
+                mFragment = ReplaceFragment.newInstance();
+                break;
+            case "ОБНОВЛЕНИЕ":
+                mFragment = RenewFragment.newInstance();
+                break;
+
+
         }
     }
 

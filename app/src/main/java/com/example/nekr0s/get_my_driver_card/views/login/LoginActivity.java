@@ -37,7 +37,6 @@ import studios.codelight.smartloginlibrary.util.SmartLoginException;
 
 public class LoginActivity extends AppCompatActivity implements SmartLoginCallbacks,
         LoginContracts.View {
-
     @BindView(R.id.button_login_facebook)
     Button mFacebookLoginButton;
 
@@ -181,21 +180,24 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
                             mTIL_password_confirm.getEditText().getText().toString());
             switch (result) {
                 case EMAIL_NULL:
-                    mTIL_email_register.setError(ErrorCode.EMAIL_NULL.getString());
+                    mTIL_email_register.setError(ErrorCode.EMAIL_NULL.getLabel(getBaseContext()));
                     break;
                 case EMAIL_NOT_CORRECT:
-                    mTIL_email_register.setError(ErrorCode.EMAIL_NOT_CORRECT.getString());
+                    mTIL_email_register.setError(ErrorCode.EMAIL_NOT_CORRECT.getLabel(getBaseContext()));
                     break;
                 case PASSWORD_NULL:
                     mTIL_email_register.setError(null);
-                    mTIL_password_register.setError(ErrorCode.PASSWORD_NULL.getString());
+                    mTIL_password_register.setError(null);
+                    mTIL_password_register.setError(ErrorCode.PASSWORD_NULL.getLabel(getBaseContext()));
                     break;
                 case PASSWORD_TOO_SIMPLE:
-                    mTIL_password_register.setError(ErrorCode.PASSWORD_TOO_SIMPLE.getString());
+                    mTIL_password_register.setError(null);
+                    mTIL_password_register.setError(ErrorCode.PASSWORD_TOO_SIMPLE.getLabel(getBaseContext()));
                     break;
                 case PASSWORDS_DONT_MATCH:
-                    mTIL_email_register.setError(null);
-                    mTIL_password_confirm.setError(ErrorCode.PASSWORDS_DONT_MATCH.getString());
+                    mTIL_password_register.setError(null);
+                    mTIL_password_confirm.setError(null);
+                    mTIL_password_confirm.setError(ErrorCode.PASSWORDS_DONT_MATCH.getLabel(getBaseContext()));
                     break;
                 case EVERYTHING_OK:
                     mTIL_password_confirm.setError(null);
@@ -203,6 +205,7 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
                     User user = new User(mEmailEditText.getText().toString(),
                             BCrypt.hashpw(mPasswordEditText.getText().toString(), BCrypt.gensalt()));
                     mPresenter.register(user);
+
                     break;
             }
         });

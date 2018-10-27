@@ -94,7 +94,7 @@ public class ReplaceFragment extends Fragment {
     }
 
     private boolean isLostOrStolen(String reasonName) {
-        return reasonName.contains("lost") || reasonName.contains("stolen");
+        return reasonName.contains("lost") || reasonName.contains("stolen") || reasonName.contains("открадната") || reasonName.contains("Загубих");
     }
 
     private void displayForms(String reasonName) {

@@ -15,11 +15,11 @@
     <string name="request_id">Request ID:</string>
     <string name="request_type">Type:</string>
     <string name="request_status">Status:</string>
-
+    <string name="fab_renew">RENEWAL</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
-    <string name="personal_number">Personal Number</string>
+    <string name="personal_number">Personal Identification Number</string>
     <string name="full_address">Full Address</string>
     <string name="phone_number">Phone Number</string>
     <string name="date_of_birth">Date of Birth - DD.MM.YYYY</string>
@@ -43,4 +43,26 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="register_button">Register</string>
     <string name="email_address">Email address</string>
+    <string name="EMAIL_NULL">Email can\'t be empty.</string>
+    <string name="EMAIL_NOT_CORRECT">Email is not valid.</string>
+    <string name="PASSWORD_NULL">Password can\'t be empty.</string>
+    <string name="PASSWORD_TOO_SIMPE">Password is too simple.</string>
+    <string name="PASSWORDS_DONT_MATCH">Passwords don\'t match.</string>
+    <string name="REPLACEMENT">REPLACEMENT</string>
+    <string name="EXCHANGE">EXCHANGE</string>
+    <string name="NEW_CARD">NEW CARD</string>
+    <string name="duetoexpire">My card is due to expire</string>
+    <string name="card_is_suspended">My card has been suspended</string>
+    <string name="card_is_withdrawn">My card has been withdrawn</string>
+    <string name="header_message">You don\'t have any requests yet, if you want to create
+        a request - click the button on the bottom right.</string>
+    <string name="card_has_been_stolen">My card has been stolen</string>
+    <string name="lost_my_card">I\'ve lost my card</string>
+    <string name="card_is_malfunctioning">My card is malfunctioning</string>
+    <string name="card_has_been_damaged">My card has been damaged</string>
+    <string name="change_my_address">I want to change my address</string>
+    <string name="change_my_name">I want to change my name</string>
+    <string name="change_my_photo">I want to change my photo</string>
+    <string name="header_msg_replacement">I want a replacement because:</string>
+    <string name="card_has_expired">My card has expired</string>
 </resources>

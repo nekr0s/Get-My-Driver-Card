@@ -13,6 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textSize="24sp"
         android:text="@string/renew_tachograph_card" />
 
     <ListView

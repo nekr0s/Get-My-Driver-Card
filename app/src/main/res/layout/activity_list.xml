@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
@@ -69,7 +69,7 @@
             fab:fab_colorNormal="#c730f1ff"
             fab:fab_colorPressed="#be101cff"
             fab:fab_size="mini"
-            fab:fab_label="RENEW" />
+            fab:fab_label="@string/fab_renew" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/replace"
@@ -79,7 +79,7 @@
             fab:fab_colorNormal="#c730f1ff"
             fab:fab_colorPressed="#be101cff"
             fab:fab_size="mini"
-            fab:fab_label="REPLACE" />
+            fab:fab_label="@string/REPLACEMENT" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/exchange"
@@ -89,7 +89,7 @@
             fab:fab_colorNormal="#c730f1ff"
             fab:fab_colorPressed="#be101cff"
             fab:fab_size="mini"
-            fab:fab_label="EXCHANGE" />
+            fab:fab_label="@string/EXCHANGE" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/new_card"
@@ -99,7 +99,7 @@
             fab:fab_colorPressed="#be101cff"
             android:src="@drawable/ic_newcard"
             fab:fab_size="normal"
-            fab:fab_label="NEW CARD" />
+            fab:fab_label="@string/NEW_CARD" />
 
 
     </com.github.clans.fab.FloatingActionMenu>
@@ -116,7 +116,7 @@
         android:background="@color/black80percent"
         android:padding="16dp"
         android:paddingTop="16dp"
-        android:text="You don't have any requests yet,if you want to create a request click the button on the bottom right"
+        android:text="@string/header_message"
         android:textColor="@color/bluenontransp"
         android:textSize="18sp"
         android:textStyle="bold" />
