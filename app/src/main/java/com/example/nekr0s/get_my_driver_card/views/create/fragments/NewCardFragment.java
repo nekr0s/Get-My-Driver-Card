@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.nekr0s.get_my_driver_card.R;
-import com.example.nekr0s.get_my_driver_card.views.camera.CameraActivity;
+import com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -92,7 +92,10 @@ public class NewCardFragment extends Fragment {
 
     @OnClick(R.id.new_card_next_button)
     void openCameraActivity() {
-        Intent intent = new Intent(getActivity(), CameraActivity.class);
+//        Intent intent = new Intent(getActivity(), CameraActivity.class);
+//        startActivity(intent);
+
+        Intent intent = new Intent(getActivity(), DeclarationActivity.class);
         startActivity(intent);
 
     }
