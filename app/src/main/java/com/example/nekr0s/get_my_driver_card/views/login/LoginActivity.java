@@ -8,6 +8,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,8 +21,7 @@ import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.services.HttpUsersService;
 import com.example.nekr0s.get_my_driver_card.utils.BCrypt;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
-import com.example.nekr0s.get_my_driver_card.validator.UserCreateValidator;
-import com.example.nekr0s.get_my_driver_card.validator.base.CreateValidator;
+import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
 import com.example.nekr0s.get_my_driver_card.views.list.ListActivity;
 
 import org.springframework.http.HttpAuthentication;
@@ -37,6 +37,8 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
+import java.util.Objects;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,8 +76,13 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     SmartUser mCurrentUser;
     SmartLoginConfig mConfig;
     SmartLogin mSmartLogin;
-    private CreateValidator mValidator;
     private LoginContracts.Presenter mPresenter;
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    "(?=.*[a-zA-Z])" +      //any letter
+                    "(?=\\S+$)" +           //no white spaces
+                    ".{4,}" +               //at least 4 characters
+                    "$");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +92,6 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         ButterKnife.bind(this);
 
         mConfig = new SmartLoginConfig(this, this);
-        mValidator = new UserCreateValidator();
         mPresenter = new LoginPresenter(new HttpUsersService(), AsyncSchedulerProvider.getInstance());
         mConfig.setFacebookAppId(getString(R.string.facebook_app_id));
         mConfig.setFacebookPermissions(null);
@@ -189,11 +195,15 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         final AlertDialog dialog = mBuilder.create();
         dialog.show();
         mConfirmButton.setOnClickListener(v -> {
-
+            if (!validateEmail(mTIL_email_register) |
+                    !validatePassword(mTIL_password_register, mTIL_password_confirm) |
+                    !validatePasswordTwo(mTIL_password_confirm, mTIL_password_register)) {
+                return;
+            }
 
             User user = new User(mEmailEditText.getText().toString(),
-                            BCrypt.hashpw(mPasswordEditText.getText().toString(), BCrypt.gensalt()));
-                    mPresenter.register(user);
+                    BCrypt.hashpw(mPasswordEditText.getText().toString(), BCrypt.gensalt()));
+            mPresenter.register(user);
 
 
         });
@@ -228,6 +238,59 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         startActivity(intent);
         finish();
     }
+
+    private boolean validateEmail(TextInputLayout email) {
+        String emailInput = Objects.requireNonNull(email.getEditText()).getText().toString().trim();
+
+        if (emailInput.isEmpty()) {
+            email.setError(ErrorCode.EMAIL_NULL.getLabel(getBaseContext()));
+            return false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
+            email.setError(ErrorCode.EMAIL_NOT_CORRECT.getLabel(getBaseContext()));
+            return false;
+        } else email.setError(null);
+        return true;
+
+    }
+
+    private boolean validatePassword(TextInputLayout password, TextInputLayout passwordtwo) {
+        String passwordInput = Objects.requireNonNull(password.getEditText()).getText().toString().trim();
+        String passwordInputtwo = Objects.requireNonNull(passwordtwo.getEditText()).getText().toString().trim();
+
+        if (passwordInput.isEmpty()) {
+            password.setError(ErrorCode.PASSWORD_NULL.getLabel(getBaseContext()));
+            return false;
+        } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
+            password.setError(ErrorCode.PASSWORD_TOO_SIMPLE.getLabel(getBaseContext()));
+            return false;
+        } else if (!passwordInput.equals(passwordInputtwo)) {
+            password.setError(ErrorCode.PASSWORDS_DONT_MATCH.getLabel(getBaseContext()));
+            passwordtwo.setError(ErrorCode.PASSWORDS_DONT_MATCH.getLabel(getBaseContext()));
+            return false;
+        } else password.setError(null);
+        passwordtwo.setError(null);
+        return true;
+    }
+
+    private boolean validatePasswordTwo(TextInputLayout passwordtwo, TextInputLayout password) {
+        String passwordInput = Objects.requireNonNull(passwordtwo.getEditText()).getText().toString().trim();
+        String passwordInputTwo = Objects.requireNonNull(password.getEditText()).getText().toString().trim();
+
+        if (passwordInput.isEmpty()) {
+            passwordtwo.setError(ErrorCode.PASSWORD_NULL.getLabel(getBaseContext()));
+            return false;
+        } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
+            passwordtwo.setError(ErrorCode.PASSWORD_TOO_SIMPLE.getLabel(getBaseContext()));
+            return false;
+        } else if (!passwordInput.equals(passwordInputTwo)) {
+            passwordtwo.setError(ErrorCode.PASSWORDS_DONT_MATCH.getLabel(getBaseContext()));
+            password.setError(ErrorCode.PASSWORDS_DONT_MATCH.getLabel(getBaseContext()));
+            return false;
+        } else passwordtwo.setError(null);
+        passwordtwo.setError(null);
+        return true;
+    }
+
 
     // Private class
     private class FetchSecuredResourceTask extends AsyncTask<Void, Void, User> {
@@ -273,6 +336,7 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
 
         }
 
+
         @Override
         protected void onPostExecute(User user) {
             if (user == null) {
@@ -284,4 +348,5 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
             }
         }
     }
+
 }
