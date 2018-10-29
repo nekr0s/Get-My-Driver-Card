@@ -4,23 +4,46 @@ import android.content.Context;
 import android.content.res.Resources;
 
 public enum ErrorCode {
-    EMAIL_NULL("Email can't be empty"),
-    EMAIL_NOT_CORRECT("Email is not valid"),
-    PASSWORD_NULL("Password can't be empty"),
-    PASSWORD_TOO_SIMPLE("Password is too simple"),
-    PASSWORDS_DONT_MATCH("Passwords dont' match"),
-    EVERYTHING_OK("OK");
+    //Registration Validation
+    EMAIL_NULL,
+    EMAIL_NOT_CORRECT,
+    PASSWORD_NULL,
+    PASSWORD_TOO_SIMPLE,
+    PASSWORDS_DONT_MATCH,
+    EVERYTHING_OK,
 
-    private String string;
+    //New Card Info Validation
+    NAME_NULL,
+    NAME_NOT_VALID,
+    CYR_NAME_NULL,
+    CYR_NAME_NOT_VALID,
+    NAME_NOT_IN_CYRILLIC,
+    LAST_NAME_NULL,
+    LAST_NAME_NOT_VALID,
+    CYR_LAST_NAME_NULL,
+    CYR_LAST_NAME_NOT_VALID,
+    LAST_NAME_NOT_IN_CYRILLIC,
+    NOT_DIGIT,
+    ID_INVALID,
+    ADDRESS_TOO_LONG,
+    ADDRESS_NULL,
+    PHONE_NULL,
+    PHONE_INVALID,
 
-    ErrorCode(String string) {
-        this.string = string;
-    }
+    DATE_NULL,
+    DATE_INVALID,
+    EMAIL_CARD_NULL,
+    EMAIL_INVALID,
 
-
-    public String getString() {
-        return string;
-    }
+    // Previous Card Info Validation
+    COUNTRY_NULL,
+    COUNTRY_INVALID,
+    ISSUING_AUTHORITY_NULL,
+    ISSUING_AUTHORITY_INVALID,
+    TACH_NULL,
+    TACH_NOT_VALID,
+    DATE_OF_EXPIRY_NULL,
+    DATE_NOT_VALID;
 
     public String getLabel(Context context) {
         Resources res = context.getResources();

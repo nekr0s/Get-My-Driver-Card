@@ -29,7 +29,7 @@
     <string name="country_of_issuing">Държава издател</string>
     <string name="tachograph_card_issuing_authority">Издаващ орган на тажографската карта</string>
     <string name="tachograph_card_number_previous">Номер на тахографска карта</string>
-    <string name="date_of_expiry">Дата на валидност</string>
+    <string name="date_of_expiry">Дата на валидност ДД.ММ.ГГГГ</string>
     <string name="checkbox">Кутията</string>
     <string name="state_date_when_that_happened">Напишете кога - ДД.ММ.ГГГГ</string>
     <string name="state_the_place_where_that_happened">Напишете мястото където се случи</string>
@@ -44,7 +44,7 @@
     <string name="EMAIL_NULL">Имейла не може да бъде празен.</string>
     <string name="EMAIL_NOT_CORRECT">Имейла не е валиден.</string>
     <string name="PASSWORD_NULL">Паролата не може да бъде празна.</string>
-    <string name="PASSWORD_TOO_SIMPE">Паролата е прекалено слаба.</string>
+    <string name="PASSWORD_TOO_SIMPLE">Паролата е прекалено слаба.</string>
     <string name="PASSWORDS_DONT_MATCH">Паролите не съвпадат.</string>
     <string name="REPLACEMENT">ЗАМЯНА НА КАРТА</string>
     <string name="EXCHANGE">РАЗМЯНА НА КАРТА</string>
@@ -65,5 +65,33 @@
     <string name="previous_card_info_header_msg">Моля попълнете информацията от предишната ви карта:</string>
     <string name="first_name_cyrillic">Име (Кирилица)</string>
     <string name="last_name_cyrillic">Фамилно име (Кирилица)</string>
+    <string name="NAME_NULL">Полето не може да бъде празно</string>
+    <string name="NAME_NOT_VALID">Name must contain only letters and symbols</string>
+    <string name="CYR_NAME_NULL">Name can\'t be empty</string>
+    <string name="CYR_NAME_NOT_VALID">Name must contain only letters and symbols</string>
+    <string name="NAME_NOT_IN_CYRILLIC">Please enter your name in cyrillic</string>
+    <string name="LAST_NAME_NULL">Last name can\'t be empty</string>
+    <string name="LAST_NAME_NOT_VALID">Field must contain only letters and symbols</string>
+    <string name="CYR_LAST_NAME_NULL">Last name can\'t be empty</string>
+    <string name="CYR_LAST_NAME_NOT_VALID">Field must contain only letters and symbols</string>
+    <string name="LAST_NAME_NOT_IN_CYRILLIC">Please enter your last name in cyrillic</string>
+    <string name="NOT_DIGIT">Please enter only digits</string>
+    <string name="ID_INVALID">ID number is too long</string>
+    <string name="ADDRESS_TOO_LONG">Address is too long</string>
+    <string name="COUNTRY_NULL">Field can\'t be empty</string>
+    <string name="COUNTRY_INVALID">Country name is too long</string>
+    <string name="ISSUING_AUTHORITY_NULL">Field can\'t be empty</string>
+    <string name="ISSUING_AUTHORITY_INVALID">Field is too long</string>
+    <string name="TACH_NULL">Field can\'t be empty</string>
+    <string name="TACH_NOT_VALID">Tachograph card number is not valid</string>
+    <string name="DATE_OF_EXPIRY_NULL">Field can\'t be empty</string>
+    <string name="DATE_NOT_VALID">Date must be in format dd/MM/yyy</string>
+    <string name="ADDRESS_NULL">Address can\'t be empty</string>
+    <string name="PHONE_NULL">Field can\'t be empty</string>
+    <string name="PHONE_INVALID">Please enter a valid phone number</string>
+    <string name="DATE_NULL">Field can\'t be empty</string>
+    <string name="DATE_INVALID">Date input format is invalid</string>
+    <string name="EMAIL_CARD_NULL">Please enter your email</string>
+    <string name="EMAIL_INVALID">Email input is invalid</string>
 
 </resources>

@@ -12,6 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.nekr0s.get_my_driver_card.R;
+import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
+import com.example.nekr0s.get_my_driver_card.validator.UserCreateValidator;
+import com.example.nekr0s.get_my_driver_card.validator.base.CreateValidator;
 import com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity;
 
 import butterknife.BindView;
@@ -56,10 +59,13 @@ public class NewCardFragment extends Fragment {
     @BindView(R.id.new_card_next_button)
     MaterialButton mNextButton;
 
+    public CreateValidator mValidator;
+
 
     public static NewCardFragment newInstance() {
         return new NewCardFragment();
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +79,7 @@ public class NewCardFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_card_info, container, false);
         ButterKnife.bind(this, view);
+        mValidator = new UserCreateValidator();
 
         return view;
     }
@@ -92,12 +99,78 @@ public class NewCardFragment extends Fragment {
 
     @OnClick(R.id.new_card_next_button)
     void openCameraActivity() {
+
+        ErrorCode result;
+        result = mValidator
+                .validateNcFragment(mTIL_firstName.getEditText().getText().toString(),
+                        mTIL_firstName_cyrillic.getEditText().getText().toString()
+                        , mTIL_lastName.getEditText().getText().toString(), mTIL_lastName_cyrillic.
+                                getEditText().getText().toString()
+                        , mTIL_personalNumber.getEditText().getText().toString(), mTIL_dateOfBirth.
+                                getEditText().getText().toString(),
+                        mTIL_address.getEditText().getText().toString(), mTIL_phoneNumber.getEditText()
+                                .getText().toString(),
+                        mTIL_email_address.getEditText().getText().toString());
+        switch (result) {
+            case NAME_NULL:
+                mTIL_firstName.setError(ErrorCode.NAME_NULL.getLabel(getContext()));
+                break;
+            case NAME_NOT_VALID:
+                mTIL_firstName.setError(ErrorCode.NAME_NOT_VALID.getLabel(getContext()));
+                break;
+            case CYR_NAME_NULL:
+                mTIL_firstName.setError(null);
+                mTIL_firstName_cyrillic.setError(ErrorCode.CYR_NAME_NULL.getLabel(getContext()));
+                break;
+            case CYR_NAME_NOT_VALID:
+                mTIL_firstName.setError(null);
+                mTIL_firstName_cyrillic.setError(ErrorCode.CYR_LAST_NAME_NOT_VALID.getLabel(getContext()));
+                break;
+            case NAME_NOT_IN_CYRILLIC:
+                mTIL_firstName.setError(null);
+                mTIL_firstName_cyrillic.setError(ErrorCode.NAME_NOT_IN_CYRILLIC.getLabel(getContext()));
+                break;
+            case LAST_NAME_NULL:
+                mTIL_firstName_cyrillic.setError(null);
+                mTIL_lastName.setError(ErrorCode.LAST_NAME_NULL.getLabel(getContext()));
+                break;
+            case LAST_NAME_NOT_VALID:
+                mTIL_firstName_cyrillic.setError(null);
+                mTIL_lastName.setError(ErrorCode.LAST_NAME_NOT_VALID.getLabel(getContext()));
+                break;
+            case CYR_LAST_NAME_NULL:
+                mTIL_lastName.setError(null);
+                mTIL_lastName_cyrillic.setError(ErrorCode.CYR_LAST_NAME_NULL.getLabel(getContext()));
+                break;
+            case CYR_LAST_NAME_NOT_VALID:
+                mTIL_lastName.setError(null);
+                mTIL_lastName_cyrillic.setError(ErrorCode.LAST_NAME_NOT_VALID.getLabel(getContext()));
+                break;
+            case LAST_NAME_NOT_IN_CYRILLIC:
+                mTIL_lastName.setError(null);
+                mTIL_lastName_cyrillic.setError(ErrorCode.LAST_NAME_NOT_IN_CYRILLIC.getLabel(getContext()));
+                break;
+            case NOT_DIGIT:
+                mTIL_lastName_cyrillic.setError(null);
+                mTIL_personalNumber.setError(ErrorCode.NOT_DIGIT.getLabel(getContext()));
+                break;
+            case ID_INVALID:
+                mTIL_lastName_cyrillic.setError(null);
+                mTIL_personalNumber.setError(ErrorCode.ID_INVALID.getLabel(getContext()));
+                break;
+
+            case EVERYTHING_OK:
+                Intent intent = new Intent(getActivity(), DeclarationActivity.class);
+                startActivity(intent);
+
+
+        }
+    }
+
 //        Intent intent = new Intent(getActivity(), CameraActivity.class);
 //        startActivity(intent);
 
-        Intent intent = new Intent(getActivity(), DeclarationActivity.class);
-        startActivity(intent);
-
-    }
 
 }
+
+

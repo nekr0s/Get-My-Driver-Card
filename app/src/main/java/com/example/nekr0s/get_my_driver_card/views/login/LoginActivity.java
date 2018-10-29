@@ -191,6 +191,7 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
                     mTIL_password_register.setError(ErrorCode.PASSWORD_NULL.getLabel(getBaseContext()));
                     break;
                 case PASSWORD_TOO_SIMPLE:
+                    mTIL_email_register.setError(null);
                     mTIL_password_register.setError(null);
                     mTIL_password_register.setError(ErrorCode.PASSWORD_TOO_SIMPLE.getLabel(getBaseContext()));
                     break;

@@ -4,23 +4,30 @@ import com.example.nekr0s.get_my_driver_card.utils.translator.Translator;
 
 public class UserInfo {
     private int userInfoId;
-    private String personalNumber;
     private String firstName;
-    private String lastName;
     private String firstNameCyrillic;
+    private String lastName;
     private String lastNameCyrillic;
+    private String personalNumber;
     private String dateOfBirth;
     private String address;
     private String phoneNumber;
+    private String email;
 
-    public UserInfo(String personalNumber, String firstName, String lastName, String address,
-                    String phoneNumber, int userInfoId) {
-        this.userInfoId = userInfoId;
+    public UserInfo(String firstName, String firstNameCyrillic, String lastName, String lastNameCyrillic,
+                    String personalNumber, String dateOfBirth, String address,
+                    String phoneNumber, String email) {
+
         this.firstName = firstName;
+        this.firstNameCyrillic = firstNameCyrillic;
         this.lastName = lastName;
+        this.lastNameCyrillic = lastNameCyrillic;
+        this.personalNumber = personalNumber;
+        this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.personalNumber = personalNumber;
+        this.email = email;
+
     }
 
     public String getFirstName() {
@@ -95,5 +102,13 @@ public class UserInfo {
 
     public void setUserInfoId(int userInfoId) {
         this.userInfoId = userInfoId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
