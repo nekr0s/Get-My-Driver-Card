@@ -157,6 +157,7 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     void facebookLoginClicked() {
         mSmartLogin = SmartLoginFactory.build(LoginType.Facebook);
         mSmartLogin.login(mConfig);
+
     }
 
     @OnClick(R.id.button_login_google)
@@ -169,18 +170,14 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     void customLoginClicked() {
         mSmartLogin = SmartLoginFactory.build(LoginType.CustomLogin);
         mSmartLogin.login(mConfig);
+        navToHome(mCurrentUser);
+
+
     }
 
     @OnClick(R.id.text_no_account)
     void customCreateAccountClicked() {
-//        mSmartLogin = SmartLoginFactory.build(LoginType.CustomSignup);
-//        mSmartLogin.signup(mConfig);
 
-//        if (!mValidator.isValid(user)) {
-//            Toast.makeText(this, "Invalid form.", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//        mSmartLogin.login(mConfig);
         final AlertDialog.Builder mBuilder = new AlertDialog.Builder(LoginActivity.this);
         View mView = getLayoutInflater().inflate(R.layout.layout_dialog, null);
 
@@ -203,6 +200,7 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
             User user = new User(mEmailEditText.getText().toString(),
                     BCrypt.hashpw(mPasswordEditText.getText().toString(), BCrypt.gensalt()));
             mPresenter.register(user);
+            navToHome(mCurrentUser);
         });
     }
 

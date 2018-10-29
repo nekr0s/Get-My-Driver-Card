@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import com.example.nekr0s.get_my_driver_card.R;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -53,78 +55,7 @@ public class ExchangeFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-//
-//        mTIL_eu_country_of_issuing.getEditText().addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                changeButtonState(s);
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
-//
-//        mTIL_tachograph_card_number.getEditText().addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                changeButtonState(s);
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
-//
-//        mTIL_driver_licence_country.getEditText().addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                changeButtonState(s);
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
-//
-//        mTIL_driving_licence_number.getEditText().addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                changeButtonState(s);
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
+
 
 
         return view;
@@ -133,45 +64,14 @@ public class ExchangeFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        getActivity().finish();
+        Objects.requireNonNull(getActivity()).finish();
     }
 
-//    private void changeButtonState(CharSequence s) {
-//        if (!s.toString().trim().isEmpty()) {
-//            mNextButton.setEnabled(true);
-//
-//        } else {
-//            mNextButton.setEnabled(false);
-//        }
-//    }
-//    private TextWatcher fieldTextWatcher = new TextWatcher() {
-//        @Override
-//        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//
-//        }
-//
-//        @Override
-//        public void onTextChanged(CharSequence s, int start, int before, int count) {
-//            String euInput = mTIL_eu_country_of_issuing.getEditText().toString().trim();
-//            String tachNumberInput = mTIL_tachograph_card_number.getEditText().toString().trim();
-//            String dlIssuerInput = mTIL_driver_licence_country.getEditText().toString().trim();
-//            String dlNumberInput = mTIL_driving_licence_number.getEditText().toString().trim();
-//
-//                mNextButton.setEnabled(!euInput.isEmpty() && !tachNumberInput.isEmpty() &&
-//                        !dlIssuerInput.isEmpty() && !dlNumberInput.isEmpty());
-//
-//        }
-//
-//        @Override
-//        public void afterTextChanged(Editable s) {
-//
-//        }
-//    };
-@OnClick(R.id.exchange_next_button)
+
+    @OnClick(R.id.exchange_next_button)
 void openNextFragment() {
     NewCardFragment nextFrag = new NewCardFragment();
-    getActivity().getSupportFragmentManager().beginTransaction()
+        Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
             .replace(R.id.fragment_container, nextFrag, "newCardFragment")
             .addToBackStack(null)
             .commit();
