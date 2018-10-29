@@ -1,11 +1,13 @@
 package com.example.nekr0s.get_my_driver_card.views.login;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +24,20 @@ import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
 import com.example.nekr0s.get_my_driver_card.validator.UserCreateValidator;
 import com.example.nekr0s.get_my_driver_card.validator.base.CreateValidator;
 import com.example.nekr0s.get_my_driver_card.views.list.ListActivity;
+
+import org.springframework.http.HttpAuthentication;
+import org.springframework.http.HttpBasicAuthentication;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -102,7 +118,6 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     @Override
     public void onLoginSuccess(SmartUser user) {
         Toast.makeText(this, user.toString(), Toast.LENGTH_SHORT).show();
-        navToHome(user);
     }
 
     @Override
@@ -112,6 +127,7 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
 
     @Override
     public SmartUser doCustomLogin() {
+        new FetchSecuredResourceTask().execute();
         SmartUser user = new SmartUser();
         user.setEmail(mEmailEditText.getText().toString());
         return user;
@@ -127,7 +143,7 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
 
     private void navToHome(SmartUser user) {
         Toast.makeText(this, "Navigating to Home", Toast.LENGTH_SHORT).show();
-        User customUser = new User(user.getEmail(), mPasswordEditText.getText().toString());
+        User customUser = new User(user.getEmail(), "");
         Intent intent = new Intent(this, ListActivity.class);
         intent.putExtra(Constants.USER_OBJ_EXTRA, customUser);
         startActivity(intent);
@@ -235,5 +251,61 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         intent.putExtra(Constants.USER_OBJ_EXTRA, user);
         startActivity(intent);
         finish();
+    }
+
+    // Private class
+    private class FetchSecuredResourceTask extends AsyncTask<Void, Void, User> {
+
+        private String email;
+        private String password;
+
+        @Override
+        protected void onPreExecute() {
+            showLoading();
+            this.email = mEmailEditText.getText().toString();
+            this.password = mPasswordEditText.getText().toString();
+        }
+
+        @Override
+        protected User doInBackground(Void... voids) {
+            final String url = Constants.BASE_SERVER_URL + "/users/me";
+
+            // Populate
+            HttpAuthentication authHeader = new HttpBasicAuthentication(email, password);
+            HttpHeaders requestHeaders = new HttpHeaders();
+            requestHeaders.setAuthorization(authHeader);
+            requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+
+            // Create rest template
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+            try {
+                // Make the network request
+                Log.d("Trying network REQ", url);
+                ResponseEntity<User> responseEntity = restTemplate
+                        .exchange(url, HttpMethod.GET, new HttpEntity<>(requestHeaders),
+                                User.class);
+                return responseEntity.getBody();
+            } catch (HttpClientErrorException e) {
+                Log.e("First catch", e.getLocalizedMessage(), e);
+                return null;
+            } catch (ResourceAccessException e) {
+                Log.e("QWERTY", e.getLocalizedMessage());
+                return null;
+            }
+
+        }
+
+        @Override
+        protected void onPostExecute(User user) {
+            if (user == null) {
+                Log.d("FAILFAILFAIL", "NOTGOOD");
+                Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_LONG).show();
+            } else {
+                Log.d("ALLCOOL", "ALLLLGOOOOD");
+                Toast.makeText(LoginActivity.this, "All Cool " + user.getEmail(), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

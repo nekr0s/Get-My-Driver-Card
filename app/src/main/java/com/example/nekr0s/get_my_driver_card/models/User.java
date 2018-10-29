@@ -1,12 +1,24 @@
 package com.example.nekr0s.get_my_driver_card.models;
 
-import java.io.Serializable;
+import android.support.annotation.NonNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.io.Serializable;
+import java.util.Set;
+
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements Serializable {
     private int id;
     private String email;
     private String password;
     private UserInfo userInfo;
+    private Set<Role> roles;
+
+    public User() {
+        // keep empty pls
+    }
 
     public User(String email, String password) {
         this.email = email;
@@ -43,5 +55,19 @@ public class User implements Serializable {
 
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return email;
     }
 }
