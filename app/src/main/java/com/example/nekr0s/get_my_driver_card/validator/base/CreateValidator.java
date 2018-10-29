@@ -8,8 +8,5 @@ public interface CreateValidator {
     ErrorCode validatePreviousCardfragment(String countryIssuer, String issuingAuthority,
                                            String tCardNumber, String dateOfExpiry);
 
-    ErrorCode validateNcFragment(String firstName, String firstNameCyr, String lastName,
-                                 String lastNameCyr, String personalNum, String dateOfBirth,
-                                 String address, String phoneNumber, String email);
 
 }

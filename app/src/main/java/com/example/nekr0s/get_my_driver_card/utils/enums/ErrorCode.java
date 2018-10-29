@@ -23,6 +23,7 @@ public enum ErrorCode {
     CYR_LAST_NAME_NULL,
     CYR_LAST_NAME_NOT_VALID,
     LAST_NAME_NOT_IN_CYRILLIC,
+    ID_NULL,
     NOT_DIGIT,
     ID_INVALID,
     ADDRESS_TOO_LONG,
@@ -44,6 +45,7 @@ public enum ErrorCode {
     TACH_NOT_VALID,
     DATE_OF_EXPIRY_NULL,
     DATE_NOT_VALID;
+
 
     public String getLabel(Context context) {
         Resources res = context.getResources();

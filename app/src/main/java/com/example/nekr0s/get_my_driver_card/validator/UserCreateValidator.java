@@ -46,68 +46,6 @@ public class UserCreateValidator implements CreateValidator {
         return ErrorCode.EVERYTHING_OK;
     }
 
-    @Override
-    public ErrorCode validateNcFragment(String firstName, String firstNameCyr, String lastName,
-                                        String lastNameCyr, String personalNum, String dateOfBirth,
-                                        String address, String phoneNumber, String email) {
-        //First Name Validation
-        if (firstName.isEmpty()) {
-            return ErrorCode.NAME_NULL;
-        } else if (!firstName.matches(regexNames)) {
-            return ErrorCode.NAME_NOT_VALID;
-
-            //First Name Cyrillic Validation
-        } else if (firstNameCyr.isEmpty()) {
-            return ErrorCode.CYR_NAME_NULL;
-        } else if (firstNameCyr.length() > 256) {
-            return ErrorCode.CYR_NAME_NOT_VALID;
-        } else if (!CYRILLIC_PATTERN.matcher(firstNameCyr).matches()) {
-            return ErrorCode.NAME_NOT_IN_CYRILLIC;
-
-            // Last Name Validation
-        } else if (lastName.isEmpty()) {
-            return ErrorCode.LAST_NAME_NULL;
-        } else if (!lastName.matches(regexNames)) {
-            return ErrorCode.LAST_NAME_NOT_VALID;
-
-
-            // Last Name Cyrillic Validation
-        } else if (lastNameCyr.isEmpty()) {
-            return ErrorCode.CYR_LAST_NAME_NULL;
-        } else if (lastNameCyr.length() > 256) {
-            return ErrorCode.CYR_LAST_NAME_NOT_VALID;
-        } else if (!CYRILLIC_PATTERN.matcher(lastNameCyr).matches()) {
-            return ErrorCode.LAST_NAME_NOT_IN_CYRILLIC;
-
-
-            //Personal ID Number Validation
-        } else if (!(personalNum).matches(regexNumbersOnly)) {
-            return ErrorCode.NOT_DIGIT;
-        } else if ((personalNum).length() > 10) {
-            return ErrorCode.ID_INVALID;
-        }
-
-        // Address Validation
-        else if (address.length() > 100) {
-            return ErrorCode.ADDRESS_TOO_LONG;
-        } else if (address.isEmpty())
-            return ErrorCode.ADDRESS_NULL;
-
-            //Phone Validation
-        else if (phoneNumber.isEmpty())
-            return ErrorCode.PHONE_NULL;
-        else if (!Patterns.PHONE.matcher(phoneNumber).matches())
-            return ErrorCode.PHONE_INVALID;
-
-            //Date of birth Validation
-        else if (dateOfBirth.isEmpty())
-            return ErrorCode.DATE_NULL;
-        else if (dateOfBirth.matches(regexDate)) {
-            return ErrorCode.DATE_INVALID;
-        }
-
-        return ErrorCode.EVERYTHING_OK;
-    }
 
 
     @Override
