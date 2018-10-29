@@ -1,6 +1,7 @@
 package com.example.nekr0s.get_my_driver_card.views.create.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.button.MaterialButton;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,9 +55,10 @@ public class RenewFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         final ReasonsAdapter adapter = new ReasonsAdapter(getActivity(), Arrays.asList(
-                new Reason(false, "My card is due to expire."),
-                new Reason(false, "My card is suspended."),
-                new Reason(false, "I want to withdraw my card.")
+                new Reason(false, getString(R.string.duetoexpire)),
+                new Reason(false, getString(R.string.card_has_expired)),
+                new Reason(false, getString(R.string.card_is_suspended)),
+                new Reason(false, getString(R.string.card_is_withdrawn))
         ));
         mRenewCheckboxList.setAdapter(adapter);
 
@@ -100,5 +103,11 @@ public class RenewFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         getActivity().finish();
+    }
+
+    @OnClick(R.id.renew_next_button)
+    void openNextActivity() {
+        Intent intent = new Intent(getActivity(), PreviousCardInfoActivity.class);
+        startActivity(intent);
     }
 }

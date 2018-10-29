@@ -4,4 +4,9 @@ import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
 
 public interface CreateValidator {
     ErrorCode validate(String email, String password, String password2);
+
+    ErrorCode validatePreviousCardfragment(String countryIssuer, String issuingAuthority,
+                                           String tCardNumber, String dateOfExpiry);
+
+
 }

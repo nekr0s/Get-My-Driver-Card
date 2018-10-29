@@ -8,7 +8,8 @@
         android:id="@+id/tv_reason_name"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_vertical" />
+        android:gravity="center_vertical"
+        android:textSize="20sp" />
 
     <ImageView
         android:id="@+id/iv_check_box"

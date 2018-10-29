@@ -4,20 +4,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/layout_bg"
+    android:layout_height="match_parent"
     android:focusableInTouchMode="true"
+    android:background="@color/white"
     android:orientation="vertical"
     android:layout_gravity="center"
     tools:context=".views.create.CardCreateActivity">
 
+
+    <FrameLayout
+        android:id="@+id/fragment_containertwo"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
     <TextView
         android:id="@+id/exchange_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="16dp"
-        android:text="Please fill the information of your previous card:"
+        android:text="@string/previous_card_info_header_msg"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -37,7 +42,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/country_of_issuing"
             android:inputType="text"
-            android:paddingBottom="17dp" />
+            android:paddingBottom="18dp" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -47,7 +52,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         app:counterEnabled="true"
-        app:counterMaxLength="20"
+        app:counterMaxLength="50"
         app:errorEnabled="true">
 
         <android.support.design.widget.TextInputEditText
@@ -90,9 +95,23 @@
             android:layout_height="wrap_content"
             android:hint="@string/date_of_expiry"
             android:inputType="number"
-            android:paddingBottom="19dp" />
+            android:paddingBottom="20dp" />
 
     </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.button.MaterialButton
+        android:id="@+id/previous_card_next_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="25dp"
+        android:enabled="true"
+        android:paddingStart="15dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="10dp"
+        android:text="@string/next"
+        android:textSize="17sp" />
 
 
 </LinearLayout>

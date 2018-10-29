@@ -100,7 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginEnd="25dp"
-        android:enabled="false"
+        android:enabled="true"
         android:paddingStart="15dp"
         android:paddingTop="10dp"
         android:paddingEnd="15dp"

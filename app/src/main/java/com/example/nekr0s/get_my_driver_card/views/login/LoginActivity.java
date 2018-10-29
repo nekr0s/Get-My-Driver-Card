@@ -20,7 +20,6 @@ import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.services.HttpUsersService;
 import com.example.nekr0s.get_my_driver_card.utils.BCrypt;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
-import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
 import com.example.nekr0s.get_my_driver_card.validator.UserCreateValidator;
 import com.example.nekr0s.get_my_driver_card.validator.base.CreateValidator;
 import com.example.nekr0s.get_my_driver_card.views.list.ListActivity;
@@ -53,7 +52,6 @@ import studios.codelight.smartloginlibrary.util.SmartLoginException;
 
 public class LoginActivity extends AppCompatActivity implements SmartLoginCallbacks,
         LoginContracts.View {
-
     @BindView(R.id.button_login_facebook)
     Button mFacebookLoginButton;
 
@@ -191,38 +189,16 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         final AlertDialog dialog = mBuilder.create();
         dialog.show();
         mConfirmButton.setOnClickListener(v -> {
-            ErrorCode result = mValidator
-                    .validate(mTIL_email_register.getEditText().getText().toString(),
-                            mTIL_password_register.getEditText().getText().toString(),
-                            mTIL_password_confirm.getEditText().getText().toString());
-            switch (result) {
-                case EMAIL_NULL:
-                    mTIL_email_register.setError(ErrorCode.EMAIL_NULL.getString());
-                    break;
-                case EMAIL_NOT_CORRECT:
-                    mTIL_email_register.setError(ErrorCode.EMAIL_NOT_CORRECT.getString());
-                    break;
-                case PASSWORD_NULL:
-                    mTIL_email_register.setError(null);
-                    mTIL_password_register.setError(ErrorCode.PASSWORD_NULL.getString());
-                    break;
-                case PASSWORD_TOO_SIMPLE:
-                    mTIL_password_register.setError(ErrorCode.PASSWORD_TOO_SIMPLE.getString());
-                    break;
-                case PASSWORDS_DONT_MATCH:
-                    mTIL_email_register.setError(null);
-                    mTIL_password_confirm.setError(ErrorCode.PASSWORDS_DONT_MATCH.getString());
-                    break;
-                case EVERYTHING_OK:
-                    mTIL_password_confirm.setError(null);
-                    dialog.dismiss();
-                    User user = new User(mEmailEditText.getText().toString(),
+
+
+            User user = new User(mEmailEditText.getText().toString(),
                             BCrypt.hashpw(mPasswordEditText.getText().toString(), BCrypt.gensalt()));
                     mPresenter.register(user);
-                    break;
-            }
+
+
         });
     }
+
 
     @Override
     public void setPresenter(LoginContracts.Presenter presenter) {

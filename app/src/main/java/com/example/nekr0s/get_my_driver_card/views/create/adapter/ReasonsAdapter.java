@@ -79,13 +79,13 @@ public class ReasonsAdapter extends BaseAdapter {
 
     private void initReasons() {
         reasons = new ArrayList<>(Arrays.asList(
-                new Reason(false, "My card has been stolen"),
-                new Reason(false, "I've lost my card"),
-                new Reason(false, "My card is malfunctioning"),
-                new Reason(false, "My card has been damaged"),
-                new Reason(false, "I want to change my address"),
-                new Reason(false, "I want to change my name"),
-                new Reason(false, "I want to change my photo")));
+                new Reason(false, activity.getString(R.string.card_has_been_stolen)),
+                new Reason(false, activity.getString(R.string.lost_my_card)),
+                new Reason(false, activity.getString(R.string.card_is_malfunctioning)),
+                new Reason(false, activity.getString(R.string.card_has_been_damaged)),
+                new Reason(false, activity.getString(R.string.change_my_address)),
+                new Reason(false, activity.getString(R.string.change_my_name)),
+                new Reason(false, activity.getString(R.string.change_my_photo))));
     }
 
     class ViewHolder {
