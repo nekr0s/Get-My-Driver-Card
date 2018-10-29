@@ -20,8 +20,6 @@ import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.services.HttpUsersService;
 import com.example.nekr0s.get_my_driver_card.utils.BCrypt;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
-import com.example.nekr0s.get_my_driver_card.validator.UserCreateValidator;
-import com.example.nekr0s.get_my_driver_card.validator.base.CreateValidator;
 import com.example.nekr0s.get_my_driver_card.views.list.ListActivity;
 
 import org.springframework.http.HttpAuthentication;
@@ -70,11 +68,9 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     @BindView(R.id.password_edittext)
     EditText mPasswordEditText;
 
-
     SmartUser mCurrentUser;
     SmartLoginConfig mConfig;
     SmartLogin mSmartLogin;
-    private CreateValidator mValidator;
     private LoginContracts.Presenter mPresenter;
 
     @Override
@@ -85,7 +81,6 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         ButterKnife.bind(this);
 
         mConfig = new SmartLoginConfig(this, this);
-        mValidator = new UserCreateValidator();
         mPresenter = new LoginPresenter(new HttpUsersService(), AsyncSchedulerProvider.getInstance());
         mConfig.setFacebookAppId(getString(R.string.facebook_app_id));
         mConfig.setFacebookPermissions(null);
@@ -189,13 +184,9 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         final AlertDialog dialog = mBuilder.create();
         dialog.show();
         mConfirmButton.setOnClickListener(v -> {
-
-
             User user = new User(mEmailEditText.getText().toString(),
-                            BCrypt.hashpw(mPasswordEditText.getText().toString(), BCrypt.gensalt()));
-                    mPresenter.register(user);
-
-
+                    BCrypt.hashpw(mPasswordEditText.getText().toString(), BCrypt.gensalt()));
+            mPresenter.register(user);
         });
     }
 
@@ -279,8 +270,8 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
                 Log.d("FAILFAILFAIL", "NOTGOOD");
                 Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_LONG).show();
             } else {
-                Log.d("ALLCOOL", "ALLLLGOOOOD");
-                Toast.makeText(LoginActivity.this, "All Cool " + user.getEmail(), Toast.LENGTH_SHORT).show();
+                Log.d("ALLGOODMAN", "USERNOTNULL");
+                navigateToHome(user);
             }
         }
     }

@@ -32,6 +32,8 @@ public class ListActivity extends AppCompatActivity {
     @BindView(R.id.new_card)
     FloatingActionButton mFAB_NewCard;
 
+    private User mUser;
+
     //    Translator translator = new Translator();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,8 @@ public class ListActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         // Get intent
-        User user = (User) getIntent().getSerializableExtra(Constants.USER_OBJ_EXTRA);
+        mUser = (User) getIntent().getSerializableExtra(Constants.USER_OBJ_EXTRA);
+        toolbar.setTitle(mUser.getEmail());
 
         // Toolbar
         setSupportActionBar(toolbar);

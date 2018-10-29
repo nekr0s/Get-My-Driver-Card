@@ -2,7 +2,9 @@ package com.example.nekr0s.get_my_driver_card.models;
 
 import com.example.nekr0s.get_my_driver_card.utils.translator.Translator;
 
-public class UserInfo {
+import java.io.Serializable;
+
+public class UserInfo implements Serializable {
     private int userInfoId;
     private String firstName;
     private String firstNameCyrillic;

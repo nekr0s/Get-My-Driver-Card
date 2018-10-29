@@ -1,6 +1,8 @@
 package com.example.nekr0s.get_my_driver_card.models;
 
-public class Role {
+import java.io.Serializable;
+
+public class Role implements Serializable {
     private int roleId;
     private String role;
 
