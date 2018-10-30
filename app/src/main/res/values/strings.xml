@@ -97,5 +97,16 @@
     <string name="EMAIL_CARD_NULL">Please enter your email</string>
     <string name="EMAIL_INVALID">Email input is invalid</string>
     <string name="ID_NULL">Field can\'t be empty</string>
+    <string name="republic_of_bulgaria_ministry_of_transport_earta">REPUBLIC OF BULGARIA MINISTRY OF TRANSPORT EARTA</string>
+    <string name="request_for_issuing_of_a_driver_card">REQUEST for issuing of a driver card</string>
+    <string name="cyrName">Име:</string>
+    <string name="cyrSurname">Фамилия:</string>
+    <string name="name">Name:</string>
+    <string name="surname">Surname:</string>
+    <string name="address_preview">Address:</string>
+    <string name="phone_number_preview">Phone Number:</string>
+    <string name="date_of_birth_preview">Date of birth:</string>
+    <string name="email_preview">Email:</string>
+    <string name="additional_info_preview">Additional info:</string>
 
 </resources>
