@@ -62,7 +62,7 @@ public class NewCardFragment extends Fragment {
     MaterialButton mNextButton;
 
     private String regexNames = "^[a-zA-Z]*$";
-    
+
 
     private static final Pattern CYRILLIC_PATTERN = Pattern.compile("[А-яЁё][-А-яЁё]+");
 
