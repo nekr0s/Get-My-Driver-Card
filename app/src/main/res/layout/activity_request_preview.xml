@@ -21,7 +21,7 @@
             android:layout_marginStart="289dp"
             android:layout_marginTop="18dp"
             android:layout_marginEnd="26dp"
-            app:srcCompat="@drawable/AdministrationIcon" />
+            app:srcCompat="@drawable/administration_icon" />
 
         <ImageView
             android:id="@+id/imageView2"
@@ -31,7 +31,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="26dp"
             android:layout_marginTop="18dp"
-            app:srcCompat="@drawable/MinistryIcon" />
+            app:srcCompat="@drawable/ministry_icon" />
 
         <TextView
             android:id="@+id/textView2"
@@ -69,7 +69,7 @@
             android:layout_alignStart="@+id/imageView2"
             android:layout_alignParentTop="true"
             android:layout_marginTop="129dp"
-            app:srcCompat="@drawable/picImage" />
+            app:srcCompat="@drawable/pic_image" />
 
         <ImageView
             android:id="@+id/imageView5"
@@ -79,7 +79,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="1dp"
             android:layout_marginTop="239dp"
-            app:srcCompat="@drawable/signatureImage" />
+            app:srcCompat="@drawable/signature_image" />
 
         <EditText
             android:id="@+id/editText"
