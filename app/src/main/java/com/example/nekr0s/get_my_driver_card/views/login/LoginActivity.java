@@ -10,6 +10,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.services.HttpUsersService;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
+import com.example.nekr0s.get_my_driver_card.utils.keyboard.KeyboardHider;
 import com.example.nekr0s.get_my_driver_card.views.list.ListActivity;
 
 import java.util.Objects;
@@ -56,10 +58,14 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     @BindView(R.id.password_edittext)
     EditText mPasswordEditText;
 
+    @BindView(R.id.progress_bar_loading)
+    ProgressBar mProgressBar;
+
     SmartUser mCurrentUser;
     SmartLoginConfig mConfig;
     SmartLogin mSmartLogin;
     private LoginContracts.Presenter mPresenter;
+    private AlertDialog mAlertDialog;
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
                     "(?=.*[a-zA-Z])" +      //any letter
@@ -145,38 +151,31 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     void customLoginClicked() {
         mSmartLogin = SmartLoginFactory.build(LoginType.CustomLogin);
         mSmartLogin.login(mConfig);
-        navToHome(mCurrentUser);
-
-
     }
 
     @OnClick(R.id.text_no_account)
     void customCreateAccountClicked() {
-
         final AlertDialog.Builder mBuilder = new AlertDialog.Builder(LoginActivity.this);
-        View mView = getLayoutInflater().inflate(R.layout.layout_dialog, null);
+        View view = getLayoutInflater().inflate(R.layout.layout_dialog, null);
 
+        final TextInputLayout tilEmailRegister = view.findViewById(R.id.text_input_email_register);
+        final TextInputLayout tilPasswordRegister = view.findViewById(R.id.text_input_password_one);
+        final TextInputLayout tilPasswordConfirm = view.findViewById(R.id.text_input_password_two);
 
-        final TextInputLayout mTIL_email_register = mView.findViewById(R.id.text_input_email_register);
-        final TextInputLayout mTIL_password_register = mView.findViewById(R.id.text_input_password_one);
-        final TextInputLayout mTIL_password_confirm = mView.findViewById(R.id.text_input_password_two);
-
-        Button mConfirmButton = mView.findViewById(R.id.register_confirm_button);
-        mBuilder.setView(mView);
-        final AlertDialog dialog = mBuilder.create();
-        dialog.show();
+        Button mConfirmButton = view.findViewById(R.id.register_confirm_button);
+        mBuilder.setView(view);
+        mAlertDialog = mBuilder.create();
+        mAlertDialog.show();
         mConfirmButton.setOnClickListener(v -> {
-            if (!validateEmail(mTIL_email_register) |
-                    !validatePassword(mTIL_password_register, mTIL_password_confirm) |
-                    !validatePasswordTwo(mTIL_password_confirm, mTIL_password_register)) {
+            if (!validateEmail(tilEmailRegister) |
+                    !validatePasswords(tilPasswordRegister, tilPasswordConfirm)) {
                 return;
             }
 
-            User user = new User(mTIL_email_register.getEditText().getText().toString(),
-                    mTIL_password_register.getEditText().getText().toString());
+            User user = new User(tilEmailRegister.getEditText().getText().toString(),
+                    tilPasswordRegister.getEditText().getText().toString());
 
             mPresenter.register(user);
-            navToHome(mCurrentUser);
         });
     }
 
@@ -188,12 +187,14 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
 
     @Override
     public void showLoading() {
-        Toast.makeText(this, "Loading...", Toast.LENGTH_LONG).show();
+        if (mAlertDialog != null && mAlertDialog.isShowing()) mAlertDialog.dismiss();
+        KeyboardHider.hideKeyboard(this);
+        mProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-        Toast.makeText(this, "Done.", Toast.LENGTH_SHORT).show();
+        mProgressBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -224,9 +225,9 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
 
     }
 
-    private boolean validatePassword(TextInputLayout password, TextInputLayout passwordtwo) {
+    private boolean validatePasswords(TextInputLayout password, TextInputLayout confirmPassword) {
         String passwordInput = Objects.requireNonNull(password.getEditText()).getText().toString().trim();
-        String passwordInputtwo = Objects.requireNonNull(passwordtwo.getEditText()).getText().toString().trim();
+        String passwordInputTwo = Objects.requireNonNull(confirmPassword.getEditText()).getText().toString().trim();
 
         if (passwordInput.isEmpty()) {
             password.setError(ErrorCode.PASSWORD_NULL.getLabel(getBaseContext()));
@@ -234,90 +235,13 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
             password.setError(ErrorCode.PASSWORD_TOO_SIMPLE.getLabel(getBaseContext()));
             return false;
-        } else if (!passwordInput.equals(passwordInputtwo)) {
+        } else if (!passwordInput.equals(passwordInputTwo)) {
             password.setError(ErrorCode.PASSWORDS_DONT_MATCH.getLabel(getBaseContext()));
-            passwordtwo.setError(ErrorCode.PASSWORDS_DONT_MATCH.getLabel(getBaseContext()));
+            confirmPassword.setError(ErrorCode.PASSWORDS_DONT_MATCH.getLabel(getBaseContext()));
             return false;
         } else password.setError(null);
-        passwordtwo.setError(null);
+        confirmPassword.setError(null);
         return true;
     }
-
-    private boolean validatePasswordTwo(TextInputLayout passwordtwo, TextInputLayout password) {
-        String passwordInput = Objects.requireNonNull(passwordtwo.getEditText()).getText().toString().trim();
-        String passwordInputTwo = Objects.requireNonNull(password.getEditText()).getText().toString().trim();
-
-        if (passwordInput.isEmpty()) {
-            passwordtwo.setError(ErrorCode.PASSWORD_NULL.getLabel(getBaseContext()));
-            return false;
-        } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
-            passwordtwo.setError(ErrorCode.PASSWORD_TOO_SIMPLE.getLabel(getBaseContext()));
-            return false;
-        } else if (!passwordInput.equals(passwordInputTwo)) {
-            passwordtwo.setError(ErrorCode.PASSWORDS_DONT_MATCH.getLabel(getBaseContext()));
-            password.setError(ErrorCode.PASSWORDS_DONT_MATCH.getLabel(getBaseContext()));
-            return false;
-        } else passwordtwo.setError(null);
-        passwordtwo.setError(null);
-        return true;
-    }
-
-
-//    // Private class
-//    private class FetchSecuredResourceTask extends AsyncTask<Void, Void, User> {
-//
-//        private String email;
-//        private String password;
-//
-//        @Override
-//        protected void onPreExecute() {
-//            showLoading();
-//            this.email = mEmailEditText.getText().toString();
-//            this.password = mPasswordEditText.getText().toString();
-//        }
-//
-//        @Override
-//        protected User doInBackground(Void... voids) {
-//            final String url = Constants.BASE_SERVER_URL + "/users/me";
-//
-//            // Populate
-//            HttpAuthentication authHeader = new HttpBasicAuthentication(email, password);
-//            HttpHeaders requestHeaders = new HttpHeaders();
-//            requestHeaders.setAuthorization(authHeader);
-//            requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-//
-//            // Create rest template
-//            RestTemplate restTemplate = new RestTemplate();
-//            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-//
-//            try {
-//                // Make the network request
-//                Log.d("Trying network REQ", url);
-//                ResponseEntity<User> responseEntity = restTemplate
-//                        .exchange(url, HttpMethod.GET, new HttpEntity<>(requestHeaders),
-//                                User.class);
-//                return responseEntity.getBody();
-//            } catch (HttpClientErrorException e) {
-//                Log.e("First catch", e.getLocalizedMessage(), e);
-//                return null;
-//            } catch (ResourceAccessException e) {
-//                Log.e("QWERTY", e.getLocalizedMessage());
-//                return null;
-//            }
-//
-//        }
-//
-//
-//        @Override
-//        protected void onPostExecute(User user) {
-//            if (user == null) {
-//                Log.d("FAILFAILFAIL", "NOTGOOD");
-//                Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_LONG).show();
-//            } else {
-//                Log.d("ALLGOODMAN", "USERNOTNULL");
-//                navigateToHome(user);
-//            }
-//        }
-//    }
 
 }

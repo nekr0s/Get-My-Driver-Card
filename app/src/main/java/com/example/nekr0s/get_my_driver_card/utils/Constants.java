@@ -9,7 +9,7 @@ public class Constants {
     public static final String USER_OBJ_EXTRA = "USER_EXTRA";
 
     // Server address - change depending on situation
-    public static final String BASE_SERVER_URL = "http://10.145.113.71:9090/api";
+    public static final String BASE_SERVER_URL = "http://192.168.0.101:8080/api";
 
     public static final int EMPTY_FIELD = 404;
 }
