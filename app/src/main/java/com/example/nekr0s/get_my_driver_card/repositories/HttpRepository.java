@@ -36,7 +36,7 @@ public class HttpRepository<T> implements Repository<T> {
     @Override
     public T add(T item) throws IOException {
         String requestBody = mJsonParser.toJson(item);
-        String responseBody = mHttpRequester.post(mServerUrl, requestBody);
+        String responseBody = mHttpRequester.post(mServerUrl + "/signup", requestBody);
         return mJsonParser.fromJson(responseBody);
     }
 }

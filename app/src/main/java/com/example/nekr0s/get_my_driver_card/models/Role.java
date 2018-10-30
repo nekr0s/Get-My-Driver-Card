@@ -10,6 +10,11 @@ public class Role implements Serializable {
         // keep empty
     }
 
+    public Role(int roleId, String role) {
+        this.roleId = roleId;
+        this.role = role;
+    }
+
     public int getRoleId() {
         return roleId;
     }

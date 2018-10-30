@@ -1,13 +1,11 @@
 package com.example.nekr0s.get_my_driver_card.views.login;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -19,24 +17,10 @@ import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.async.AsyncSchedulerProvider;
 import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.services.HttpUsersService;
-import com.example.nekr0s.get_my_driver_card.utils.BCrypt;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
 import com.example.nekr0s.get_my_driver_card.views.list.ListActivity;
 
-import org.springframework.http.HttpAuthentication;
-import org.springframework.http.HttpBasicAuthentication;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.ResourceAccessException;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.Collections;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -120,17 +104,17 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
 
     @Override
     public void onLoginSuccess(SmartUser user) {
-        Toast.makeText(this, user.toString(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, user.toString(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onLoginFailure(SmartLoginException e) {
-        Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public SmartUser doCustomLogin() {
-        new FetchSecuredResourceTask().execute();
+        mPresenter.login(mEmailEditText.getText().toString(), mPasswordEditText.getText().toString());
         SmartUser user = new SmartUser();
         user.setEmail(mEmailEditText.getText().toString());
         return user;
@@ -142,15 +126,6 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         SmartUser user = new SmartUser();
         user.setEmail(mEmailEditText.getText().toString());
         return user;
-    }
-
-    private void navToHome(SmartUser user) {
-        Toast.makeText(this, "Navigating to Home", Toast.LENGTH_SHORT).show();
-        User customUser = new User(user.getEmail(), "");
-        Intent intent = new Intent(this, ListActivity.class);
-        intent.putExtra(Constants.USER_OBJ_EXTRA, customUser);
-        startActivity(intent);
-        finish();
     }
 
     @OnClick(R.id.button_login_facebook)
@@ -200,8 +175,9 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
                 return;
             }
 
-            User user = new User(mEmailEditText.getText().toString(),
-                    BCrypt.hashpw(mPasswordEditText.getText().toString(), BCrypt.gensalt()));
+            User user = new User(mTIL_email_register.getEditText().getText().toString(),
+                    mTIL_password_register.getEditText().getText().toString());
+
             mPresenter.register(user);
         });
     }
@@ -289,61 +265,61 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     }
 
 
-    // Private class
-    private class FetchSecuredResourceTask extends AsyncTask<Void, Void, User> {
-
-        private String email;
-        private String password;
-
-        @Override
-        protected void onPreExecute() {
-            showLoading();
-            this.email = mEmailEditText.getText().toString();
-            this.password = mPasswordEditText.getText().toString();
-        }
-
-        @Override
-        protected User doInBackground(Void... voids) {
-            final String url = Constants.BASE_SERVER_URL + "/users/me";
-
-            // Populate
-            HttpAuthentication authHeader = new HttpBasicAuthentication(email, password);
-            HttpHeaders requestHeaders = new HttpHeaders();
-            requestHeaders.setAuthorization(authHeader);
-            requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-
-            // Create rest template
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-
-            try {
-                // Make the network request
-                Log.d("Trying network REQ", url);
-                ResponseEntity<User> responseEntity = restTemplate
-                        .exchange(url, HttpMethod.GET, new HttpEntity<>(requestHeaders),
-                                User.class);
-                return responseEntity.getBody();
-            } catch (HttpClientErrorException e) {
-                Log.e("First catch", e.getLocalizedMessage(), e);
-                return null;
-            } catch (ResourceAccessException e) {
-                Log.e("QWERTY", e.getLocalizedMessage());
-                return null;
-            }
-
-        }
-
-
-        @Override
-        protected void onPostExecute(User user) {
-            if (user == null) {
-                Log.d("FAILFAILFAIL", "NOTGOOD");
-                Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_LONG).show();
-            } else {
-                Log.d("ALLGOODMAN", "USERNOTNULL");
-                navigateToHome(user);
-            }
-        }
-    }
+//    // Private class
+//    private class FetchSecuredResourceTask extends AsyncTask<Void, Void, User> {
+//
+//        private String email;
+//        private String password;
+//
+//        @Override
+//        protected void onPreExecute() {
+//            showLoading();
+//            this.email = mEmailEditText.getText().toString();
+//            this.password = mPasswordEditText.getText().toString();
+//        }
+//
+//        @Override
+//        protected User doInBackground(Void... voids) {
+//            final String url = Constants.BASE_SERVER_URL + "/users/me";
+//
+//            // Populate
+//            HttpAuthentication authHeader = new HttpBasicAuthentication(email, password);
+//            HttpHeaders requestHeaders = new HttpHeaders();
+//            requestHeaders.setAuthorization(authHeader);
+//            requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+//
+//            // Create rest template
+//            RestTemplate restTemplate = new RestTemplate();
+//            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+//
+//            try {
+//                // Make the network request
+//                Log.d("Trying network REQ", url);
+//                ResponseEntity<User> responseEntity = restTemplate
+//                        .exchange(url, HttpMethod.GET, new HttpEntity<>(requestHeaders),
+//                                User.class);
+//                return responseEntity.getBody();
+//            } catch (HttpClientErrorException e) {
+//                Log.e("First catch", e.getLocalizedMessage(), e);
+//                return null;
+//            } catch (ResourceAccessException e) {
+//                Log.e("QWERTY", e.getLocalizedMessage());
+//                return null;
+//            }
+//
+//        }
+//
+//
+//        @Override
+//        protected void onPostExecute(User user) {
+//            if (user == null) {
+//                Log.d("FAILFAILFAIL", "NOTGOOD");
+//                Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_LONG).show();
+//            } else {
+//                Log.d("ALLGOODMAN", "USERNOTNULL");
+//                navigateToHome(user);
+//            }
+//        }
+//    }
 
 }
