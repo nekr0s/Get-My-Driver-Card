@@ -115,5 +115,6 @@ public class RenewFragment extends Fragment {
         // only for test
 //        Intent intent = new Intent(getActivity(), RequestPreviewActivity.class);
 //        startActivity(intent);
+
     }
 }
