@@ -85,6 +85,7 @@
         android:layout_alignStart="@+id/add_ID_icon"
         android:layout_alignTop="@+id/driver_license_photo"
         android:src="@drawable/add_file_icon"
+        android:visibility="gone"
         tools:ignore="ContentDescription" />
 
     <Button
@@ -107,7 +108,8 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/button_shape"
         android:text="@string/add_previous_card"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/documents_next_button"
@@ -116,10 +118,10 @@
         android:layout_alignEnd="@+id/add_ID_button"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="11dp"
-        android:text="@string/next_documents"
-        android:textSize="16sp"
         android:background="@color/black"
-        android:textColor="@color/bluenontransp" />
+        android:text="@string/next_documents"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
 
 
 </RelativeLayout>

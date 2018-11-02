@@ -3,12 +3,12 @@ package com.example.nekr0s.get_my_driver_card.services;
 import com.example.nekr0s.get_my_driver_card.GetMyDriverCardApplication;
 import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.repositories.base.Repository;
-import com.example.nekr0s.get_my_driver_card.services.base.UsersService;
+import com.example.nekr0s.get_my_driver_card.services.base.Service;
 
 import java.io.IOException;
 import java.util.List;
 
-public class HttpUsersService implements UsersService {
+public class HttpUsersService implements Service<User> {
 
     private final Repository<User> mRepository;
 
@@ -17,17 +17,17 @@ public class HttpUsersService implements UsersService {
     }
 
     @Override
-    public List<User> getAllUsers() throws IOException {
+    public List<User> getAll() throws IOException {
         return mRepository.getAll();
     }
 
     @Override
-    public User getUserById(int id) throws IOException {
+    public User getById(int id) throws IOException {
         return mRepository.getById(id);
     }
 
     @Override
-    public User createUser(User user) throws Exception {
-        return mRepository.add(user);
+    public User create(User item) throws Exception {
+        return mRepository.add(item);
     }
 }

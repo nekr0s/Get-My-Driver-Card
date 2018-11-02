@@ -1,8 +1,9 @@
 package com.example.nekr0s.get_my_driver_card.views.login;
 
+import com.example.nekr0s.get_my_driver_card.GetMyDriverCardApplication;
 import com.example.nekr0s.get_my_driver_card.async.base.SchedulerProvider;
 import com.example.nekr0s.get_my_driver_card.models.User;
-import com.example.nekr0s.get_my_driver_card.services.base.UsersService;
+import com.example.nekr0s.get_my_driver_card.services.base.Service;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
 
 import org.springframework.http.HttpAuthentication;
@@ -23,13 +24,13 @@ import io.reactivex.disposables.Disposable;
 
 public class LoginPresenter implements LoginContracts.Presenter {
 
-    private final UsersService mUsersService;
+    private final Service<User> mUsersService;
     private final SchedulerProvider mSchedulerProvider;
     private LoginContracts.View mView;
 
-    LoginPresenter(UsersService mUsersService, SchedulerProvider mSchedulerProvider) {
-        this.mUsersService = mUsersService;
-        this.mSchedulerProvider = mSchedulerProvider;
+    LoginPresenter() {
+        mUsersService = GetMyDriverCardApplication.getUsersService();
+        mSchedulerProvider = GetMyDriverCardApplication.getSchedulerProvider();
     }
 
     @Override
@@ -37,7 +38,7 @@ public class LoginPresenter implements LoginContracts.Presenter {
         mView.showLoading();
         Disposable disposable = Observable
                 .create((ObservableOnSubscribe<User>) emitter -> {
-                    User createUser = mUsersService.createUser(user);
+                    User createUser = mUsersService.create(user);
                     emitter.onNext(createUser);
                     emitter.onComplete();
                 })
