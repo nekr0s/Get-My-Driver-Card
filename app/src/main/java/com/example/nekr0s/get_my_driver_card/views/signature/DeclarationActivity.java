@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -16,6 +15,7 @@ import com.example.nekr0s.get_my_driver_card.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DeclarationActivity extends Activity {
     @BindView(R.id.header_msg_declaration)
@@ -46,12 +46,10 @@ public class DeclarationActivity extends Activity {
         Intent intent = getIntent();
         intent.getSerializableExtra(ALMOST_READY_REQUEST);
 
-        mSignImage.setOnClickListener(onButtonClick);
-
         //disable button if checkbox is not checked else enable button
         mCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) signatureButton.setEnabled(true);
-            else signatureButton.setEnabled(false);
+            if (isChecked) mFinishButton.setEnabled(true);
+            else mFinishButton.setEnabled(false);
         });
 
         //to get imagepath from SignatureActivity and set it on ImageView
@@ -60,15 +58,9 @@ public class DeclarationActivity extends Activity {
         mSignImage.setImageBitmap(bitmap);
     }
 
-    Button.OnClickListener onButtonClick = new Button.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (mCheckBox.isChecked()) {
-                Intent i = new Intent(DeclarationActivity.this, SignatureActivity.class);
-                startActivity(i);
-            } else {
-                mFinishButton.setEnabled(false);
-            }
-        }
-    };
+    @OnClick(R.id.sign_here)
+    void signHereClick() {
+        Intent intent = new Intent(this, SignatureActivity.class);
+        startActivity(intent);
+    }
 }
