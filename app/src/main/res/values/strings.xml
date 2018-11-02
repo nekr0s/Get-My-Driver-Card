@@ -65,7 +65,7 @@
     <string name="change_my_photo">I want to change my photo</string>
     <string name="header_msg_replacement">I want a replacement because:</string>
     <string name="card_has_expired">My card has expired</string>
-    <string name="previous_card_info_header_msg">Please fill the information of your previous card:</string>
+    <string name="previous_card_info_header_msg">Please fill the information below:</string>
     <string name="first_name_cyrillic">First Name (Cyrillic)</string>
     <string name="last_name_cyrillic">Last Name (Cyrillic)</string>
     <string name="NAME_NULL">Name can\'t be empty</string>
@@ -110,4 +110,8 @@
     <string name="date_of_birth_preview">Date of birth:</string>
     <string name="email_preview">Email:</string>
     <string name="additional_info_preview">Additional info:</string>
+    <string name="sign_here">Sign Here</string>
+    <string name="cancel">CANCEL</string>
+    <string name="clear">CLEAR</string>
+    <string name="save">SAVE</string>
 </resources>

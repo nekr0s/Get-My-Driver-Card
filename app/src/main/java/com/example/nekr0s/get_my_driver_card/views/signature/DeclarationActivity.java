@@ -23,7 +23,6 @@ public class DeclarationActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_declaration);
         signatureButton = findViewById(R.id.getSign);
-        signImage = findViewById(R.id.imageView1);
         signatureButton.setOnClickListener(onButtonClick);
         checkBox = findViewById(R.id.checkbox);
         //disable button if checkbox is not checked else enable button

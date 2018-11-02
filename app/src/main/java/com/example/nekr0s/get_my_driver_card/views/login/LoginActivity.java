@@ -168,14 +168,16 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         mAlertDialog.show();
         mConfirmButton.setOnClickListener(v -> {
             if (!validateEmail(tilEmailRegister) |
-                    !validatePasswords(tilPasswordRegister, tilPasswordConfirm)) {
+                    !validatePasswords(tilPasswordRegister, tilPasswordConfirm) |
+                    !validatePasswords(tilPasswordConfirm, tilPasswordRegister)) {
                 return;
             }
 
             User user = new User(tilEmailRegister.getEditText().getText().toString(),
                     tilPasswordRegister.getEditText().getText().toString());
 
-            mPresenter.register(user);
+//            mPresenter.register(user);
+            navigateToHome(user);
         });
     }
 
