@@ -33,14 +33,13 @@ public class DeclarationActivity extends Activity {
         signatureButton = findViewById(R.id.getSign);
         signatureButton.setOnClickListener(onButtonClick);
         checkBox = findViewById(R.id.checkbox);
+
         //disable button if checkbox is not checked else enable button
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                signatureButton.setEnabled(true);
-            } else {
-                signatureButton.setEnabled(false);
-            }
+            if (isChecked) signatureButton.setEnabled(true);
+            else signatureButton.setEnabled(false);
         });
+
         //to get imagepath from SignatureActivity and set it on ImageView
         String image_path = getIntent().getStringExtra("imagePath");
         Bitmap bitmap = BitmapFactory.decodeFile(image_path);
