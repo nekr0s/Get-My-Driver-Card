@@ -13,6 +13,7 @@ import com.example.nekr0s.get_my_driver_card.parsers.base.JsonParser;
 import com.example.nekr0s.get_my_driver_card.repositories.RequestsRepository;
 import com.example.nekr0s.get_my_driver_card.repositories.UsersRepository;
 import com.example.nekr0s.get_my_driver_card.repositories.base.Repository;
+import com.example.nekr0s.get_my_driver_card.repositories.base.ReqRepository;
 import com.example.nekr0s.get_my_driver_card.services.HttpRequestsService;
 import com.example.nekr0s.get_my_driver_card.services.HttpUsersService;
 import com.example.nekr0s.get_my_driver_card.services.base.Service;
@@ -25,7 +26,7 @@ public class GetMyDriverCardApplication extends Application {
     private static JsonParser<User> mJsonParserUser;
     private static JsonParser<Request> mJsonParserRequest;
     private static Repository<User> mUserRepository;
-    private static Repository<Request> mRequestRepository;
+    private static ReqRepository<Request> mRequestRepository;
     private static Service<User> mUsersService;
     private static Service<Request> mRequestsService;
 
@@ -71,7 +72,7 @@ public class GetMyDriverCardApplication extends Application {
         return mUserRepository;
     }
 
-    public static Repository<Request> getRequestRepository() {
+    public static ReqRepository<Request> getRequestRepository() {
         if (mRequestRepository == null) {
             String serverUrl = Constants.BASE_SERVER_URL + "/requests";
             HttpRequester httpRequester = getHttpRequester();

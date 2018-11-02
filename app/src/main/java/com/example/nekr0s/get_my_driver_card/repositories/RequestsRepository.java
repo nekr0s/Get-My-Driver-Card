@@ -2,12 +2,12 @@ package com.example.nekr0s.get_my_driver_card.repositories;
 
 import com.example.nekr0s.get_my_driver_card.http.base.HttpRequester;
 import com.example.nekr0s.get_my_driver_card.parsers.base.JsonParser;
-import com.example.nekr0s.get_my_driver_card.repositories.base.Repository;
+import com.example.nekr0s.get_my_driver_card.repositories.base.ReqRepository;
 
 import java.io.IOException;
 import java.util.List;
 
-public class RequestsRepository<Request> implements Repository<Request> {
+public class RequestsRepository<Request> implements ReqRepository<Request> {
 
     private final HttpRequester mHttpRequester;
     private final String mServerUrl;
@@ -37,13 +37,15 @@ public class RequestsRepository<Request> implements Repository<Request> {
     @Override
     public Request add(Request item) throws IOException {
         String requestBody = mJsonParser.toJson(item);
-        String responseBody = mHttpRequester.post(mServerUrl + "/signup", requestBody);
+        String responseBody = mHttpRequester.post(mServerUrl, requestBody);
         return mJsonParser.fromJson(responseBody);
     }
 
-    public List<Request> getAllCurrentUser(int id) throws IOException {
+    @Override
+    public List<Request> getAllCurrentUser(int userId) throws IOException {
+        String url = mServerUrl + "/secured/" + userId + "/all";
         String jsonArray = null;
-        jsonArray = mHttpRequester.get(mServerUrl + "/secured" + id + "/all");
+        jsonArray = mHttpRequester.get(url);
         return mJsonParser.fromJsonArray(jsonArray);
     }
 }

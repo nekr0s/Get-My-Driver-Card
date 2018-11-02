@@ -2,7 +2,7 @@ package com.example.nekr0s.get_my_driver_card.services;
 
 import com.example.nekr0s.get_my_driver_card.GetMyDriverCardApplication;
 import com.example.nekr0s.get_my_driver_card.models.Request;
-import com.example.nekr0s.get_my_driver_card.repositories.base.Repository;
+import com.example.nekr0s.get_my_driver_card.repositories.base.ReqRepository;
 import com.example.nekr0s.get_my_driver_card.services.base.Service;
 
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class HttpRequestsService implements Service<Request> {
 
-    private final Repository<Request> mRequestsRepository;
+    private final ReqRepository<Request> mRequestsRepository;
 
     public HttpRequestsService() {
         mRequestsRepository = GetMyDriverCardApplication.getRequestRepository();
@@ -29,5 +29,9 @@ public class HttpRequestsService implements Service<Request> {
     @Override
     public Request create(Request item) throws Exception {
         return mRequestsRepository.add(item);
+    }
+
+    public List<Request> getCurrentUserRequests(int currentUserId) throws IOException {
+        return mRequestsRepository.getAllCurrentUser(currentUserId);
     }
 }

@@ -1,13 +1,12 @@
-package com.example.nekr0s.get_my_driver_card.views.preview;
+package com.example.nekr0s.get_my_driver_card.views.list;
 
 import com.example.nekr0s.get_my_driver_card.models.Request;
 
 import java.util.List;
 
-public interface RequestPreviewContracts {
-
+public interface ListContracts {
     interface Presenter {
-        void submit(Request request);
+        void loadRequests();
 
         void subscribe(View view);
 
@@ -17,12 +16,18 @@ public interface RequestPreviewContracts {
     interface View {
         void setPresenter(Presenter presenter);
 
+        void showRequests(List<Request> requestList);
+
+        void showEmptyRequestList();
+
         void showLoading();
 
         void hideLoading();
 
         void showError(Throwable throwable);
+    }
 
-        void navigateToHome(Request request);
+    interface Navigator {
+        void navigateWith(Request request);
     }
 }
