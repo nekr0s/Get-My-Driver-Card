@@ -39,7 +39,8 @@ public class CardCreateActivity extends AppCompatActivity {
         whichFragmentToOpen(fragmentName);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_right);
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right,
+                R.anim.enter_from_right, R.anim.exit_to_right);
 //        transaction.addToBackStack(null);
         transaction.add(R.id.fragment_container, mFragment, "new_fragment").commit();
     }
@@ -48,32 +49,21 @@ public class CardCreateActivity extends AppCompatActivity {
     private void whichFragmentToOpen(String fragmentName) {
         switch (fragmentName) {
             case "NEW CARD":
-                mFragment = NewCardFragment.newInstance();
-                break;
-            case "EXCHANGE":
-                mFragment = ExchangeFragment.newInstance();
-                break;
-            case "REPLACEMENT":
-                mFragment = ReplaceFragment.newInstance();
-                break;
-            case "RENEWAL":
-                mFragment = RenewFragment.newInstance();
-                break;
-
             case "ИСКАМ НОВА КАРТА":
                 mFragment = NewCardFragment.newInstance();
                 break;
+            case "EXCHANGE":
             case "РАЗМЯНА НА КАРТА":
                 mFragment = ExchangeFragment.newInstance();
                 break;
+            case "REPLACEMENT":
             case "ЗАМЯНА НА КАРТА":
                 mFragment = ReplaceFragment.newInstance();
                 break;
+            case "RENEWAL":
             case "ОБНОВЛЕНИЕ":
                 mFragment = RenewFragment.newInstance();
                 break;
-
-
         }
     }
 

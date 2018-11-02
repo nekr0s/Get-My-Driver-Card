@@ -29,28 +29,22 @@ public class PreviousCardInfoActivity extends AppCompatActivity {
     @BindView(R.id.date_of_expiry)
     TextInputLayout mTIL_date_of_expiry;
 
-
     @BindView(R.id.previous_card_next_button)
     MaterialButton mNextButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.previous_card_info);
-        ButterKnife.bind(this);
 
+        ButterKnife.bind(this);
 
     }
 
     @OnClick(R.id.previous_card_next_button)
     void openNextFragment() {
-        if (!validateCountryIssuer() | !validateIssuingAuthority() |
-                !validateTachCardNumber() | !validateDateOfExpiry()) {
-            return;
-
-        } else {
-
+        if (validateCountryIssuer() | validateIssuingAuthority() |
+                validateTachCardNumber() | validateDateOfExpiry()) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_containertwo, new NewCardFragment())
                     .addToBackStack(null)
@@ -107,11 +101,10 @@ public class PreviousCardInfoActivity extends AppCompatActivity {
     }
 
     private boolean validateDateOfExpiry() {
-        String regexDate = "^(?:(?:31(\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
+        String regexDate = getString(R.string.date_exp);
 
         String dateOfExpiryInput = Objects.requireNonNull(mTIL_date_of_expiry.
                 getEditText()).getText().toString().trim();
-
 
         if (dateOfExpiryInput.isEmpty()) {
             mTIL_date_of_expiry.setError(ErrorCode.DATE_OF_EXPIRY_NULL.getLabel(getBaseContext()));

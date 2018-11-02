@@ -199,7 +199,13 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
 
     @Override
     public void showError(Throwable throwable) {
-        Toast.makeText(this, "Error: " + throwable.getMessage(), Toast.LENGTH_LONG)
+        String errorExplained = throwable.getMessage().trim();
+        switch (errorExplained) {
+            case "401":
+                errorExplained = "Invalid credentials. Check your email and password.";
+                break;
+        }
+        Toast.makeText(this, "Error: " + errorExplained, Toast.LENGTH_LONG)
                 .show();
     }
 

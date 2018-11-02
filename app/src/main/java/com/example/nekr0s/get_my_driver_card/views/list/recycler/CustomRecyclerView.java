@@ -11,6 +11,11 @@ import android.widget.TextView;
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Request;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,6 +53,26 @@ public class CustomRecyclerView extends RecyclerView.Adapter<CustomRecyclerView.
     public void setOnRequestClickListener(OnItemClickListener onRequestClickListener) {
         this.mOnRequestClickListener = onRequestClickListener;
     }
+
+    public void sortByStatus() {
+        mRequests.sort(Comparator.comparingInt(o -> o.getStatus().getNum()));
+        notifyDataSetChanged();
+    }
+
+//    public void sortByDate() {
+//        Collections.sort(datestring, new Comparator<String>() {
+//            DateFormat f = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+//
+//            @Override
+//            public int compare(String o1, String o2) {
+//                try {
+//                    return f.parse(o1).compareTo(f.parse(o2));
+//                } catch (ParseException e) {
+//                    throw new IllegalArgumentException(e);
+//                }
+//            }
+//        });
+//    }
 
     protected static class ItemViewHolder extends RecyclerView.ViewHolder {
 

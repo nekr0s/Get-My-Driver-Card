@@ -82,6 +82,7 @@ public class NewCardFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_card_info, container, false);
+
         ButterKnife.bind(this, view);
 
         return view;
@@ -102,17 +103,13 @@ public class NewCardFragment extends Fragment {
 
     @OnClick(R.id.new_card_next_button)
     void openCameraActivity() {
-        if (!validateFirstName() | !validateFirstNameCyr() |
-                !validateLastName() | !validateLastNameCyr() | !validateID() |
-                !validateAddress() | !validatePhone() | !validateDateOfBirth() |
-                !validateEmail()) {
-            return;
-        } else {
+        if (validateFirstName() | validateFirstNameCyr() | validateLastName()
+                | validateLastNameCyr() | validateID() | validateAddress() | validatePhone()
+                | validateDateOfBirth() | validateEmail())
             if (isAdded()) {
                 Intent intent = new Intent(getActivity(), CameraActivity.class);
                 startActivity(intent);
             }
-        }
     }
 
     public boolean validateFirstName() {
@@ -226,7 +223,7 @@ public class NewCardFragment extends Fragment {
     public boolean validateDateOfBirth() {
         String dateOfBirth = Objects.requireNonNull(mTIL_dateOfBirth.getEditText()).getText().toString().trim();
 
-        String regexDate = "^(?:(?:31(\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
+        String regexDate = getString(R.string.date_of_birth_regex);
         if (dateOfBirth.isEmpty()) {
             mTIL_dateOfBirth.setError(ErrorCode.DATE_NULL.getLabel(Objects.requireNonNull(getContext())));
             return false;

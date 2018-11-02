@@ -75,7 +75,6 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
         boolean valid = true;
 
         for (int grantResult : grantResults)

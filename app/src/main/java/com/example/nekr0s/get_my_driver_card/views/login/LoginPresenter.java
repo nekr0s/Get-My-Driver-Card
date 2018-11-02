@@ -73,8 +73,7 @@ public class LoginPresenter implements LoginContracts.Presenter {
                 .subscribeOn(mSchedulerProvider.background())
                 .observeOn(mSchedulerProvider.ui())
                 .doOnEach(x -> mView.hideLoading())
-                .doOnError(mView::showError)
-                .subscribe(s -> mView.navigateToHome(s));
+                .subscribe(s -> mView.navigateToHome(s), e -> mView.showError(e));
     }
 
     @Override

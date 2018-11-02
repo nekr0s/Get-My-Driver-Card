@@ -101,7 +101,7 @@ public class Request {
     }
 
     private void setRequestDate(LocalDateTime requestDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
         this.requestDate = requestDate.format(formatter);
     }
 }
