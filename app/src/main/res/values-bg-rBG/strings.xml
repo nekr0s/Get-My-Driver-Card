@@ -105,5 +105,9 @@
     <string name="date_of_birth_preview">Дата на раждане:</string>
     <string name="email_preview">Имейл:</string>
     <string name="additional_info_preview">Допълнителна информация:</string>
+    <string name="sign_here">Sign Here</string>
+    <string name="cancel">CANCEL</string>
+    <string name="clear">CLEAR</string>
+    <string name="save">SAVE</string>
 
 </resources>
