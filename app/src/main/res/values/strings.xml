@@ -115,4 +115,10 @@
     <string name="clear">CLEAR</string>
     <string name="save">SAVE</string>
     <string name="app_has_no_perm">The app was not allowed to write to your storage. Hence, it cannot function properly. Please consider granting it this permission</string>
+    <string name="please_take_a_portrait_photo_of_yourself_and_take_a_picture_of_the_required_documents">Please take a portrait photo of yourself and take a picture of the required documents:</string>
+    <string name="capture_photo">Capture Photo</string>
+    <string name="add_personal_id">Add Personal ID</string>
+    <string name="add_driver_license">Add driver license</string>
+    <string name="add_previous_card">Add previous card</string>
+    <string name="next_documents">Next</string>
 </resources>

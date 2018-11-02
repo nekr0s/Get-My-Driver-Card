@@ -4,39 +4,122 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.create.attatchments.DocumentsActivity"
-    android:background="@color/white">
+    android:background="@drawable/test_backgroundtwo"
+    tools:context=".views.create.attatchments.DocumentsActivity">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/documents_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="26dp"
+        android:background="@color/Onyx50percent"
         android:lines="2"
-        android:textStyle="bold"
-        android:textSize="16sp"
+        android:padding="10dp"
+        android:text="@string/please_take_a_portrait_photo_of_yourself_and_take_a_picture_of_the_required_documents"
         android:textAlignment="center"
-        android:text="Please take a portrait photo of yourself and take a picture of the required documents:" />
+        android:textSize="17sp"
+        android:textStyle="bold" />
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="119dp"
-        android:layout_height="157dp"
+        android:id="@+id/selfie_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="87dp"
-        app:srcCompat="@drawable/add_selfie" />
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="100dp"
+        app:srcCompat="@drawable/selfie_icon"
+        tools:ignore="ContentDescription" />
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="119dp"
+        android:id="@+id/selfie_button"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView"
-        android:layout_alignStart="@+id/imageView"
+        android:layout_below="@+id/selfie_icon"
+        android:layout_alignStart="@+id/selfie_icon"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_shape"
+        android:text="@string/capture_photo"
+        android:textColor="@color/black" />
+
+    <ImageView
+        android:id="@+id/add_ID_icon"
+        android:layout_width="129dp"
+        android:layout_height="130dp"
+        android:layout_alignTop="@+id/selfie_icon"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="0dp"
-        android:text="Capture" />
+        android:layout_marginEnd="35dp"
+        android:src="@drawable/add_file_icon"
+        tools:ignore="ContentDescription" />
+
+    <Button
+        android:id="@+id/add_ID_button"
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/add_ID_icon"
+        android:layout_alignTop="@+id/selfie_button"
+        android:background="@drawable/button_shape"
+        android:text="@string/add_personal_id"
+        android:textColor="@color/black" />
+
+    <ImageView
+        android:id="@+id/driver_license_photo"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_below="@id/add_ID_button"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/add_file_icon"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/previous_card_icon"
+        android:layout_width="130dp"
+        android:layout_height="128dp"
+        android:layout_below="@id/add_ID_button"
+        android:layout_alignStart="@+id/add_ID_icon"
+        android:layout_alignTop="@+id/driver_license_photo"
+        android:src="@drawable/add_file_icon"
+        tools:ignore="ContentDescription" />
+
+    <Button
+        android:id="@+id/driver_license_button"
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/driver_license_photo"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_shape"
+        android:text="@string/add_driver_license"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/previous_card_button"
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/previous_card_icon"
+        android:layout_alignStart="@+id/previous_card_icon"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_shape"
+        android:text="@string/add_previous_card"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/documents_next_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/add_ID_button"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="11dp"
+        android:text="@string/next_documents"
+        android:textSize="16sp"
+        android:background="@color/black"
+        android:textColor="@color/bluenontransp" />
+
+
 </RelativeLayout>

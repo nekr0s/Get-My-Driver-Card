@@ -105,8 +105,7 @@
         android:paddingTop="10dp"
         android:paddingEnd="15dp"
         android:paddingBottom="10dp"
-        android:text="@string/next"
-        android:textSize="17sp" />
+        android:text="@string/next" />
 
 
 </LinearLayout>
