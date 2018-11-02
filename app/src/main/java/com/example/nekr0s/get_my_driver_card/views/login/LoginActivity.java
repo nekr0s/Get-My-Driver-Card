@@ -1,6 +1,8 @@
 package com.example.nekr0s.get_my_driver_card.views.login;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -10,7 +12,6 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ import com.example.nekr0s.get_my_driver_card.views.list.ListActivity;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
+import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -47,7 +49,7 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     Button mGoogleLoginButton;
 
     @BindView(R.id.button_login_custom)
-    Button mCustomLoginButton;
+    CircularProgressButton mCustomLoginButton;
 
     @BindView(R.id.text_no_account)
     TextView mNoAccount;
@@ -57,9 +59,6 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
 
     @BindView(R.id.password_edittext)
     EditText mPasswordEditText;
-
-    @BindView(R.id.progress_bar_loading)
-    ProgressBar mProgressBar;
 
     SmartUser mCurrentUser;
     SmartLoginConfig mConfig;
@@ -99,6 +98,12 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     protected void onPause() {
         super.onPause();
         mPresenter.unsubscribe();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mCustomLoginButton.dispose();
     }
 
     @Override
@@ -167,17 +172,14 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         mAlertDialog = mBuilder.create();
         mAlertDialog.show();
         mConfirmButton.setOnClickListener(v -> {
-            if (!validateEmail(tilEmailRegister) |
-                    !validatePasswords(tilPasswordRegister, tilPasswordConfirm) |
-                    !validatePasswords(tilPasswordConfirm, tilPasswordRegister)) {
-                return;
+            if (validateEmail(tilEmailRegister) |
+                    validatePasswords(tilPasswordRegister, tilPasswordConfirm) |
+                    validatePasswords(tilPasswordConfirm, tilPasswordRegister)) {
+                User user = new User(tilEmailRegister.getEditText().getText().toString(),
+                        tilPasswordRegister.getEditText().getText().toString());
+                mPresenter.register(user);
+//                navigateToHome(user);
             }
-
-            User user = new User(tilEmailRegister.getEditText().getText().toString(),
-                    tilPasswordRegister.getEditText().getText().toString());
-
-//            mPresenter.register(user);
-            navigateToHome(user);
         });
     }
 
@@ -191,16 +193,18 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     public void showLoading() {
         if (mAlertDialog != null && mAlertDialog.isShowing()) mAlertDialog.dismiss();
         KeyboardHider.hideKeyboard(this);
-        mProgressBar.setVisibility(View.VISIBLE);
+        mCustomLoginButton.startAnimation();
     }
 
     @Override
     public void hideLoading() {
-        mProgressBar.setVisibility(View.GONE);
+        mCustomLoginButton.doneLoadingAnimation(Color.parseColor("#dc4e41"),
+                BitmapFactory.decodeResource(getResources(), R.drawable.ic_done_white_48dp));
     }
 
     @Override
     public void showError(Throwable throwable) {
+        mCustomLoginButton.revertAnimation();
         String errorExplained = throwable.getMessage().trim();
         switch (errorExplained) {
             case "401":
@@ -233,22 +237,32 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
 
     }
 
-    private boolean validatePasswords(TextInputLayout password, TextInputLayout confirmPassword) {
-        String passwordInput = Objects.requireNonNull(password.getEditText()).getText().toString().trim();
-        String passwordInputTwo = Objects.requireNonNull(confirmPassword.getEditText()).getText().toString().trim();
-
+    private boolean validatePassword(TextInputLayout password) {
+        String passwordInput = password.getEditText().getText().toString().trim();
         if (passwordInput.isEmpty()) {
             password.setError(ErrorCode.PASSWORD_NULL.getLabel(getBaseContext()));
             return false;
         } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
             password.setError(ErrorCode.PASSWORD_TOO_SIMPLE.getLabel(getBaseContext()));
             return false;
-        } else if (!passwordInput.equals(passwordInputTwo)) {
+        } else password.setError(null);
+
+        return true;
+    }
+
+    private boolean validatePasswords(TextInputLayout password, TextInputLayout confirmPassword) {
+        String passwordInput = Objects.requireNonNull(password.getEditText()).getText().toString().trim();
+        String passwordInputTwo = Objects.requireNonNull(confirmPassword.getEditText()).getText().toString().trim();
+
+        if (!validatePassword(password)) return false;
+        else if (!passwordInput.equals(passwordInputTwo)) {
             password.setError(ErrorCode.PASSWORDS_DONT_MATCH.getLabel(getBaseContext()));
             confirmPassword.setError(ErrorCode.PASSWORDS_DONT_MATCH.getLabel(getBaseContext()));
             return false;
-        } else password.setError(null);
-        confirmPassword.setError(null);
+        } else {
+            password.setError(null);
+            confirmPassword.setError(null);
+        }
         return true;
     }
 

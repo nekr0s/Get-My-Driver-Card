@@ -114,4 +114,5 @@
     <string name="cancel">CANCEL</string>
     <string name="clear">CLEAR</string>
     <string name="save">SAVE</string>
+    <string name="app_has_no_perm">The app was not allowed to write to your storage. Hence, it cannot function properly. Please consider granting it this permission</string>
 </resources>

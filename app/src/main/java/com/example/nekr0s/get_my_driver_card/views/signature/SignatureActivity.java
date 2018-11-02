@@ -94,10 +94,17 @@ public class SignatureActivity extends AppCompatActivity {
 
 
     public boolean isStoragePermissionGranted() {
-        if (getApplicationContext().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(view.getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+            view.setDrawingCacheEnabled(true);
+            mSignature.save(view, StoredPath);
+            Toast.makeText(getApplicationContext(), "Successfully Saved", Toast.LENGTH_SHORT).show();
+            // Calling the same class
+            recreate();
             return true;
         } else {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
             return false;
         }
     }
@@ -113,9 +120,11 @@ public class SignatureActivity extends AppCompatActivity {
             // Calling the same class
             recreate();
         } else {
-            Toast.makeText(this, "The app was not allowed to write to your storage. Hence, it cannot function properly. Please consider granting it this permission", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.app_has_no_perm, Toast.LENGTH_LONG).show();
         }
     }
+
+
 
     public class signature extends View {
 
