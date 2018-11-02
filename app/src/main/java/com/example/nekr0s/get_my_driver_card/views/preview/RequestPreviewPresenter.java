@@ -16,10 +16,6 @@ public class RequestPreviewPresenter implements RequestPreviewContracts.Presente
         mSchedulerProvider = GetMyDriverCardApplication.getSchedulerProvider();
     }
 
-    @Override
-    public void loadRequests() {
-        // Async task to load all requests
-    }
 
     @Override
     public void submit(Request request) {

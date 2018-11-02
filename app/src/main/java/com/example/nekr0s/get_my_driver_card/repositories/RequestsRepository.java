@@ -1,13 +1,14 @@
 package com.example.nekr0s.get_my_driver_card.repositories;
 
 import com.example.nekr0s.get_my_driver_card.http.base.HttpRequester;
+import com.example.nekr0s.get_my_driver_card.models.Request;
 import com.example.nekr0s.get_my_driver_card.parsers.base.JsonParser;
-import com.example.nekr0s.get_my_driver_card.repositories.base.ReqRepository;
+import com.example.nekr0s.get_my_driver_card.repositories.base.RequestRepository;
 
 import java.io.IOException;
 import java.util.List;
 
-public class RequestsRepository<Request> implements ReqRepository<Request> {
+public class RequestsRepository implements RequestRepository {
 
     private final HttpRequester mHttpRequester;
     private final String mServerUrl;

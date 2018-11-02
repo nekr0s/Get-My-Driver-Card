@@ -34,7 +34,7 @@ public class RequestPreviewActivity extends AppCompatActivity {
     @BindView(R.id.preview_header)
     TextView mHeaderMssg;
 
-    @BindView(R.id.preview_header_two)
+    @BindView(R.id.request_reason)
     TextView mHeaderMssgTwo;
 
     @BindView(R.id.cyr_name)
@@ -97,7 +97,7 @@ public class RequestPreviewActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.request_preview_submit_button)
-    void onSubmitButtonClicked(){
+    void onSubmitButtonClicked() {
 
     }
 }
