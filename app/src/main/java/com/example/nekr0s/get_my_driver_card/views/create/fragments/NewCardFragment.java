@@ -13,7 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.nekr0s.get_my_driver_card.R;
+import com.example.nekr0s.get_my_driver_card.models.Request;
+import com.example.nekr0s.get_my_driver_card.models.User;
+import com.example.nekr0s.get_my_driver_card.models.UserInfo;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
+import com.example.nekr0s.get_my_driver_card.utils.enums.RequestStatus;
+import com.example.nekr0s.get_my_driver_card.utils.enums.RequestType;
+import com.example.nekr0s.get_my_driver_card.views.create.CardCreateActivity;
+import com.example.nekr0s.get_my_driver_card.views.create.attatchments.DocumentsActivity;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -97,18 +104,32 @@ public class NewCardFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-//        Objects.requireNonNull(getActivity()).finish();
     }
 
     @OnClick(R.id.new_card_next_button)
-    void openCameraActivity() {
+    void openDocumentsActivity() {
         if (validateFirstName() | validateFirstNameCyr() | validateLastName()
                 | validateLastNameCyr() | validateID() | validateAddress() | validatePhone()
-                | validateDateOfBirth() | validateEmail())
-            if (isAdded()) {
-                Intent intent = new Intent(getActivity(), CameraActivity.class);
-                startActivity(intent);
-            }
+                | validateDateOfBirth() | validateEmail()) {
+            Intent intent = new Intent(getActivity(), DocumentsActivity.class);
+            User user = ((CardCreateActivity) getActivity()).getLoggedInUser();
+            user.setUserInfo(createUserInfoFromFields());
+            Request request = new Request(RequestStatus.REQUEST_NEW, RequestType.TYPE_NEW, user);
+            intent.putExtra(DocumentsActivity.REQUEST_SO_FAR, request);
+            startActivity(intent);
+        }
+    }
+
+    private UserInfo createUserInfoFromFields() {
+        return new UserInfo(mTIL_firstName.getEditText().getText().toString(),
+                mTIL_firstName_cyrillic.getEditText().getText().toString(),
+                mTIL_lastName.getEditText().getText().toString(),
+                mTIL_lastName_cyrillic.getEditText().getText().toString(),
+                mTIL_personalNumber.getEditText().getText().toString(),
+                mTIL_dateOfBirth.getEditText().getText().toString(),
+                mTIL_address.getEditText().getText().toString(),
+                mTIL_phoneNumber.getEditText().getText().toString(),
+                mTIL_email_address.getEditText().getText().toString());
     }
 
     public boolean validateFirstName() {

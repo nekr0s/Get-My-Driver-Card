@@ -14,6 +14,9 @@ import android.widget.ImageView;
 import com.example.nekr0s.get_my_driver_card.R;
 
 public class DeclarationActivity extends Activity {
+
+    public static final String ALMOST_READY_REQUEST = "ALMOST_READY_REQUEST";
+
     Button signatureButton;
     ImageView signImage;
     CheckBox checkBox;
@@ -22,6 +25,11 @@ public class DeclarationActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_declaration);
+
+        // Get intent
+        Intent intent = getIntent();
+        intent.getSerializableExtra(ALMOST_READY_REQUEST);
+
         signatureButton = findViewById(R.id.getSign);
         signatureButton.setOnClickListener(onButtonClick);
         checkBox = findViewById(R.id.checkbox);

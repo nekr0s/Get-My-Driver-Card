@@ -5,18 +5,19 @@ import android.graphics.Color;
 import com.example.nekr0s.get_my_driver_card.utils.enums.RequestStatus;
 import com.example.nekr0s.get_my_driver_card.utils.enums.RequestType;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Request {
+public class Request implements Serializable {
     private int requestId;
     private RequestStatus status;
     private RequestType type;
     private String requestDate;
+    private Attachment attachment;
     private User user;
 
-    public Request(int requestId, RequestStatus status, RequestType type, User user) {
-        this.requestId = requestId;
+    public Request(RequestStatus status, RequestType type, User user) {
         this.status = status;
         this.type = type;
         setRequestDate(LocalDateTime.now());
@@ -53,6 +54,14 @@ public class Request {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void setAttachment(Attachment attachment) {
+        this.attachment = attachment;
+    }
+
+    public Attachment getAttachment() {
+        return attachment;
     }
 
     // methods

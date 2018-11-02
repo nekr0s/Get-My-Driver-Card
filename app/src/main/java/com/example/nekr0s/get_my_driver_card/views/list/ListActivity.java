@@ -1,9 +1,6 @@
 package com.example.nekr0s.get_my_driver_card.views.list;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -59,6 +56,7 @@ public class ListActivity extends AppCompatActivity {
     public void openInfoActivityNew(FloatingActionButton fab) {
         Intent intent = new Intent(this, CardCreateActivity.class);
         intent.putExtra(CardCreateActivity.EXTRA_KEY, fab.getLabelText());
+        intent.putExtra(CardCreateActivity.CURRENT_USER, mUser);
         startActivity(intent);
     }
 

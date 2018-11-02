@@ -33,7 +33,7 @@
         <activity android:name=".views.signature.SignatureActivity" />
         <activity android:name=".views.signature.DeclarationActivity" />
         <activity android:name=".views.list.RequestPreviewActivity" />
-        <activity android:name=".views.camera.DocumentUploadActivity"></activity>
+        <activity android:name=".views.create.attatchments.DocumentsActivity"></activity>
     </application>
 
 </manifest>

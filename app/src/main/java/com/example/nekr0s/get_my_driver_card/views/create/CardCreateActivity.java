@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.nekr0s.get_my_driver_card.R;
+import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.views.create.fragments.ExchangeFragment;
 import com.example.nekr0s.get_my_driver_card.views.create.fragments.NewCardFragment;
 import com.example.nekr0s.get_my_driver_card.views.create.fragments.RenewFragment;
@@ -18,8 +19,10 @@ import butterknife.ButterKnife;
 public class CardCreateActivity extends AppCompatActivity {
 
     public static final String EXTRA_KEY = "NAVIGATE_EXTRA";
+    public static final String CURRENT_USER = "CURRENT_USER";
 
     private Fragment mFragment;
+    private User mLoggedInUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +31,10 @@ public class CardCreateActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        // Get intent
         Intent intent = getIntent();
         String whichButtonIsClicked = intent.getStringExtra(EXTRA_KEY);
+        mLoggedInUser = (User) intent.getSerializableExtra(CURRENT_USER);
 
         openFragment(whichButtonIsClicked);
 
@@ -43,6 +48,10 @@ public class CardCreateActivity extends AppCompatActivity {
                 R.anim.enter_from_right, R.anim.exit_to_right);
 //        transaction.addToBackStack(null);
         transaction.add(R.id.fragment_container, mFragment, "new_fragment").commit();
+    }
+
+    public User getLoggedInUser() {
+        return mLoggedInUser;
     }
 
     // Maybe Reflection
