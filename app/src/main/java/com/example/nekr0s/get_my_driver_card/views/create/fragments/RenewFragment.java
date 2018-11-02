@@ -107,7 +107,14 @@ public class RenewFragment extends Fragment {
 
     @OnClick(R.id.renew_next_button)
     void openNextActivity() {
+
+        //supposed to be like that
         Intent intent = new Intent(getActivity(), PreviousCardInfoActivity.class);
         startActivity(intent);
+
+        // only for test
+//        Intent intent = new Intent(getActivity(), RequestPreviewActivity.class);
+//        startActivity(intent);
+
     }
 }
