@@ -16,9 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nekr0s.get_my_driver_card.R;
-import com.example.nekr0s.get_my_driver_card.async.AsyncSchedulerProvider;
 import com.example.nekr0s.get_my_driver_card.models.User;
-import com.example.nekr0s.get_my_driver_card.services.HttpUsersService;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
 import com.example.nekr0s.get_my_driver_card.utils.keyboard.KeyboardHider;
@@ -80,7 +78,7 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         ButterKnife.bind(this);
 
         mConfig = new SmartLoginConfig(this, this);
-        mPresenter = new LoginPresenter(new HttpUsersService(), AsyncSchedulerProvider.getInstance());
+        mPresenter = new LoginPresenter();
         mConfig.setFacebookAppId(getString(R.string.facebook_app_id));
         mConfig.setFacebookPermissions(null);
         mConfig.setGoogleApiClient(null);
@@ -172,8 +170,7 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         mAlertDialog = mBuilder.create();
         mAlertDialog.show();
         mConfirmButton.setOnClickListener(v -> {
-            if (validateEmail(tilEmailRegister) |
-                    validatePasswords(tilPasswordRegister, tilPasswordConfirm) |
+            if (validateEmail(tilEmailRegister) ||
                     validatePasswords(tilPasswordConfirm, tilPasswordRegister)) {
                 User user = new User(tilEmailRegister.getEditText().getText().toString(),
                         tilPasswordRegister.getEditText().getText().toString());

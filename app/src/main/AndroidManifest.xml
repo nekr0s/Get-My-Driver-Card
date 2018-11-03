@@ -49,7 +49,9 @@
         <activity android:name=".views.signature.DeclarationActivity" />
         <activity android:name=".views.list.RequestPreviewActivity" />
         <activity android:name=".views.create.attatchments.DocumentsActivity" />
-        <activity android:name=".views.create.attatchments.MyCameraActivity"></activity>
+        <activity android:name=".views.create.attatchments.MyCameraActivity" />
+        <activity android:name=".views.preview.RequestPreviewActivity" />
+
     </application>
 
 </manifest>

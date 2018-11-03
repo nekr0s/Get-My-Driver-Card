@@ -7,13 +7,13 @@ import com.example.nekr0s.get_my_driver_card.repositories.base.Repository;
 import java.io.IOException;
 import java.util.List;
 
-public class HttpRepository<T> implements Repository<T> {
+public class UsersRepository<T> implements Repository<T> {
 
     private final HttpRequester mHttpRequester;
     private final String mServerUrl;
     private final JsonParser<T> mJsonParser;
 
-    public HttpRepository(String mServerUrl, HttpRequester mHttpRequester, JsonParser<T> mJsonParser) {
+    public UsersRepository(String mServerUrl, HttpRequester mHttpRequester, JsonParser<T> mJsonParser) {
         this.mHttpRequester = mHttpRequester;
         this.mServerUrl = mServerUrl;
         this.mJsonParser = mJsonParser;
@@ -36,7 +36,7 @@ public class HttpRepository<T> implements Repository<T> {
     @Override
     public T add(T item) throws IOException {
         String requestBody = mJsonParser.toJson(item);
-        String responseBody = mHttpRequester.post(mServerUrl + "/signup", requestBody);
+        String responseBody = mHttpRequester.post(mServerUrl, requestBody);
         return mJsonParser.fromJson(responseBody);
     }
 }
