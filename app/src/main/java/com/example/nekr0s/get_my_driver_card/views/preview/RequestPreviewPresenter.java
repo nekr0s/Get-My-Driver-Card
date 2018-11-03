@@ -5,6 +5,10 @@ import com.example.nekr0s.get_my_driver_card.async.base.SchedulerProvider;
 import com.example.nekr0s.get_my_driver_card.models.Request;
 import com.example.nekr0s.get_my_driver_card.services.base.Service;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.disposables.Disposable;
+
 public class RequestPreviewPresenter implements RequestPreviewContracts.Presenter {
 
     private RequestPreviewContracts.View mView;
@@ -20,6 +24,18 @@ public class RequestPreviewPresenter implements RequestPreviewContracts.Presente
     @Override
     public void submit(Request request) {
         // Async task to submit a request
+        mView.showLoading();
+        Disposable disposable = Observable
+                .create((ObservableOnSubscribe<Request>) emitter -> {
+                    Request createRequest = mService.create(request);
+                    emitter.onNext(createRequest);
+                    emitter.onComplete();
+                })
+                .subscribeOn(mSchedulerProvider.background())
+                .observeOn(mSchedulerProvider.ui())
+                .doOnEach(x -> mView.hideLoading())
+                .doOnError(mView::showError)
+                .subscribe(s -> mView.navigateToHome(request));
     }
 
     @Override

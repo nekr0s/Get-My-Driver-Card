@@ -1,37 +1,24 @@
 package com.example.nekr0s.get_my_driver_card.views.create.attatchments;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.media.ExifInterface;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Request;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DocumentsActivity extends AppCompatActivity {
+public class DocumentsActivity extends AppCompatActivity implements DocumentsContracts.View {
 
     public static final String REQUEST_SO_FAR = "REQUEST_SO_FAR";
     private Request mRequestSoFar;
@@ -39,7 +26,6 @@ public class DocumentsActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_TAKE_PHOTO = 1;
     String mCurrentPhotoPath;
-
 
 
     @BindView(R.id.documents_header)
@@ -72,6 +58,9 @@ public class DocumentsActivity extends AppCompatActivity {
     @BindView(R.id.documents_next_button)
     Button mNextButton;
 
+    private DocumentsContracts.Presenter mPresenter;
+    private String mClickedButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,56 +70,74 @@ public class DocumentsActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        mPresenter = new DocumentsPresenter(this);
+
         // Gets request so far
         Intent intent = getIntent();
         mRequestSoFar = (Request) intent.getSerializableExtra(REQUEST_SO_FAR);
-        if (hasCamera()) {
+        if (!mPresenter.deviceHasCamera()) {
             mNextButton.setEnabled(false);
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.subscribe(this);
+    }
 
-    private boolean hasCamera() {
-        return getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mPresenter.unsubscribe();
     }
 
     @OnClick(R.id.selfie_button)
-    void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
+    void takePictureFront(Button button) {
+        mClickedButton = button.getText().toString().trim();
+        startActivityForResult(mPresenter.capturePhoto(true), REQUEST_TAKE_PHOTO);
+    }
 
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.android.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+    @OnClick({R.id.add_ID_button, R.id.driver_license_button, R.id.previous_card_button})
+    void takePictureBack(Button button) {
+        mClickedButton = button.getText().toString().trim();
+        startActivityForResult(mPresenter.capturePhoto(false), REQUEST_TAKE_PHOTO);
+    }
+
+    @Override
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_CANCELED) {
+            if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null) {
+                Bundle extras = data.getExtras();
+                mPresenter.savePicToGallery();
+                fillIcon(mClickedButton);
             }
         }
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != RESULT_CANCELED) {
-            if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null) {
-                Bundle extras = data.getExtras();
-                galleryAddPic();
-                setPic();
-
-            }
-        }
+    public void setPresenter(DocumentsContracts.Presenter presenter) {
+        this.mPresenter = presenter;
     }
 
-    private void setPic() {
+    @Override
+    public Bitmap rotateImage(Bitmap img, int degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        Bitmap rotatedImg = Bitmap
+                .createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
+        img.recycle();
+        return rotatedImg;
+    }
+
+    @Override
+    public void showError(Throwable throwable) {
+        Toast.makeText(this, "Error: ", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void fillIcon(String whichButton) {
         // Get the dimensions of the View
         int targetW = mSelfieIcon.getWidth();
         int targetH = mSelfieIcon.getHeight();
@@ -138,81 +145,51 @@ public class DocumentsActivity extends AppCompatActivity {
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
         int photoW = bmOptions.outWidth;
         int photoH = bmOptions.outHeight;
 
         // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
+        int scaleFactor = Math.max(photoW / targetW, photoH / targetH);
 
         // Decode the image file into a Bitmap sized to fill the View
         bmOptions.inJustDecodeBounds = false;
         bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
 
-        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        mSelfieIcon.setImageBitmap(bitmap);
-        mSelfieIcon.setRotation(90);
-    }
-
-    private void galleryAddPic() {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(mCurrentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        this.sendBroadcast(mediaScanIntent);
-    }
-
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
-
-    /**
-     * Rotate an image if required.
-     *
-     * @param img           The image bitmap
-     * @param selectedImage Image URI
-     * @return The resulted Bitmap after manipulation
-     */
-    private static Bitmap rotateImageIfRequired(Context context, Bitmap img, Uri selectedImage) throws IOException {
-
-        InputStream input = context.getContentResolver().openInputStream(selectedImage);
-        ExifInterface ei;
-        ei = new ExifInterface(input);
-
-        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-
-        switch (orientation) {
-            case ExifInterface.ORIENTATION_ROTATE_90:
-                return rotateImage(img, 90);
-            case ExifInterface.ORIENTATION_ROTATE_180:
-                return rotateImage(img, 180);
-            case ExifInterface.ORIENTATION_ROTATE_270:
-                return rotateImage(img, 270);
-            default:
-                return img;
+        switch (whichButton) {
+            case "Capture Photo":
+                mSelfieIcon.setImageBitmap(mPresenter.getBitmap(bmOptions));
+                break;
+            case "Add Personal ID":
+                mAddIdIcon.setImageBitmap(mPresenter.getBitmap(bmOptions));
+                break;
+            case "Add driver license":
+                mAddLicense.setImageBitmap(mPresenter.getBitmap(bmOptions));
+                break;
+            case "Add previous card":
+                mAddLicense.setImageBitmap(mPresenter.getBitmap(bmOptions));
+                break;
         }
     }
 
-    private static Bitmap rotateImage(Bitmap img, int degree) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(degree);
-        Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
-        img.recycle();
-        return rotatedImg;
-    }
+//    private static Bitmap rotateImageIfRequired(Context context, Bitmap img, Uri selectedImage) throws IOException {
+//
+//        InputStream input = context.getContentResolver().openInputStream(selectedImage);
+//        ExifInterface ei;
+//        ei = new ExifInterface(input);
+//
+//        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+//
+//        switch (orientation) {
+//            case ExifInterface.ORIENTATION_ROTATE_90:
+//                return rotateImage(img, 90);
+//            case ExifInterface.ORIENTATION_ROTATE_180:
+//                return rotateImage(img, 180);
+//            case ExifInterface.ORIENTATION_ROTATE_270:
+//                return rotateImage(img, 270);
+//            default:
+//                return img;
+//        }
+//    }
 
 }
 

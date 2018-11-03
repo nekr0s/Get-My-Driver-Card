@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Request;
@@ -16,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RequestPreviewActivity extends AppCompatActivity {
+public class RequestPreviewActivity extends AppCompatActivity implements RequestPreviewContracts.View {
 
 
     @BindView(R.id.administration_icon)
@@ -77,8 +78,9 @@ public class RequestPreviewActivity extends AppCompatActivity {
     Button mSubmitButton;
 
     private Request mRequest;
+    private RequestPreviewContracts.Presenter mPresenter;
 
-    public static final String BUTTON_STATUS = "BUTTON_STATUS";
+    public static final String BUTTON_VISIBLE = "BUTTON_VISIBLE";
     public static final String REQUEST_FIN = "REQUEST_FIN";
 
 
@@ -90,7 +92,7 @@ public class RequestPreviewActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        if (intent.getBooleanExtra(BUTTON_STATUS, false)) {
+        if (intent.getBooleanExtra(BUTTON_VISIBLE, false)) {
             mSubmitButton.setVisibility(View.VISIBLE);
         }
         mRequest = (Request) intent.getSerializableExtra(REQUEST_FIN);
@@ -99,5 +101,30 @@ public class RequestPreviewActivity extends AppCompatActivity {
     @OnClick(R.id.request_preview_submit_button)
     void onSubmitButtonClicked() {
 
+    }
+
+    @Override
+    public void setPresenter(RequestPreviewContracts.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void showLoading() {
+        Toast.makeText(this, "Loading..", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void hideLoading() {
+        Toast.makeText(this, "Done Loading.", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showError(Throwable throwable) {
+        Toast.makeText(this, "Error: " + throwable.getMessage(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void navigateToHome(Request request) {
+        Intent intent = new Intent();
     }
 }
