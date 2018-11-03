@@ -2,12 +2,13 @@ package com.example.nekr0s.get_my_driver_card.views.create.fragments;
 
 
 import android.os.Bundle;
-import android.support.design.button.MaterialButton;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.nekr0s.get_my_driver_card.R;
 
@@ -17,9 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class ExchangeFragment extends Fragment {
 
 
@@ -40,7 +39,7 @@ public class ExchangeFragment extends Fragment {
     TextInputLayout mTIL_driving_licence_number;
 
     @BindView(R.id.exchange_next_button)
-    MaterialButton mNextButton;
+    Button mNextButton;
 
 
     public static Fragment newInstance() {
@@ -49,13 +48,11 @@ public class ExchangeFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_exchange, container, false);
 
         ButterKnife.bind(this, view);
-
-
 
 
         return view;
@@ -70,10 +67,10 @@ public class ExchangeFragment extends Fragment {
 
     @OnClick(R.id.exchange_next_button)
     void openNextFragment() {
-    NewCardFragment nextFrag = new NewCardFragment();
+        NewCardFragment nextFrag = new NewCardFragment();
         Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
-            .replace(R.id.fragment_container, nextFrag, "newCardFragment")
-            .addToBackStack(null)
-            .commit();
-}
+                .replace(R.id.fragment_container, nextFrag, "newCardFragment")
+                .addToBackStack(null)
+                .commit();
+    }
 }

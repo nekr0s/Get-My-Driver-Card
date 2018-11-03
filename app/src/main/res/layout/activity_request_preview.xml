@@ -237,12 +237,14 @@
 
         <TextView
             android:id="@+id/preview_additional_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
             android:layout_below="@id/preview_email"
             android:layout_toEndOf="@+id/icon_info"
+            android:lines="5"
             android:paddingStart="5dp"
             android:paddingTop="5dp"
+            android:paddingEnd="5dp"
             android:paddingBottom="10dp"
             android:text="@string/additional_info_preview"
             android:textSize="17sp" />

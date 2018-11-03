@@ -1,63 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/europeflags"
     tools:context=".views.list.ListActivity"
-    tools:ignore="NamespaceTypo"
-    android:background="@drawable/europeflags">
+    tools:ignore="NamespaceTypo">
 
     <include
         android:id="@+id/userToolbar"
-        layout="@layout/toolbar"
-        />
+        layout="@layout/toolbar" />
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
+        fab:menu_animationDelayPerItem="50"
+        fab:menu_backgroundColor="@android:color/transparent"
+        fab:menu_buttonSpacing="0dp"
+        fab:menu_colorNormal="#c730f1ff"
+        fab:menu_colorPressed="#be101cff"
+        fab:menu_colorRipple="#99FFFFFF"
+        fab:menu_fab_hide_animation="@anim/show_from_bottom"
+        fab:menu_fab_show_animation="@anim/hide_to_bottom"
         fab:menu_fab_size="normal"
-        fab:menu_showShadow="true"
+        fab:menu_icon="@drawable/ic_note_add_black"
+        fab:menu_labels_colorNormal="@color/black80percent"
+        fab:menu_labels_colorPressed="@color/black80percent"
+        fab:menu_labels_colorRipple="#66FFFFFF"
+        fab:menu_labels_cornerRadius="3dp"
+        fab:menu_labels_ellipsize="none"
+        fab:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+        fab:menu_labels_margin="0dp"
+        fab:menu_labels_maxLines="-1"
+        fab:menu_labels_padding="8dp"
+        fab:menu_labels_paddingBottom="4dp"
+        fab:menu_labels_paddingLeft="8dp"
+        fab:menu_labels_paddingRight="8dp"
+        fab:menu_labels_paddingTop="4dp"
+        fab:menu_labels_position="left"
+        fab:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
+        fab:menu_labels_showShadow="true"
+        fab:menu_labels_singleLine="false"
+        fab:menu_labels_textColor="#FFFFFF"
+        fab:menu_labels_textSize="14sp"
+        fab:menu_openDirection="up"
         fab:menu_shadowColor="#66000000"
         fab:menu_shadowRadius="4dp"
         fab:menu_shadowXOffset="1dp"
         fab:menu_shadowYOffset="3dp"
-        fab:menu_colorNormal="#c730f1ff"
-        fab:menu_colorPressed="#be101cff"
-        fab:menu_colorRipple="#99FFFFFF"
-        fab:menu_animationDelayPerItem="50"
-        fab:menu_icon="@drawable/ic_note_add_black"
-        fab:menu_buttonSpacing="0dp"
-        fab:menu_labels_margin="0dp"
-        fab:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
-        fab:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
-        fab:menu_labels_paddingTop="4dp"
-        fab:menu_labels_paddingRight="8dp"
-        fab:menu_labels_paddingBottom="4dp"
-        fab:menu_labels_paddingLeft="8dp"
-        fab:menu_labels_padding="8dp"
-        fab:menu_labels_textColor="#FFFFFF"
-        fab:menu_labels_textSize="14sp"
-        fab:menu_labels_cornerRadius="3dp"
-        fab:menu_labels_colorNormal="@color/black80percent"
-        fab:menu_labels_colorPressed="@color/black80percent"
-        fab:menu_labels_colorRipple="#66FFFFFF"
-        fab:menu_labels_showShadow="true"
-        fab:menu_labels_singleLine="false"
-        fab:menu_labels_ellipsize="none"
-        fab:menu_labels_maxLines="-1"
-        fab:menu_labels_position="left"
-        fab:menu_openDirection="up"
-        fab:menu_backgroundColor="@android:color/transparent"
-        fab:menu_fab_show_animation="@anim/hide_to_bottom"
-        fab:menu_fab_hide_animation="@anim/show_from_bottom"
-        >
+        fab:menu_showShadow="true">
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/renew"
@@ -66,8 +64,8 @@
             android:src="@drawable/ic_renew"
             fab:fab_colorNormal="#c730f1ff"
             fab:fab_colorPressed="#be101cff"
-            fab:fab_size="mini"
-            fab:fab_label="@string/fab_renew" />
+            fab:fab_label="@string/fab_renew"
+            fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/replace"
@@ -76,8 +74,8 @@
             android:src="@drawable/ic_replace"
             fab:fab_colorNormal="#c730f1ff"
             fab:fab_colorPressed="#be101cff"
-            fab:fab_size="mini"
-            fab:fab_label="@string/REPLACEMENT" />
+            fab:fab_label="@string/REPLACEMENT"
+            fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/exchange"
@@ -86,18 +84,18 @@
             android:src="@drawable/ic_exchange"
             fab:fab_colorNormal="#c730f1ff"
             fab:fab_colorPressed="#be101cff"
-            fab:fab_size="mini"
-            fab:fab_label="@string/EXCHANGE" />
+            fab:fab_label="@string/EXCHANGE"
+            fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/new_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/ic_newcard"
             fab:fab_colorNormal="#c730f1ff"
             fab:fab_colorPressed="#be101cff"
-            android:src="@drawable/ic_newcard"
-            fab:fab_size="normal"
-            fab:fab_label="@string/NEW_CARD" />
+            fab:fab_label="@string/NEW_CARD"
+            fab:fab_size="normal" />
 
 
     </com.github.clans.fab.FloatingActionMenu>
@@ -118,7 +116,6 @@
         android:textColor="@color/bluenontransp"
         android:textSize="18sp"
         android:textStyle="bold" />
-
 
 
 </RelativeLayout>

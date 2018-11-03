@@ -20,7 +20,7 @@
     <string name="full_address">Пълен Адрес</string>
     <string name="phone_number">Телефонен Номер</string>
     <string name="date_of_birth">" Дата на раждане - ДД.ММ.ГГГГ"</string>
-    <string name="new_card_screen_message">Моля попълнете информацията за вашата заявка:</string>
+    <string name="new_card_screen_message">Моля попълнете личната си информация:</string>
     <string name="exchange_fragment_message">Моля попълнете информацията отдолу:</string>
     <string name="eu_country_of_issuing">Държава издател на тахографска карта</string>
     <string name="tachograph_card_number">Номер на тахографска карта</string>
@@ -119,5 +119,8 @@
     <string name="next_documents">Next</string>
     <string name="add_previous_card">Add previous card</string>
     <string name="submit">Submit</string>
+    <string name="hereby_i_declare_that_all_the_provided_details_are_correct_and_understand_that_it_is_a_criminal_offense_if_i_make_a_false_declaration">Hereby I declare that all the provided details are correct and understand that it is a criminal offense if I make a false declaration</string>
+    <string name="click_below_to_submit_your_e_signature">Click below to submit your e-signature</string>
+    <string name="finish_button_declaration">Finish</string>
 
 </resources>

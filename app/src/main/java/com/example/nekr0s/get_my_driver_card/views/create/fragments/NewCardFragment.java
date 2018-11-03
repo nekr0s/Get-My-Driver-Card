@@ -4,13 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Request;
@@ -65,7 +65,7 @@ public class NewCardFragment extends Fragment {
     TextInputLayout mTIL_email_address;
 
     @BindView(R.id.new_card_next_button)
-    MaterialButton mNextButton;
+    Button mNextButton;
 
     private String regexNames = "^[a-zA-Z]*$";
 
@@ -133,12 +133,16 @@ public class NewCardFragment extends Fragment {
     }
 
     public boolean validateFirstName() {
-        String firstNameInput = Objects.requireNonNull(mTIL_firstName.getEditText()).getText().toString().trim();
+        String firstNameInput = Objects.requireNonNull(mTIL_firstName.
+                getEditText()).getText().toString().trim();
+
         if (firstNameInput.isEmpty()) {
-            mTIL_firstName.setError(ErrorCode.NAME_NULL.getLabel(Objects.requireNonNull(getContext())));
+            mTIL_firstName.setError(ErrorCode.NAME_NULL
+                    .getLabel(Objects.requireNonNull(getContext())));
             return false;
         } else if (!firstNameInput.matches(regexNames)) {
-            mTIL_firstName.setError(ErrorCode.NAME_NOT_VALID.getLabel(Objects.requireNonNull(getContext())));
+            mTIL_firstName.setError(ErrorCode.NAME_NOT_VALID
+                    .getLabel(Objects.requireNonNull(getContext())));
             return false;
         } else {
             mTIL_firstName.setError(null);
@@ -148,16 +152,20 @@ public class NewCardFragment extends Fragment {
     }
 
     public boolean validateFirstNameCyr() {
-        String firstNameCyrInput = Objects.requireNonNull(mTIL_firstName_cyrillic.getEditText()).getText().toString().trim();
+        String firstNameCyrInput = Objects.requireNonNull(mTIL_firstName_cyrillic
+                .getEditText()).getText().toString().trim();
 
         if (firstNameCyrInput.isEmpty()) {
-            mTIL_firstName_cyrillic.setError(ErrorCode.CYR_NAME_NULL.getLabel(Objects.requireNonNull(getContext())));
+            mTIL_firstName_cyrillic.setError(ErrorCode.CYR_NAME_NULL
+                    .getLabel(Objects.requireNonNull(getContext())));
             return false;
         } else if (firstNameCyrInput.length() > 256) {
-            mTIL_firstName_cyrillic.setError(ErrorCode.CYR_NAME_NOT_VALID.getLabel(Objects.requireNonNull(getContext())));
+            mTIL_firstName_cyrillic.setError(ErrorCode.CYR_NAME_NOT_VALID
+                    .getLabel(Objects.requireNonNull(getContext())));
             return false;
         } else if (!CYRILLIC_PATTERN.matcher(firstNameCyrInput).matches()) {
-            mTIL_firstName_cyrillic.setError(ErrorCode.NAME_NOT_IN_CYRILLIC.getLabel(Objects.requireNonNull(getContext())));
+            mTIL_firstName_cyrillic.setError(ErrorCode.NAME_NOT_IN_CYRILLIC
+                    .getLabel(Objects.requireNonNull(getContext())));
         } else
             mTIL_firstName_cyrillic.setError(null);
         return true;
@@ -165,13 +173,16 @@ public class NewCardFragment extends Fragment {
     }
 
     public boolean validateLastName() {
-        String validateLastName = Objects.requireNonNull(mTIL_lastName.getEditText()).getText().toString().trim();
+        String validateLastName = Objects.requireNonNull(mTIL_lastName
+                .getEditText()).getText().toString().trim();
 
         if (validateLastName.isEmpty()) {
-            mTIL_lastName.setError(ErrorCode.LAST_NAME_NULL.getLabel(Objects.requireNonNull(getContext())));
+            mTIL_lastName.setError(ErrorCode.LAST_NAME_NULL
+                    .getLabel(Objects.requireNonNull(getContext())));
             return false;
         } else if (!validateLastName.matches(regexNames)) {
-            mTIL_lastName.setError(ErrorCode.LAST_NAME_NOT_VALID.getLabel(Objects.requireNonNull(getContext())));
+            mTIL_lastName.setError(ErrorCode.LAST_NAME_NOT_VALID
+                    .getLabel(Objects.requireNonNull(getContext())));
             return false;
         } else mTIL_lastName.setError(null);
         return true;
@@ -179,15 +190,19 @@ public class NewCardFragment extends Fragment {
     }
 
     public boolean validateLastNameCyr() {
-        String lastNameCyr = Objects.requireNonNull(mTIL_lastName_cyrillic.getEditText()).getText().toString().trim();
+        String lastNameCyr = Objects.requireNonNull(mTIL_lastName_cyrillic
+                .getEditText()).getText().toString().trim();
         if (lastNameCyr.isEmpty()) {
-            mTIL_lastName_cyrillic.setError(ErrorCode.CYR_LAST_NAME_NULL.getLabel(Objects.requireNonNull(getContext())));
+            mTIL_lastName_cyrillic.setError(ErrorCode.CYR_LAST_NAME_NULL
+                    .getLabel(Objects.requireNonNull(getContext())));
             return false;
         } else if (lastNameCyr.length() > 256) {
-            mTIL_lastName_cyrillic.setError(ErrorCode.CYR_LAST_NAME_NOT_VALID.getLabel(Objects.requireNonNull(getContext())));
+            mTIL_lastName_cyrillic.setError(ErrorCode.CYR_LAST_NAME_NOT_VALID
+                    .getLabel(Objects.requireNonNull(getContext())));
             return false;
         } else if (!CYRILLIC_PATTERN.matcher(lastNameCyr).matches()) {
-            mTIL_lastName_cyrillic.setError(ErrorCode.LAST_NAME_NOT_IN_CYRILLIC.getLabel(Objects.requireNonNull(getContext())));
+            mTIL_lastName_cyrillic.setError(ErrorCode.LAST_NAME_NOT_IN_CYRILLIC
+                    .getLabel(Objects.requireNonNull(getContext())));
             return false;
         } else mTIL_lastName_cyrillic.setError(null);
         return true;
@@ -195,17 +210,21 @@ public class NewCardFragment extends Fragment {
     }
 
     public boolean validateID() {
-        String personalNum = Objects.requireNonNull(mTIL_personalNumber.getEditText()).getText().toString().trim();
+        String personalNum = Objects.requireNonNull(mTIL_personalNumber
+                .getEditText()).getText().toString().trim();
 
         String regexNumbersOnly = "^[0-9]*$";
         if (personalNum.isEmpty()) {
-            mTIL_personalNumber.setError(ErrorCode.ID_NULL.getLabel(Objects.requireNonNull(getContext())));
+            mTIL_personalNumber.setError(ErrorCode.ID_NULL
+                    .getLabel(Objects.requireNonNull(getContext())));
             return false;
         } else if (!(personalNum).matches(regexNumbersOnly)) {
-            mTIL_personalNumber.setError(ErrorCode.NOT_DIGIT.getLabel(Objects.requireNonNull(getContext())));
+            mTIL_personalNumber.setError(ErrorCode.NOT_DIGIT
+                    .getLabel(Objects.requireNonNull(getContext())));
             return false;
         } else if ((personalNum).length() > 10) {
-            mTIL_personalNumber.setError(ErrorCode.ID_INVALID.getLabel(Objects.requireNonNull(getContext())));
+            mTIL_personalNumber.setError(ErrorCode.ID_INVALID
+                    .getLabel(Objects.requireNonNull(getContext())));
             return false;
         } else mTIL_personalNumber.setError(null);
         return true;
@@ -213,13 +232,16 @@ public class NewCardFragment extends Fragment {
     }
 
     public boolean validateAddress() {
-        String address = Objects.requireNonNull(mTIL_address.getEditText()).getText().toString().trim();
+        String address = Objects.requireNonNull(mTIL_address
+                .getEditText()).getText().toString().trim();
 
         if (address.length() > 100) {
-            mTIL_address.setError(ErrorCode.ADDRESS_TOO_LONG.getLabel(Objects.requireNonNull(getContext())));
+            mTIL_address.setError(ErrorCode.ADDRESS_TOO_LONG
+                    .getLabel(Objects.requireNonNull(getContext())));
             return false;
         } else if (address.isEmpty()) {
-            mTIL_address.setError(ErrorCode.ADDRESS_NULL.getLabel(Objects.requireNonNull(getContext())));
+            mTIL_address.setError(ErrorCode.ADDRESS_NULL
+                    .getLabel(Objects.requireNonNull(getContext())));
             return false;
         } else mTIL_address.setError(null);
         return true;
@@ -227,13 +249,16 @@ public class NewCardFragment extends Fragment {
     }
 
     public boolean validatePhone() {
-        String phoneNumber = Objects.requireNonNull(mTIL_phoneNumber.getEditText()).getText().toString().trim();
+        String phoneNumber = Objects.requireNonNull(mTIL_phoneNumber
+                .getEditText()).getText().toString().trim();
 
         if (phoneNumber.isEmpty()) {
-            mTIL_phoneNumber.setError(ErrorCode.PHONE_NULL.getLabel(Objects.requireNonNull(getContext())));
+            mTIL_phoneNumber.setError(ErrorCode.PHONE_NULL
+                    .getLabel(Objects.requireNonNull(getContext())));
             return false;
         } else if (!Patterns.PHONE.matcher(phoneNumber).matches()) {
-            mTIL_phoneNumber.setError(ErrorCode.PHONE_INVALID.getLabel(Objects.requireNonNull(getContext())));
+            mTIL_phoneNumber.setError(ErrorCode.PHONE_INVALID
+                    .getLabel(Objects.requireNonNull(getContext())));
             return false;
         } else mTIL_phoneNumber.setError(null);
         return true;
@@ -241,14 +266,17 @@ public class NewCardFragment extends Fragment {
     }
 
     public boolean validateDateOfBirth() {
-        String dateOfBirth = Objects.requireNonNull(mTIL_dateOfBirth.getEditText()).getText().toString().trim();
+        String dateOfBirth = Objects.requireNonNull(mTIL_dateOfBirth
+                .getEditText()).getText().toString().trim();
 
         String regexDate = getString(R.string.date_of_birth_regex);
         if (dateOfBirth.isEmpty()) {
-            mTIL_dateOfBirth.setError(ErrorCode.DATE_NULL.getLabel(Objects.requireNonNull(getContext())));
+            mTIL_dateOfBirth.setError(ErrorCode.DATE_NULL
+                    .getLabel(Objects.requireNonNull(getContext())));
             return false;
         } else if (!dateOfBirth.matches(regexDate)) {
-            mTIL_dateOfBirth.setError(ErrorCode.DATE_INVALID.getLabel(Objects.requireNonNull(getContext())));
+            mTIL_dateOfBirth.setError(ErrorCode.DATE_INVALID
+                    .getLabel(Objects.requireNonNull(getContext())));
             return false;
         } else mTIL_dateOfBirth.setError(null);
         return true;
@@ -256,14 +284,17 @@ public class NewCardFragment extends Fragment {
     }
 
     public boolean validateEmail() {
-        String emailInput = Objects.requireNonNull(mTIL_email_address.getEditText()).getText().toString().trim();
+        String emailInput = Objects.requireNonNull(mTIL_email_address
+                .getEditText()).getText().toString().trim();
 
         if (emailInput.isEmpty()) {
 
-            mTIL_email_address.setError(ErrorCode.EMAIL_CARD_NULL.getLabel(Objects.requireNonNull(getContext())));
+            mTIL_email_address.setError(ErrorCode.EMAIL_CARD_NULL
+                    .getLabel(Objects.requireNonNull(getContext())));
             return false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
-            mTIL_email_address.setError(ErrorCode.EMAIL_INVALID.getLabel(Objects.requireNonNull(getContext())));
+            mTIL_email_address.setError(ErrorCode.EMAIL_INVALID
+                    .getLabel(Objects.requireNonNull(getContext())));
         } else mTIL_email_address.setError(null);
         return true;
 

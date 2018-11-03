@@ -72,7 +72,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/driver_licence_country_of_issuing"
-            android:inputType="text" />
+            android:inputType="text"
+            android:paddingBottom="18dp" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -90,7 +91,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/driving_licence_number"
             android:inputType="number"
-            android:paddingBottom="19dp" />
+            android:paddingBottom="18dp" />
 
     </android.support.design.widget.TextInputLayout>
 

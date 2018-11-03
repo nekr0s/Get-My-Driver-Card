@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
-    android:background="@drawable/test_backgroundtwo"
+    android:background="@drawable/test_background_two"
     android:orientation="vertical"
     android:layout_gravity="center"
     tools:context=".views.create.CardCreateActivity">
@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/exchange_text"
-        android:layout_width="389dp"
+        android:layout_width="match_parent"
         android:layout_height="59dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
@@ -27,6 +27,8 @@
         android:background="@color/Onyx50percent"
         android:lines="2"
         android:padding="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:text="@string/previous_card_info_header_msg"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -107,19 +109,21 @@
 
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.button.MaterialButton
+    <Button
         android:id="@+id/previous_card_next_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginEnd="25dp"
+        android:textColor="@color/white"
+        android:background="@color/black"
         android:enabled="true"
-        android:paddingStart="15dp"
+        android:paddingStart="5dp"
         android:paddingTop="10dp"
-        android:paddingEnd="15dp"
+        android:paddingEnd="5dp"
         android:paddingBottom="10dp"
         android:text="@string/next"
-        android:textSize="17sp" />
+        android:textSize="16sp" />
 
 
 </LinearLayout>
