@@ -51,7 +51,7 @@ public class ReasonsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
-        ViewHolder holder = null;
+        ViewHolder holder;
         if (view == null) {
             view = inflater.inflate(R.layout.reasons_item, viewGroup, false);
 
@@ -74,7 +74,6 @@ public class ReasonsAdapter extends BaseAdapter {
         reasons.set(position, reason);
         notifyDataSetChanged();
     }
-
 
 
     private void initReasons() {

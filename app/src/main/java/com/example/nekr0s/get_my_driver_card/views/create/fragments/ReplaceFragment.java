@@ -3,7 +3,6 @@ package com.example.nekr0s.get_my_driver_card.views.create.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.nekr0s.get_my_driver_card.R;
@@ -35,7 +35,7 @@ public class ReplaceFragment extends Fragment {
     TextInputLayout mTIL_Place;
 
     @BindView(R.id.replace_reason_button)
-    MaterialButton mNextButton;
+    Button mNextButton;
 
     private int mPreselectedIndex = -1;
 
@@ -96,7 +96,8 @@ public class ReplaceFragment extends Fragment {
     }
 
     private boolean isLostOrStolen(String reasonName) {
-        return reasonName.contains("lost") || reasonName.contains("stolen") || reasonName.contains("открадната") || reasonName.contains("Загубих");
+        return reasonName.contains("lost") || reasonName.contains("stolen") ||
+                reasonName.contains("открадната") || reasonName.contains("Загубих");
     }
 
     private void displayForms(String reasonName) {

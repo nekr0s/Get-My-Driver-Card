@@ -125,7 +125,6 @@ public class SignatureActivity extends AppCompatActivity {
     }
 
 
-
     public class signature extends View {
 
         private static final float STROKE_WIDTH = 5f;

@@ -54,14 +54,17 @@ public class PreviousCardInfoActivity extends AppCompatActivity {
 
     private boolean validateCountryIssuer() {
         String regexNames = "^[a-zA-Z]*$";
-        String countryIssuerInput = Objects.requireNonNull(mTIL_previous_eu_country_of_issuing.getEditText())
-                .getText().toString().trim();
+
+        String countryIssuerInput = Objects.requireNonNull(mTIL_previous_eu_country_of_issuing
+                .getEditText()).getText().toString().trim();
 
         if (countryIssuerInput.isEmpty()) {
-            mTIL_previous_eu_country_of_issuing.setError(ErrorCode.COUNTRY_NULL.getLabel(getBaseContext()));
+            mTIL_previous_eu_country_of_issuing.setError(ErrorCode.COUNTRY_NULL
+                    .getLabel(getBaseContext()));
             return false;
         } else if (!countryIssuerInput.matches(regexNames)) {
-            mTIL_previous_eu_country_of_issuing.setError(ErrorCode.COUNTRY_INVALID.getLabel(getBaseContext()));
+            mTIL_previous_eu_country_of_issuing.setError(ErrorCode.COUNTRY_INVALID
+                    .getLabel(getBaseContext()));
             return false;
         } else mTIL_previous_eu_country_of_issuing.setError(null);
         return true;
@@ -70,32 +73,40 @@ public class PreviousCardInfoActivity extends AppCompatActivity {
 
     private boolean validateIssuingAuthority() {
         String regexNames = "^[a-zA-Z]*$";
-        String authorityInput = Objects.requireNonNull(mTIL_issuing_authority.getEditText())
-                .getText().toString().trim();
+
+        String authorityInput = Objects.requireNonNull(mTIL_issuing_authority
+                .getEditText()).getText().toString().trim();
 
         if (authorityInput.isEmpty()) {
-            mTIL_issuing_authority.setError(ErrorCode.ISSUING_AUTHORITY_NULL.getLabel(getBaseContext()));
+            mTIL_issuing_authority.setError(ErrorCode.ISSUING_AUTHORITY_NULL
+                    .getLabel(getBaseContext()));
             return false;
         } else if (!authorityInput.matches(regexNames)) {
-            mTIL_issuing_authority.setError(ErrorCode.ISSUING_AUTHORITY_INVALID.getLabel(getBaseContext()));
+            mTIL_issuing_authority.setError(ErrorCode.ISSUING_AUTHORITY_INVALID
+                    .getLabel(getBaseContext()));
             return false;
         } else mTIL_issuing_authority.setError(null);
+
         return true;
 
     }
 
     private boolean validateTachCardNumber() {
         String regexNumbersOnly = "^[0-9]*$";
+
         String tachNumberInput = Objects.requireNonNull(mTIL_previous_tachograph_card_number.
                 getEditText()).getText().toString().trim();
 
         if (tachNumberInput.isEmpty()) {
-            mTIL_previous_tachograph_card_number.setError(ErrorCode.TACH_NULL.getLabel(getBaseContext()));
+            mTIL_previous_tachograph_card_number.setError(ErrorCode.TACH_NULL
+                    .getLabel(getBaseContext()));
             return false;
         } else if (!tachNumberInput.matches(regexNumbersOnly)) {
-            mTIL_previous_tachograph_card_number.setError(ErrorCode.TACH_NOT_VALID.getLabel(getBaseContext()));
+            mTIL_previous_tachograph_card_number.setError(ErrorCode.TACH_NOT_VALID
+                    .getLabel(getBaseContext()));
             return false;
         } else mTIL_previous_tachograph_card_number.setError(null);
+
         return true;
 
     }
@@ -107,10 +118,12 @@ public class PreviousCardInfoActivity extends AppCompatActivity {
                 getEditText()).getText().toString().trim();
 
         if (dateOfExpiryInput.isEmpty()) {
-            mTIL_date_of_expiry.setError(ErrorCode.DATE_OF_EXPIRY_NULL.getLabel(getBaseContext()));
+            mTIL_date_of_expiry.setError(ErrorCode.DATE_OF_EXPIRY_NULL
+                    .getLabel(getBaseContext()));
             return false;
         } else if (!dateOfExpiryInput.matches(regexDate)) {
-            mTIL_date_of_expiry.setError(ErrorCode.DATE_NOT_VALID.getLabel(getBaseContext()));
+            mTIL_date_of_expiry.setError(ErrorCode.DATE_NOT_VALID
+                    .getLabel(getBaseContext()));
             return false;
         } else mTIL_date_of_expiry.setError(null);
         return true;

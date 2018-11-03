@@ -171,25 +171,6 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
         }
     }
 
-//    private static Bitmap rotateImageIfRequired(Context context, Bitmap img, Uri selectedImage) throws IOException {
-//
-//        InputStream input = context.getContentResolver().openInputStream(selectedImage);
-//        ExifInterface ei;
-//        ei = new ExifInterface(input);
-//
-//        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-//
-//        switch (orientation) {
-//            case ExifInterface.ORIENTATION_ROTATE_90:
-//                return rotateImage(img, 90);
-//            case ExifInterface.ORIENTATION_ROTATE_180:
-//                return rotateImage(img, 180);
-//            case ExifInterface.ORIENTATION_ROTATE_270:
-//                return rotateImage(img, 270);
-//            default:
-//                return img;
-//        }
-//    }
 
 }
 

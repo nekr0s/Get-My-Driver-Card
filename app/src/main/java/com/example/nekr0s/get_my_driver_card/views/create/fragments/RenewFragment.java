@@ -3,12 +3,12 @@ package com.example.nekr0s.get_my_driver_card.views.create.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.button.MaterialButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,9 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class RenewFragment extends Fragment {
 
 
@@ -44,7 +42,7 @@ public class RenewFragment extends Fragment {
     ListView mRenewCheckboxList;
 
     @BindView(R.id.renew_next_button)
-    MaterialButton mNextButton;
+    Button mNextButton;
 
     private int mPreselectedIndex = -1;
 
