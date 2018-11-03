@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Reason;
 import com.example.nekr0s.get_my_driver_card.views.create.adapter.ReasonsAdapter;
-import com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity;
+import com.example.nekr0s.get_my_driver_card.views.create.attatchments.DocumentsActivity;
 
 import java.util.Arrays;
 
@@ -109,9 +109,19 @@ public class RenewFragment extends Fragment {
     @OnClick(R.id.renew_next_button)
     void openNextActivity() {
 
-        //supposed to be like that
-        Intent intent = new Intent(getActivity(), DeclarationActivity.class);
+
+        //only for test
+//        Intent intent = new Intent(getActivity(), MyCameraActivity.class);
+//        startActivity(intent);
+
+
+        //only for test
+        Intent intent = new Intent(getActivity(), DocumentsActivity.class);
         startActivity(intent);
+
+        //only for test
+//        Intent intent = new Intent(getActivity(), DeclarationActivity.class);
+//        startActivity(intent);
 
         // only for test
 //        Intent intent = new Intent(getActivity(), RequestPreviewActivity.class);
