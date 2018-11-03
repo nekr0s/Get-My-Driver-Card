@@ -15,26 +15,24 @@
         android:background="@color/white">
 
         <ImageView
-            android:id="@+id/administration_icon"
-            android:layout_width="74dp"
-            android:layout_height="64dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="289dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginEnd="26dp"
-            app:srcCompat="@drawable/administration_icon"
-            tools:ignore="ContentDescription" />
-
-        <ImageView
             android:id="@+id/ministry_icon"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="26dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
             app:srcCompat="@drawable/ministry_icon"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/administration_icon"
+            android:layout_width="74dp"
+            android:layout_height="64dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="20dp"
+            app:srcCompat="@drawable/administration_icon"
             tools:ignore="ContentDescription" />
 
         <TextView
@@ -42,10 +40,11 @@
             android:layout_width="184dp"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/administration_icon"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="94dp"
-            android:layout_marginTop="2dp"
+            android:layout_alignBottom="@+id/request_reason"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="70dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="106dp"
             android:lines="3"
             android:text="@string/republic_of_bulgaria_ministry_of_transport_earta"
@@ -55,12 +54,9 @@
 
         <TextView
             android:id="@+id/request_reason"
-            android:layout_width="340dp"
+            android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="88dp"
-            android:layout_marginEnd="18dp"
+            android:layout_below="@+id/ministry_icon"
             android:text="@string/request_for_issuing_of_a_driver_card"
             android:textAlignment="center"
             android:textSize="17sp"
@@ -70,70 +66,64 @@
             android:id="@+id/photo_container"
             android:layout_width="80dp"
             android:layout_height="108dp"
-            android:layout_alignStart="@+id/ministry_icon"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="129dp"
+            android:layout_below="@+id/request_reason"
+            android:layout_marginStart="20dp"
             app:srcCompat="@drawable/pic_image"
             tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/signature_container"
             android:layout_width="80dp"
-            android:layout_height="78dp"
-            android:layout_alignStart="@+id/ministry_icon"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="239dp"
+            android:layout_height="86dp"
+            android:layout_below="@+id/photo_container"
+            android:layout_marginStart="20dp"
             app:srcCompat="@drawable/signature_image"
             tools:ignore="ContentDescription" />
 
         <EditText
             android:id="@+id/cyr_name"
-            android:layout_width="278dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="130dp"
-            android:layout_marginEnd="0dp"
+            android:layout_below="@id/request_reason"
+            android:layout_toEndOf="@+id/photo_container"
             android:ems="10"
             android:focusable="false"
             android:inputType="textPersonName"
+            android:paddingTop="15dp"
             android:text="@string/cyrName"
             tools:ignore="Autofill,LabelFor,TextFields" />
 
         <EditText
             android:id="@+id/cyr_surname"
-            android:layout_width="278dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/cyr_name"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="177dp"
+            android:layout_below="@id/cyr_name"
+            android:layout_toEndOf="@+id/photo_container"
             android:ems="10"
             android:focusable="false"
             android:inputType="textPersonName"
+            android:paddingBottom="15dp"
             android:text="@string/cyrSurname"
             tools:ignore="Autofill,LabelFor,TextFields" />
 
         <EditText
             android:id="@+id/preview_name"
-            android:layout_width="277dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/cyr_surname"
-            android:layout_marginTop="0dp"
             android:layout_toEndOf="@+id/signature_container"
             android:ems="10"
             android:focusable="false"
             android:inputType="textPersonName"
+            android:paddingTop="15dp"
             android:text="@string/name"
             tools:ignore="Autofill,LabelFor,TextFields" />
 
         <EditText
             android:id="@+id/preview_surname"
-            android:layout_width="277dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/preview_name"
-            android:layout_marginTop="-1dp"
             android:layout_toEndOf="@+id/signature_container"
             android:ems="10"
             android:focusable="false"
@@ -141,124 +131,122 @@
             android:text="@string/surname"
             tools:ignore="Autofill,LabelFor,TextFields" />
 
+        <ImageView
+            android:id="@+id/icon_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/preview_surname"
+            android:layout_marginStart="20dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="5dp"
+            app:srcCompat="@drawable/ic_location_city_black_24dp"
+            tools:ignore="ContentDescription" />
+
         <EditText
             android:id="@+id/preview_address"
-            android:layout_width="358dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="26dp"
-            android:layout_marginBottom="185dp"
+            android:layout_below="@+id/preview_surname"
+            android:layout_toEndOf="@id/icon_address"
             android:ems="10"
             android:focusable="false"
             android:inputType="textPersonName"
             android:text="@string/address_preview"
             tools:ignore="Autofill,LabelFor,TextFields" />
 
+        <ImageView
+            android:id="@+id/icon_phone_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/icon_address"
+            android:layout_marginStart="20dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="5dp"
+            app:srcCompat="@drawable/ic_local_phone_black_24dp"
+            tools:ignore="ContentDescription" />
+
         <EditText
             android:id="@+id/preview_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="26dp"
-            android:layout_marginBottom="142dp"
+            android:layout_below="@+id/preview_address"
+            android:layout_toEndOf="@+id/icon_phone_number"
             android:ems="10"
             android:focusable="false"
             android:text="@string/phone_number_preview"
             tools:ignore="Autofill,LabelFor,TextFields" />
+
+        <ImageView
+            android:id="@+id/icon_date_of_birth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/icon_phone_number"
+            android:layout_marginStart="20dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="5dp"
+            app:srcCompat="@drawable/ic_date_range_black_24dp"
+            tools:ignore="ContentDescription" />
+
 
         <EditText
             android:id="@+id/preview_birth_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/preview_number"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="26dp"
-            android:layout_marginTop="-142dp"
+            android:layout_toEndOf="@+id/icon_date_of_birth"
             android:ems="10"
             android:focusable="false"
             android:inputType="date"
             android:text="@string/date_of_birth_preview"
             tools:ignore="Autofill,LabelFor,TextFields" />
 
-        <EditText
-            android:id="@+id/preview_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="26dp"
-            android:layout_marginBottom="53dp"
-            android:ems="10"
-            android:focusable="false"
-            android:text="@string/email_preview"
-            android:textSize="16sp"
-            tools:ignore="Autofill,LabelFor,TextFields" />
-
-        <TextView
-            android:id="@+id/preview_additional_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/icon_info"
-            android:layout_alignBottom="@+id/icon_info"
-            android:layout_marginStart="30dp"
-            android:text="@string/additional_info_preview"
-            android:textSize="16sp" />
-
         <ImageView
             android:id="@+id/icon_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginBottom="59dp"
+            android:layout_below="@+id/icon_date_of_birth"
+            android:layout_marginStart="20dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="5dp"
             app:srcCompat="@drawable/ic_email_black_24dp"
             tools:ignore="ContentDescription" />
 
-        <ImageView
-            android:id="@+id/icon_date_of_birth"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/preview_email"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginBottom="104dp"
-            app:srcCompat="@drawable/ic_date_range_black_24dp"
-            tools:ignore="ContentDescription" />
-
-        <ImageView
-            android:id="@+id/icon_phone_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginBottom="150dp"
-            app:srcCompat="@drawable/ic_local_phone_black_24dp"
-            tools:ignore="ContentDescription" />
-
-        <ImageView
-            android:id="@+id/icon_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="194dp"
-            app:srcCompat="@drawable/ic_location_city_black_24dp"
-            tools:ignore="ContentDescription" />
+            android:layout_below="@+id/preview_birth_date"
+            android:layout_toEndOf="@id/icon_email"
+            android:ems="10"
+            android:focusable="false"
+            android:paddingTop="15dp"
+            android:text="@string/email_preview"
+            android:textSize="16sp"
+            tools:ignore="Autofill,LabelFor,TextFields" />
 
         <ImageView
             android:id="@+id/icon_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginBottom="22dp"
+            android:layout_below="@id/icon_email"
+            android:layout_marginStart="20dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="5dp"
             app:srcCompat="@drawable/ic_info_black_24dp"
             tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/preview_additional_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/preview_email"
+            android:layout_toEndOf="@+id/icon_info"
+            android:paddingStart="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp"
+            android:text="@string/additional_info_preview"
+            android:textSize="17sp" />
+
 
         <Button
             android:id="@+id/request_preview_submit_button"
@@ -267,8 +255,9 @@
             android:layout_below="@id/preview_additional_info"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
             android:background="@color/black"
-            android:text="Submit"
+            android:text="@string/submit"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:visibility="gone" />

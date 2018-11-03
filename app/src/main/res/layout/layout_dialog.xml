@@ -56,6 +56,8 @@
         android:id="@+id/register_confirm_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:textColor="@color/white"
         android:text="@string/register_button" />
 
 </LinearLayout>

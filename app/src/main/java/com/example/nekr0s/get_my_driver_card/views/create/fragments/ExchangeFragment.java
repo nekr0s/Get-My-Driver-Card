@@ -69,7 +69,7 @@ public class ExchangeFragment extends Fragment {
 
 
     @OnClick(R.id.exchange_next_button)
-void openNextFragment() {
+    void openNextFragment() {
     NewCardFragment nextFrag = new NewCardFragment();
         Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
             .replace(R.id.fragment_container, nextFrag, "newCardFragment")
