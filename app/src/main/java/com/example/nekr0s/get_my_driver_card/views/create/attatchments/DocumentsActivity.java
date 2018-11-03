@@ -1,6 +1,6 @@
 package com.example.nekr0s.get_my_driver_card.views.create.attatchments;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -12,19 +12,17 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Request;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,8 +33,11 @@ public class DocumentsActivity extends AppCompatActivity {
     public static final String REQUEST_SO_FAR = "REQUEST_SO_FAR";
     private Request mRequestSoFar;
 
-    private static final int CAMERA_PHOTO = 111;
-    private Uri imageToUploadUri;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int REQUEST_TAKE_PHOTO = 1;
+    String mCurrentPhotoPath;
+
+
 
     @BindView(R.id.documents_header)
     TextView mHeaderMsg;
@@ -75,8 +76,6 @@ public class DocumentsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_document_upload);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-
-
         ButterKnife.bind(this);
 
         // Gets request so far
@@ -93,101 +92,87 @@ public class DocumentsActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.selfie_button)
-    void captureCameraImage() {
-        Intent chooserIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File f = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        chooserIntent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(this,
-                getApplicationContext().getPackageName() + ".my.package.name.provider", f));
-        imageToUploadUri = FileProvider.getUriForFile(this,
-                getApplicationContext().getPackageName() + ".my.package.name.provider", f);
-        chooserIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        startActivityForResult(chooserIntent, CAMERA_PHOTO);
+    void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.example.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+            }
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_CANCELED) {
+            if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null) {
+                Bundle extras = data.getExtras();
+                galleryAddPic();
+                setPic();
 
-        if (requestCode == CAMERA_PHOTO && resultCode == DocumentsActivity.RESULT_OK) {
-            if (imageToUploadUri != null) {
-                Uri selectedImage = imageToUploadUri;
-                getContentResolver().notifyChange(selectedImage, null);
-                Bitmap reducedSizeBitmap = getBitmap(imageToUploadUri.getPath(), this);
-                if (reducedSizeBitmap != null) {
-                    mSelfieIcon.setImageBitmap(reducedSizeBitmap);
-                    Button uploadImageButton = (Button) findViewById(R.id.add_ID_button);
-                    uploadImageButton.setVisibility(View.VISIBLE);
-                } else {
-                    Toast.makeText(this, "Error while capturing Image", Toast.LENGTH_LONG).show();
-                }
-            } else {
-                Toast.makeText(this, "Error while capturing Image", Toast.LENGTH_LONG).show();
             }
         }
     }
 
+    private void setPic() {
+        // Get the dimensions of the View
+        int targetW = mSelfieIcon.getWidth();
+        int targetH = mSelfieIcon.getHeight();
 
-    private Bitmap getBitmap(String path, Context context) {
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
 
-        Uri uri = FileProvider.getUriForFile(context,
-                context.getApplicationContext().getPackageName() + ".my.package.name.provider", new File(path));
+        // Determine how much to scale down the image
+        int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
 
-        InputStream in = null;
-        try {
-            final int IMAGE_MAX_SIZE = 1200000; // 1.2MP
-            in = getContentResolver().openInputStream(uri);
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
 
-            // Decode image size
-            BitmapFactory.Options o = new BitmapFactory.Options();
-            o.inJustDecodeBounds = true;
-            BitmapFactory.decodeStream(in, null, o);
-            in.close();
+        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        mSelfieIcon.setImageBitmap(bitmap);
+    }
 
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
+    }
 
-            int scale = 1;
-            while ((o.outWidth * o.outHeight) * (1 / Math.pow(scale, 2)) >
-                    IMAGE_MAX_SIZE) {
-                scale++;
-            }
-            Log.d("", "scale = " + scale + ", orig-width: " + o.outWidth + ", orig-height: " + o.outHeight);
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
 
-            Bitmap b = null;
-            in = getContentResolver().openInputStream(uri);
-            if (scale > 1) {
-                scale--;
-                // scale to max possible inSampleSize that still yields an image
-                // larger than target
-                o = new BitmapFactory.Options();
-                o.inSampleSize = scale;
-                b = BitmapFactory.decodeStream(in, null, o);
-
-                // resize to desired dimensions
-                int height = b.getHeight();
-                int width = b.getWidth();
-                Log.d("", "1th scale operation dimenions - width: " + width + ", height: " + height);
-
-                double y = Math.sqrt(IMAGE_MAX_SIZE
-                        / (((double) width) / height));
-                double x = (y / height) * width;
-
-                Bitmap scaledBitmap = Bitmap.createScaledBitmap(b, (int) x,
-                        (int) y, true);
-                b.recycle();
-                b = scaledBitmap;
-
-                System.gc();
-            } else {
-                b = BitmapFactory.decodeStream(in);
-            }
-            in.close();
-
-            Log.d("", "bitmap size - width: " + b.getWidth() + ", height: " +
-                    b.getHeight());
-            return b;
-        } catch (IOException e) {
-            Log.e("", e.getMessage(), e);
-            return null;
-        }
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
     }
 }
 

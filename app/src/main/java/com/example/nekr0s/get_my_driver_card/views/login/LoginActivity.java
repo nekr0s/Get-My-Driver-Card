@@ -174,8 +174,8 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
                     validatePasswords(tilPasswordConfirm, tilPasswordRegister)) {
                 User user = new User(tilEmailRegister.getEditText().getText().toString(),
                         tilPasswordRegister.getEditText().getText().toString());
-                mPresenter.register(user);
-//                navigateToHome(user);
+//                mPresenter.register(user);
+                navigateToHome(user);
             }
         });
     }

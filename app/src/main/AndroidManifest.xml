@@ -26,8 +26,8 @@
             android:value="@string/facebook_app_id" />
 
         <provider
-            android:name=".views.create.attatchments.GenericFileProvider"
-            android:authorities="${applicationId}.my.package.name.provider"
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.android.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -48,7 +48,6 @@
         <activity android:name=".views.signature.SignatureActivity" />
         <activity android:name=".views.signature.DeclarationActivity" />
         <activity android:name=".views.create.attatchments.DocumentsActivity" />
-        <activity android:name=".views.create.attatchments.MyCameraActivity" />
         <activity android:name=".views.preview.RequestPreviewActivity" />
 
     </application>
