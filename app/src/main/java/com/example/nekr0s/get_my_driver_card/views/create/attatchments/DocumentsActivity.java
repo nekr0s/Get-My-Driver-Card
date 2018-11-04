@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
@@ -72,6 +73,21 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
         ButterKnife.bind(this);
 
         mPresenter = new DocumentsPresenter(this);
+        Drawable oldSelfieIcon = mSelfieIcon.getDrawable();
+        Drawable oldFileIcon = mAddIdIcon.getDrawable();
+
+        mNextButton.setOnClickListener(v -> {
+            if (mSelfieIcon.getDrawable().equals(oldSelfieIcon) | mAddIdIcon.getDrawable().equals(oldFileIcon) |
+                    mAddLicense.getDrawable().equals(oldFileIcon)) {
+
+                Toast.makeText(this, "Please upload all required files",
+                        Toast.LENGTH_LONG).show();
+            } else {
+                Intent intent = new Intent(this, DeclarationActivity.class);
+                startActivity(intent);
+            }
+
+        });
 
         // Gets request so far
         Intent intent = getIntent();
@@ -105,14 +121,8 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
         startActivityForResult(mPresenter.capturePhoto(false), REQUEST_TAKE_PHOTO);
     }
 
-    @OnClick(R.id.documents_next_button)
-    void openDeclarationActivity() {
-        Intent intent = new Intent(this, DeclarationActivity.class);
-        startActivity(intent);
-    }
 
     @Override
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_CANCELED) {
             if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null) {
