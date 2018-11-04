@@ -31,6 +31,7 @@ public class DocumentsPresenter implements DocumentsContracts.Presenter {
     @Override
     public Intent capturePhoto(boolean isFront) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        if (isFront) takePictureIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(mContext.getPackageManager()) != null) {
             // Create the File where the photo should go
@@ -39,15 +40,13 @@ public class DocumentsPresenter implements DocumentsContracts.Presenter {
                 photoFile = createImageFile();
             } catch (IOException ex) {
                 // Error occurred while creating the File
-
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
                 Uri photoURI = FileProvider.getUriForFile(mContext,
-                        "com.example.android.fileprovider",
+                        "com.example.nekr0s.get_my_driver_card.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                if (isFront) takePictureIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
             }
         }
         return takePictureIntent;
@@ -67,15 +66,24 @@ public class DocumentsPresenter implements DocumentsContracts.Presenter {
     public void savePicToGallery() {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         File f = new File(mCurrentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
+        Uri contentUri = FileProvider.getUriForFile(mContext,
+                "com.example.nekr0s.get_my_driver_card.fileprovider",
+                f);
         mediaScanIntent.setData(contentUri);
         mContext.sendBroadcast(mediaScanIntent);
+//        MediaScannerConnection.scanFile(mContext,
+//                new String[]{f.toString()}, null,
+//                (path, uri) -> {
+//                    Log.i("ExternalStorage", "Scanned " + path + ":");
+//                    Log.i("ExternalStorage", "-> uri=" + uri);
+//                });
     }
 
     @Override
     public File createImageFile() throws IOException {
         // Create an image file name
-        @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        @SuppressLint("SimpleDateFormat") String timeStamp =
+                new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
@@ -95,12 +103,13 @@ public class DocumentsPresenter implements DocumentsContracts.Presenter {
     }
 
     @Override
-    public boolean deviceHasCamera() {
-        return mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
+    public String getCurrentPath() {
+        return mCurrentPhotoPath;
     }
 
-    public String getCurrentPhotoPath() {
-        return mCurrentPhotoPath;
+    @Override
+    public boolean deviceHasCamera() {
+        return mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
     }
 
     public void setCurrentPhotoPath(String mCurrentPhotoPath) {

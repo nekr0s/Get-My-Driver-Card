@@ -1,5 +1,7 @@
 package com.example.nekr0s.get_my_driver_card.models;
 
+import com.example.nekr0s.get_my_driver_card.utils.Constants;
+
 import java.io.Serializable;
 
 public class Attachment implements Serializable {
@@ -76,5 +78,12 @@ public class Attachment implements Serializable {
 
     public void setPreviousEuCard(byte[] previousEuCard) {
         this.previousEuCard = previousEuCard;
+    }
+
+    public boolean checkPictureBytes(int flag) throws NullPointerException {
+        if (flag != Constants.NEEDS_BONUS)
+            return idShot.length != 0 && driverLicense.length != 0 && faceShot.length != 0;
+        else return idShot.length != 0 && driverLicense.length != 0 && faceShot.length != 0 &&
+                previousTachCard.length != 0;
     }
 }

@@ -10,8 +10,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.nekr0s.get_my_driver_card.R;
+import com.example.nekr0s.get_my_driver_card.models.Attachment;
 import com.example.nekr0s.get_my_driver_card.models.Request;
 import com.example.nekr0s.get_my_driver_card.views.preview.RequestPreviewActivity;
 
@@ -22,6 +24,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class DeclarationActivity extends Activity {
+    public static final String SELFIE_PATH = "SELFIE_PATH";
+    public static final String PERSONAL_ID_PATH = "PID_PATH";
+    public static final String DRIVER_LICENSE_PATH = "DL_PATH";
+    public static final String PREVIOUS_CARD_PATH = "PREV_PATH";
+    private static final int REQUEST_SIGN_HERE = 6;
     @BindView(R.id.header_msg_declaration)
     TextView mHeader;
 
@@ -48,39 +55,75 @@ public class DeclarationActivity extends Activity {
 
         ButterKnife.bind(this);
 
-        // Get intent
-        Intent intent = getIntent();
-        mRequestSoFar = (Request) intent.getSerializableExtra(ALMOST_READY_REQUEST);
+        // Get and set all Attachments
+        initIntents();
 
         //disable button if checkbox is not checked else enable button
         mCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) mFinishButton.setEnabled(true);
             else mFinishButton.setEnabled(false);
         });
-
-        //to get imagepath from SignatureActivity and set it on ImageView
-        String image_path = getIntent().getStringExtra("imagePath");
-        Bitmap bitmap = BitmapFactory.decodeFile(image_path);
-        if (bitmap != null) {
-            mSignImage.setBackground(null);
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream);
-            byte[] bytes = stream.toByteArray();
-            mRequestSoFar.getAttachment().setSignature(bytes);
-        }
-        mSignImage.setImageBitmap(bitmap);
     }
 
     @OnClick(R.id.sign_here)
     void signHereClick() {
         Intent intent = new Intent(this, SignatureActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_SIGN_HERE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_CANCELED) {
+            if (requestCode == REQUEST_SIGN_HERE && resultCode == RESULT_OK && data != null) {
+                Bundle bundle = data.getExtras();
+                // dosmth
+                String signaturePath = bundle.getString("imagePath");
+                Bitmap bitmap = BitmapFactory.decodeFile(signaturePath);
+                mSignImage.setBackground(null);
+                mSignImage.setImageBitmap(bitmap);
+                mRequestSoFar.getAttachment().setSignature(getBitmapAsByteArray(bitmap));
+            }
+        }
     }
 
     @OnClick(R.id.finish_button)
     void finalizeRequest() {
-        Intent intent = new Intent(this, RequestPreviewActivity.class);
-        startActivity(intent);
+        if (mRequestSoFar.getAttachment().getSignature() != null && mCheckBox.isChecked()) {
+            Intent intent = new Intent(this, RequestPreviewActivity.class);
+            startActivity(intent);
+        } else if (!mCheckBox.isChecked()) {
+            Toast.makeText(this, "Please accept the declaration.", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Please Sign.", Toast.LENGTH_SHORT).show();
+        }
+    }
 
+    private byte[] getBitmapAsByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream);
+        return stream.toByteArray();
+    }
+
+    private Bitmap getBitmap(String path) {
+        return BitmapFactory.decodeFile(path);
+    }
+
+    private void initIntents() {
+        // Get intent
+        Intent intent = getIntent();
+        mRequestSoFar = (Request) intent.getSerializableExtra(ALMOST_READY_REQUEST);
+        String selfiePath = intent.getStringExtra(SELFIE_PATH);
+        String personalIdPath = intent.getStringExtra(PERSONAL_ID_PATH);
+        String driverLicensePath = intent.getStringExtra(DRIVER_LICENSE_PATH);
+
+        byte[] sBytes = getBitmapAsByteArray(getBitmap(selfiePath));
+        byte[] pBytes = getBitmapAsByteArray(getBitmap(personalIdPath));
+        byte[] dBytes = getBitmapAsByteArray(getBitmap(driverLicensePath));
+
+        mRequestSoFar.setAttachment(new Attachment());
+        mRequestSoFar.getAttachment().setFaceShot(sBytes);
+        mRequestSoFar.getAttachment().setDriverLicense(dBytes);
+        mRequestSoFar.getAttachment().setIdShot(pBytes);
     }
 }

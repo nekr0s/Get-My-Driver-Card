@@ -22,6 +22,8 @@ public interface DocumentsContracts {
         File createImageFile() throws IOException;
 
         Bitmap getBitmap(BitmapFactory.Options bmOptions);
+
+        String getCurrentPath();
     }
 
     interface View {

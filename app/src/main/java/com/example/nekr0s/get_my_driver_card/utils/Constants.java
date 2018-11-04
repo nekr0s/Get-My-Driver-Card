@@ -6,9 +6,12 @@ public class Constants {
     public static final int PASSWORD_MIN_LENGTH = 6;
     public static final int PASSWORD_MAX_LENGTH = 50;
 
+    // Attachments
+    public static final int NEEDS_BONUS = 167;
+
     public static final String USER_OBJ_EXTRA = "USER_EXTRA";
 
     // Server address - change depending on situation
-    public static final String BASE_SERVER_URL = "http://10.145.113.71:9090/api";
-//    public static final String BASE_SERVER_URL = "http://192.168.0.101:9090/api";
+//    public static final String BASE_SERVER_URL = "http://10.145.113.71:9090/api";
+    public static final String BASE_SERVER_URL = "http://192.168.0.101:9090/api";
 }

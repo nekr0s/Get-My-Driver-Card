@@ -161,7 +161,7 @@ public class SignatureActivity extends AppCompatActivity {
                 bitmap.compress(Bitmap.CompressFormat.PNG, 90, mFileOutStream);
                 Intent intent = new Intent(SignatureActivity.this, DeclarationActivity.class);
                 intent.putExtra("imagePath", StoredPath);
-                startActivity(intent);
+                setResult(RESULT_OK, intent);
                 finish();
                 mFileOutStream.flush();
                 mFileOutStream.close();
@@ -253,5 +253,6 @@ public class SignatureActivity extends AppCompatActivity {
             dirtyRect.top = Math.min(lastTouchY, eventY);
             dirtyRect.bottom = Math.max(lastTouchY, eventY);
         }
+
     }
 }

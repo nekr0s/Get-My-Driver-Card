@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nekr0s.get_my_driver_card.R;
+import com.example.nekr0s.get_my_driver_card.models.Attachment;
 import com.example.nekr0s.get_my_driver_card.models.Request;
 import com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity;
 
@@ -23,10 +24,14 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
 
     public static final String REQUEST_SO_FAR = "REQUEST_SO_FAR";
     private Request mRequestSoFar;
+    private Attachment mAttachments;
 
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-    static final int REQUEST_TAKE_PHOTO = 1;
-    String mCurrentPhotoPath;
+    static final int REQUEST_IMAGE_CAPTURE = 143;
+
+    private String mSelfiePath;
+    private String mPersonalIdPath;
+    private String mDriverLicensePath;
+    private String mPreviousCardPath;
 
 
     @BindView(R.id.documents_header)
@@ -62,7 +67,6 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
     private DocumentsContracts.Presenter mPresenter;
     private String mClickedButton;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,31 +100,41 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
     @OnClick(R.id.selfie_button)
     void takePictureFront(Button button) {
         mClickedButton = button.getText().toString().trim();
-        startActivityForResult(mPresenter.capturePhoto(true), REQUEST_TAKE_PHOTO);
+        Intent intent = mPresenter.capturePhoto(true);
+        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
     }
 
     @OnClick({R.id.add_ID_button, R.id.driver_license_button, R.id.previous_card_button})
     void takePictureBack(Button button) {
         mClickedButton = button.getText().toString().trim();
-        startActivityForResult(mPresenter.capturePhoto(false), REQUEST_TAKE_PHOTO);
+        Intent intent = mPresenter.capturePhoto(false);
+        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
     }
 
     @OnClick(R.id.documents_next_button)
     void openDeclarationActivity() {
+        if (mPersonalIdPath == null || mSelfiePath == null || mDriverLicensePath == null) {
+            Toast.makeText(this, "Please provide all pictures.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Intent intent = new Intent(this, DeclarationActivity.class);
+        intent.putExtra(DeclarationActivity.ALMOST_READY_REQUEST, mRequestSoFar);
+        intent.putExtra(DeclarationActivity.SELFIE_PATH, mSelfiePath);
+        intent.putExtra(DeclarationActivity.PERSONAL_ID_PATH, mPersonalIdPath);
+        intent.putExtra(DeclarationActivity.DRIVER_LICENSE_PATH, mPersonalIdPath);
+        if (mPreviousCardPath != null)
+            intent.putExtra(DeclarationActivity.PREVIOUS_CARD_PATH, mPreviousCardPath);
         startActivity(intent);
     }
 
     @Override
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_CANCELED) {
             if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null) {
-                Bundle extras = data.getExtras();
-                mPresenter.savePicToGallery();
                 fillIcon(mClickedButton);
             }
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -161,19 +175,25 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
         // Decode the image file into a Bitmap sized to fill the View
         bmOptions.inJustDecodeBounds = false;
         bmOptions.inSampleSize = scaleFactor;
+        // For attachments
+        Bitmap bitmap = mPresenter.getBitmap(bmOptions);
 
         switch (whichButton) {
             case "Capture Photo":
-                mSelfieIcon.setImageBitmap(mPresenter.getBitmap(bmOptions));
+                mSelfieIcon.setImageBitmap(bitmap);
+                mSelfiePath = mPresenter.getCurrentPath();
                 break;
             case "Add Personal ID":
-                mAddIdIcon.setImageBitmap(mPresenter.getBitmap(bmOptions));
+                mAddIdIcon.setImageBitmap(bitmap);
+                mPersonalIdPath = mPresenter.getCurrentPath();
                 break;
             case "Add driver license":
-                mAddLicense.setImageBitmap(mPresenter.getBitmap(bmOptions));
+                mAddLicense.setImageBitmap(bitmap);
+                mDriverLicensePath = mPresenter.getCurrentPath();
                 break;
             case "Add previous card":
-                mAddLicense.setImageBitmap(mPresenter.getBitmap(bmOptions));
+                mAddLicense.setImageBitmap(bitmap);
+                mPreviousCardPath = mPresenter.getCurrentPath();
                 break;
         }
     }
