@@ -13,7 +13,6 @@
 
 
     <FrameLayout
-        android:transitionName=""
         android:id="@+id/fragment_containertwo"
         android:layout_height="wrap_content"
         android:layout_width="match_parent" />

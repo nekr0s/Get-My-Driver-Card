@@ -13,13 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.nekr0s.get_my_driver_card.R;
-import com.example.nekr0s.get_my_driver_card.models.Request;
-import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.models.UserInfo;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
-import com.example.nekr0s.get_my_driver_card.utils.enums.RequestStatus;
-import com.example.nekr0s.get_my_driver_card.utils.enums.RequestType;
-import com.example.nekr0s.get_my_driver_card.views.create.CardCreateActivity;
 import com.example.nekr0s.get_my_driver_card.views.create.attatchments.DocumentsActivity;
 
 import java.util.Objects;
@@ -113,10 +108,13 @@ public class NewCardFragment extends Fragment {
 //                | validateLastNameCyr() | validateID() | validateAddress() | validatePhone()
 //                | validateDateOfBirth() | validateEmail()) {
             Intent intent = new Intent(getActivity(), DocumentsActivity.class);
-            User user = ((CardCreateActivity) getActivity()).getLoggedInUser();
-            user.setUserInfo(createUserInfoFromFields());
-            Request request = new Request(RequestStatus.REQUEST_NEW, RequestType.TYPE_NEW, user);
-            intent.putExtra(DocumentsActivity.REQUEST_SO_FAR, request);
+
+        // TODO: 11/4/2018  we have to fix this
+        //bugs with previousCardinfoActivity (review casting to cardCreateActivity and PreviousCardInfoActivity),.
+//            User user = ((CardCreateActivity) getActivity()).getLoggedInUser();
+//            user.setUserInfo(createUserInfoFromFields());
+//            Request request = new Request(RequestStatus.REQUEST_NEW, RequestType.TYPE_NEW, user);
+//            intent.putExtra(DocumentsActivity.REQUEST_SO_FAR, request);
             startActivity(intent);
 //        }
     }

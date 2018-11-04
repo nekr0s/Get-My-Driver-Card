@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
@@ -16,6 +17,9 @@ import butterknife.OnClick;
 
 public class PreviousCardInfoActivity extends AppCompatActivity {
 
+
+    @BindView(R.id.fragment_containertwo)
+    FrameLayout mLayout;
 
     @BindView(R.id.previous_eu_country_of_issuing)
     TextInputLayout mTIL_previous_eu_country_of_issuing;
@@ -46,10 +50,13 @@ public class PreviousCardInfoActivity extends AppCompatActivity {
         //commented for testing
 //        if (validateCountryIssuer() | validateIssuingAuthority() |
 //                validateTachCardNumber() | validateDateOfExpiry()) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_containertwo, new NewCardFragment())
-                    .addToBackStack(null)
-                    .commit();
+
+
+        NewCardFragment nextFrag = new NewCardFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_containertwo, nextFrag, "newCardFragment")
+                .addToBackStack(null)
+                .commit();
 //        }
     }
 

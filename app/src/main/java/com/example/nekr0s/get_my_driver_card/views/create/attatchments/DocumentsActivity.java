@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
@@ -76,6 +77,21 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
         ButterKnife.bind(this);
 
         mPresenter = new DocumentsPresenter(this);
+        Drawable oldSelfieIcon = mSelfieIcon.getDrawable();
+        Drawable oldFileIcon = mAddIdIcon.getDrawable();
+
+        mNextButton.setOnClickListener(v -> {
+            if (mSelfieIcon.getDrawable().equals(oldSelfieIcon) | mAddIdIcon.getDrawable().equals(oldFileIcon) |
+                    mAddLicense.getDrawable().equals(oldFileIcon)) {
+
+                Toast.makeText(this, "Please upload all required files",
+                        Toast.LENGTH_LONG).show();
+            } else {
+                Intent intent = new Intent(this, DeclarationActivity.class);
+                startActivity(intent);
+            }
+
+        });
 
         // Gets request so far
         Intent intent = getIntent();
