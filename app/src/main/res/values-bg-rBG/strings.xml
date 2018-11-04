@@ -121,7 +121,7 @@
     <string name="add_previous_card">Снимай Предишна карта</string>
     <string name="submit">Изпрати</string>
     <string name="hereby_i_declare_that_all_the_provided_details_are_correct_and_understand_that_it_is_a_criminal_offense_if_i_make_a_false_declaration">С това декларирам, че всички предоставени подробности са правилни и разбирам, че е престъпление, ако направя фалшива декларация.</string>
-    <string name="click_below_to_submit_your_e_signature">Click below to submit your e-signature</string>
-    <string name="finish_button_declaration">Finish</string>
+    <string name="click_below_to_submit_your_e_signature">Натиснете отдолу за да се подпишете</string>
+    <string name="finish_button_declaration">Завърши</string>
 
 </resources>

@@ -52,6 +52,8 @@
         android:layout_alignStart="@+id/selfie_icon"
         android:layout_marginTop="10dp"
         android:background="@drawable/button_shape"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
         android:text="@string/capture_photo"
         android:textColor="@color/black" />
 
@@ -93,6 +95,7 @@
         android:layout_below="@+id/driver_license_photo"
         android:layout_marginStart="35dp"
         android:layout_marginTop="10dp"
+        android:paddingBottom="6dp"
         android:background="@drawable/button_shape"
         android:text="@string/add_driver_license"
         android:textColor="@color/black" />
