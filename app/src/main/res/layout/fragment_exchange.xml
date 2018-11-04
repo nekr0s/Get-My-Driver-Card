@@ -95,17 +95,19 @@
 
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.button.MaterialButton
+    <Button
         android:id="@+id/exchange_next_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginEnd="25dp"
         android:enabled="true"
-        android:paddingStart="15dp"
+        android:paddingStart="5dp"
         android:paddingTop="10dp"
-        android:paddingEnd="15dp"
+        android:paddingEnd="5dp"
         android:paddingBottom="10dp"
+        android:background="@color/black"
+        android:textColor="@color/white"
         android:text="@string/next" />
 
 

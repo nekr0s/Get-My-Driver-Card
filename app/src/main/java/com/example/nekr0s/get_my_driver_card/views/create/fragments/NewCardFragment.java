@@ -108,16 +108,17 @@ public class NewCardFragment extends Fragment {
 
     @OnClick(R.id.new_card_next_button)
     void openDocumentsActivity() {
-        if (validateFirstName() | validateFirstNameCyr() | validateLastName()
-                | validateLastNameCyr() | validateID() | validateAddress() | validatePhone()
-                | validateDateOfBirth() | validateEmail()) {
+        //commented for tests
+//        if (validateFirstName() | validateFirstNameCyr() | validateLastName()
+//                | validateLastNameCyr() | validateID() | validateAddress() | validatePhone()
+//                | validateDateOfBirth() | validateEmail()) {
             Intent intent = new Intent(getActivity(), DocumentsActivity.class);
             User user = ((CardCreateActivity) getActivity()).getLoggedInUser();
             user.setUserInfo(createUserInfoFromFields());
             Request request = new Request(RequestStatus.REQUEST_NEW, RequestType.TYPE_NEW, user);
             intent.putExtra(DocumentsActivity.REQUEST_SO_FAR, request);
             startActivity(intent);
-        }
+//        }
     }
 
     private UserInfo createUserInfoFromFields() {

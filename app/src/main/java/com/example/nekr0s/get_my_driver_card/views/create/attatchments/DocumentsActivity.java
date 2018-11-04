@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Request;
+import com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -102,6 +103,12 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
     void takePictureBack(Button button) {
         mClickedButton = button.getText().toString().trim();
         startActivityForResult(mPresenter.capturePhoto(false), REQUEST_TAKE_PHOTO);
+    }
+
+    @OnClick(R.id.documents_next_button)
+    void openDeclarationActivity() {
+        Intent intent = new Intent(this, DeclarationActivity.class);
+        startActivity(intent);
     }
 
     @Override

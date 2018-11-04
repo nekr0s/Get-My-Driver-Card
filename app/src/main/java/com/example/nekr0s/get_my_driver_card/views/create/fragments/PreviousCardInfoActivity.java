@@ -1,9 +1,9 @@
 package com.example.nekr0s.get_my_driver_card.views.create.fragments;
 
 import android.os.Bundle;
-import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
@@ -30,7 +30,7 @@ public class PreviousCardInfoActivity extends AppCompatActivity {
     TextInputLayout mTIL_date_of_expiry;
 
     @BindView(R.id.previous_card_next_button)
-    MaterialButton mNextButton;
+    Button mNextButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +43,14 @@ public class PreviousCardInfoActivity extends AppCompatActivity {
 
     @OnClick(R.id.previous_card_next_button)
     void openNextFragment() {
-        if (validateCountryIssuer() | validateIssuingAuthority() |
-                validateTachCardNumber() | validateDateOfExpiry()) {
+        //commented for testing
+//        if (validateCountryIssuer() | validateIssuingAuthority() |
+//                validateTachCardNumber() | validateDateOfExpiry()) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_containertwo, new NewCardFragment())
                     .addToBackStack(null)
                     .commit();
-        }
+//        }
     }
 
     private boolean validateCountryIssuer() {

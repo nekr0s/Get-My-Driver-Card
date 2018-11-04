@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Request;
+import com.example.nekr0s.get_my_driver_card.views.preview.RequestPreviewActivity;
 
 import java.io.ByteArrayOutputStream;
 
@@ -78,6 +79,8 @@ public class DeclarationActivity extends Activity {
 
     @OnClick(R.id.finish_button)
     void finalizeRequest() {
+        Intent intent = new Intent(this, RequestPreviewActivity.class);
+        startActivity(intent);
 
     }
 }
