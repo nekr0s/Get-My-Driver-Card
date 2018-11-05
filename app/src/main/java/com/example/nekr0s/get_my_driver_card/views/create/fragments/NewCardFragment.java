@@ -1,7 +1,6 @@
 package com.example.nekr0s.get_my_driver_card.views.create.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -12,16 +11,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.nekr0s.get_my_driver_card.R;
-import com.example.nekr0s.get_my_driver_card.models.Request;
-import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.models.UserInfo;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
-import com.example.nekr0s.get_my_driver_card.utils.enums.RequestStatus;
-import com.example.nekr0s.get_my_driver_card.utils.enums.RequestType;
+import com.example.nekr0s.get_my_driver_card.validator.base.DateValidator;
+import com.example.nekr0s.get_my_driver_card.validator.base.DigitsValidator;
 import com.example.nekr0s.get_my_driver_card.validator.base.EmailValidator;
+import com.example.nekr0s.get_my_driver_card.validator.base.NameValidator;
+import com.example.nekr0s.get_my_driver_card.validator.base.NamesValidator;
 import com.example.nekr0s.get_my_driver_card.validator.base.Validator;
-import com.example.nekr0s.get_my_driver_card.views.create.attatchments.DocumentsActivity;
-import com.example.nekr0s.get_my_driver_card.views.create.base.UserHolder;
+import com.example.nekr0s.get_my_driver_card.validator.base.ValidatorDate;
+import com.example.nekr0s.get_my_driver_card.validator.base.ValidatorDigits;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -70,7 +69,10 @@ public class NewCardFragment extends Fragment {
     private HashSet<ErrorCode> errorCodes = new HashSet<>();
 
 
+    private final ValidatorDate mDateValidator = new DateValidator();
     private final Validator mValidator = new EmailValidator();
+    private final NameValidator mNameValidator = new NamesValidator();
+    private final ValidatorDigits mDigitsValidator = new DigitsValidator();
 
 
     public static NewCardFragment newInstance() {
@@ -110,23 +112,19 @@ public class NewCardFragment extends Fragment {
     @OnClick(R.id.new_card_next_button)
     void openDocumentsActivity() {
 
-        //commented for tests
-//        if (validateFirstName() | validateFirstNameCyr() | validateLastName()
-//                | validateLastNameCyr() | validateID() | validateAddress() | validatePhone()
-//                | validateDateOfBirth() | validateEmail()) {
 
+        errorCodes.add(mNameValidator.isFirstNameValid(mTIL_firstName.getEditText().getText().toString().trim()));
+        errorCodes.add(mNameValidator.isFirstNameCyrValid(mTIL_firstName_cyrillic.getEditText().getText().toString().trim()));
+        errorCodes.add(mNameValidator.isLastNameValid(mTIL_lastName.getEditText().getText().toString().trim()));
+        errorCodes.add(mNameValidator.isLastNameCyrValid(mTIL_lastName_cyrillic.getEditText().getText().toString().trim()));
+        errorCodes.add(mDigitsValidator.isPersonalNumberValid(mTIL_personalNumber.getEditText().getText().toString().trim()));
+        errorCodes.add(mNameValidator.isAddressValid(mTIL_address.getEditText().getText().toString().trim()));
+        errorCodes.add(mDigitsValidator.isPhoneNumberValid(mTIL_phoneNumber.getEditText().getText().toString().trim()));
+        errorCodes.add(mDateValidator.isDateValid(mTIL_dateOfBirth.getEditText().getText().toString().trim()));
         errorCodes.add(mValidator.isValid(mTIL_email_address.getEditText().getText().toString().trim()));
 
         setErrors(errorCodes);
 
-        if (errorCodes.isEmpty()) {
-            Intent intent = new Intent(getActivity(), DocumentsActivity.class);
-            User user = ((UserHolder) getActivity()).getCurrentUser();
-            user.setUserInfo(createUserInfoFromFields());
-            Request request = new Request(RequestStatus.REQUEST_NEW, RequestType.TYPE_NEW, user);
-            intent.putExtra(DocumentsActivity.REQUEST_SO_FAR, request);
-            startActivity(intent);
-        }
     }
 
     private UserInfo createUserInfoFromFields() {
@@ -141,189 +139,84 @@ public class NewCardFragment extends Fragment {
                 mTIL_email_address.getEditText().getText().toString());
     }
 
-//    public boolean validateFirstName() {
-//        String firstNameInput = Objects.requireNonNull(mTIL_firstName.
-//                getEditText()).getText().toString().trim();
-//
-//        if (firstNameInput.isEmpty()) {
-//            mTIL_firstName.setError(ErrorCode.NAME_NULL
-//                    .getLabel(Objects.requireNonNull(getContext())));
-//            return false;
-////        } else if (!firstNameInput.matches(regexNames)) {
-//            mTIL_firstName.setError(ErrorCode.NAME_NOT_VALID
-//                    .getLabel(Objects.requireNonNull(getContext())));
-//            return false;
-//        } else {
-//            mTIL_firstName.setError(null);
-//            return true;
-//        }
-//
-//    }
-
-//    public boolean validateFirstNameCyr() {
-//        String firstNameCyrInput = Objects.requireNonNull(mTIL_firstName_cyrillic
-//                .getEditText()).getText().toString().trim();
-//
-//        if (firstNameCyrInput.isEmpty()) {
-//            mTIL_firstName_cyrillic.setError(ErrorCode.CYR_NAME_NULL
-//                    .getLabel(Objects.requireNonNull(getContext())));
-//            return false;
-//        } else if (firstNameCyrInput.length() > 256) {
-//            mTIL_firstName_cyrillic.setError(ErrorCode.CYR_NAME_NOT_VALID
-//                    .getLabel(Objects.requireNonNull(getContext())));
-//            return false;
-//        } else if (!CYRILLIC_PATTERN.matcher(firstNameCyrInput).matches()) {
-//            mTIL_firstName_cyrillic.setError(ErrorCode.NAME_NOT_IN_CYRILLIC
-//                    .getLabel(Objects.requireNonNull(getContext())));
-//        } else
-//            mTIL_firstName_cyrillic.setError(null);
-//        return true;
-//
-//    }
-//
-//    public boolean validateLastName() {
-//        String validateLastName = Objects.requireNonNull(mTIL_lastName
-//                .getEditText()).getText().toString().trim();
-//
-//        if (validateLastName.isEmpty()) {
-//            mTIL_lastName.setError(ErrorCode.LAST_NAME_NULL
-//                    .getLabel(Objects.requireNonNull(getContext())));
-//            return false;
-//        } else if (!validateLastName.matches(regexNames)) {
-//            mTIL_lastName.setError(ErrorCode.LAST_NAME_NOT_VALID
-//                    .getLabel(Objects.requireNonNull(getContext())));
-//            return false;
-//        } else mTIL_lastName.setError(null);
-//        return true;
-//
-//    }
-//
-//    public boolean validateLastNameCyr() {
-//        String lastNameCyr = Objects.requireNonNull(mTIL_lastName_cyrillic
-//                .getEditText()).getText().toString().trim();
-//        if (lastNameCyr.isEmpty()) {
-//            mTIL_lastName_cyrillic.setError(ErrorCode.CYR_LAST_NAME_NULL
-//                    .getLabel(Objects.requireNonNull(getContext())));
-//            return false;
-//        } else if (lastNameCyr.length() > 256) {
-//            mTIL_lastName_cyrillic.setError(ErrorCode.CYR_LAST_NAME_NOT_VALID
-//                    .getLabel(Objects.requireNonNull(getContext())));
-//            return false;
-//        } else if (!CYRILLIC_PATTERN.matcher(lastNameCyr).matches()) {
-//            mTIL_lastName_cyrillic.setError(ErrorCode.LAST_NAME_NOT_IN_CYRILLIC
-//                    .getLabel(Objects.requireNonNull(getContext())));
-//            return false;
-//        } else mTIL_lastName_cyrillic.setError(null);
-//        return true;
-//
-//    }
-//
-//    public boolean validateID() {
-//        String personalNum = Objects.requireNonNull(mTIL_personalNumber
-//                .getEditText()).getText().toString().trim();
-//
-//        String regexNumbersOnly = "^[0-9]*$";
-//        if (personalNum.isEmpty()) {
-//            mTIL_personalNumber.setError(ErrorCode.ID_NULL
-//                    .getLabel(Objects.requireNonNull(getContext())));
-//            return false;
-//        } else if (!(personalNum).matches(regexNumbersOnly)) {
-//            mTIL_personalNumber.setError(ErrorCode.NOT_DIGIT
-//                    .getLabel(Objects.requireNonNull(getContext())));
-//            return false;
-//        } else if ((personalNum).length() > 10) {
-//            mTIL_personalNumber.setError(ErrorCode.ID_INVALID
-//                    .getLabel(Objects.requireNonNull(getContext())));
-//            return false;
-//        } else mTIL_personalNumber.setError(null);
-//        return true;
-//
-//    }
-//
-//    public boolean validateAddress() {
-//        String address = Objects.requireNonNull(mTIL_address
-//                .getEditText()).getText().toString().trim();
-//
-//        if (address.length() > 100) {
-//            mTIL_address.setError(ErrorCode.ADDRESS_TOO_LONG
-//                    .getLabel(Objects.requireNonNull(getContext())));
-//            return false;
-//        } else if (address.isEmpty()) {
-//            mTIL_address.setError(ErrorCode.ADDRESS_NULL
-//                    .getLabel(Objects.requireNonNull(getContext())));
-//            return false;
-//        } else mTIL_address.setError(null);
-//        return true;
-//
-//    }
-//
-//    public boolean validatePhone() {
-//        String phoneNumber = Objects.requireNonNull(mTIL_phoneNumber
-//                .getEditText()).getText().toString().trim();
-//
-//        if (phoneNumber.isEmpty()) {
-//            mTIL_phoneNumber.setError(ErrorCode.PHONE_NULL
-//                    .getLabel(Objects.requireNonNull(getContext())));
-//            return false;
-//        } else if (!Patterns.PHONE.matcher(phoneNumber).matches()) {
-//            mTIL_phoneNumber.setError(ErrorCode.PHONE_INVALID
-//                    .getLabel(Objects.requireNonNull(getContext())));
-//            return false;
-//        } else mTIL_phoneNumber.setError(null);
-//        return true;
-//
-//    }
-//
-//    public boolean validateDateOfBirth() {
-//        String dateOfBirth = Objects.requireNonNull(mTIL_dateOfBirth
-//                .getEditText()).getText().toString().trim();
-//
-//        String regexDate = getString(R.string.date_of_birth_regex);
-//        if (dateOfBirth.isEmpty()) {
-//            mTIL_dateOfBirth.setError(ErrorCode.DATE_NULL
-//                    .getLabel(Objects.requireNonNull(getContext())));
-//            return false;
-//        } else if (!dateOfBirth.matches(regexDate)) {
-//            mTIL_dateOfBirth.setError(ErrorCode.DATE_INVALID
-//                    .getLabel(Objects.requireNonNull(getContext())));
-//            return false;
-//        } else mTIL_dateOfBirth.setError(null);
-//        return true;
-//
-//    }
-//
-//    public boolean validateEmail() {
-//        String emailInput = Objects.requireNonNull(mTIL_email_address
-//                .getEditText()).getText().toString().trim();
-//
-//        if (emailInput.isEmpty()) {
-//
-//            mTIL_email_address.setError(ErrorCode.EMAIL_CARD_NULL
-//                    .getLabel(Objects.requireNonNull(getContext())));
-//            return false;
-//        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
-//            mTIL_email_address.setError(ErrorCode.EMAIL_INVALID
-//                    .getLabel(Objects.requireNonNull(getContext())));
-//        } else mTIL_email_address.setError(null);
-//        return true;
-//
-//    }
-
-
     public void setErrors(HashSet<ErrorCode> errors) {
-        for (ErrorCode e : errors) setErrorCorresponding(e);
-    }
 
+        for (ErrorCode e : errors) setErrorCorresponding(e);
+        errors.clear();
+    }
     private void setErrorCorresponding(ErrorCode e) {
         switch (e) {
-            case EMAIL_CARD_NULL:
-            case EMAIL_INVALID:
-                mTIL_email_address.setError(e.getLabel(Objects.requireNonNull(getContext())));
+            case NAME_NULL:
+            case NAME_TOO_LONG:
+            case NAME_NOT_VALID:
+                mTIL_firstName.setError(e.getLabel(Objects.requireNonNull(getContext())));
+            case NAME_OK:
+                mTIL_firstName.setError(null);
                 break;
-            case EMAIL_OK:
-                mTIL_email_address.setError(null);
+
+            case CYR_NAME_NULL:
+            case CYR_NAME_TOO_LONG:
+            case CYR_NAME_NOT_IN_CYRILLIC:
+                mTIL_firstName_cyrillic.setError(e.getLabel(Objects.requireNonNull(getContext())));
+            case CYR_NAME_OK:
+                mTIL_firstName_cyrillic.setError(null);
                 errorCodes.remove(e);
                 break;
+
+            case LAST_NAME_NULL:
+            case LAST_NAME_TOO_LONG:
+            case LAST_NAME_NOT_VALID:
+                mTIL_lastName.setError(e.getLabel(Objects.requireNonNull(getContext())));
+            case LAST_NAME_OK:
+                mTIL_lastName.setError(null);
+                break;
+
+            case CYR_LAST_NAME_NULL:
+            case CYR_LAST_NAME_TOO_LONG:
+            case CYR_LAST_NAME_NOT_IN_CYRILLIC:
+                mTIL_lastName_cyrillic.setError(e.getLabel(Objects.requireNonNull(getContext())));
+            case CYR_LAST_NAME_OK:
+                mTIL_lastName_cyrillic.setError(null);
+                break;
+
+            case ID_NULL:
+            case ID_TOO_LONG:
+            case ID_INVALID:
+                mTIL_personalNumber.setError(e.getLabel(Objects.requireNonNull(getContext())));
+            case ID_OK:
+                mTIL_personalNumber.setError(null);
+                break;
+
+            case ADDRESS_NULL:
+            case ADDRESS_TOO_LONG:
+                mTIL_address.setError(e.getLabel(Objects.requireNonNull(getContext())));
+            case ADDRESS_OK:
+                mTIL_address.setError(null);
+                break;
+
+            case PHONE_NULL:
+            case PHONE_TOO_LONG:
+            case PHONE_INVALID:
+                mTIL_phoneNumber.setError(e.getLabel(Objects.requireNonNull(getContext())));
+            case PHONE_OK:
+                mTIL_phoneNumber.setError(null);
+                break;
+
+            case DATE_NULL:
+            case DATE_INVALID:
+                mTIL_dateOfBirth.setError(e.getLabel(Objects.requireNonNull(getContext())));
+            case DATE_OK:
+                mTIL_dateOfBirth.setError(null);
+                break;
+
+            case EMAIL_CARD_NULL:
+            case EMAIL_INVALID:
+            case EMAIL_TOO_LONG:
+                mTIL_email_address.setError(e.getLabel(Objects.requireNonNull(getContext())));
+            case EMAIL_OK:
+                mTIL_email_address.setError(null);
+                break;
+
 
         }
     }

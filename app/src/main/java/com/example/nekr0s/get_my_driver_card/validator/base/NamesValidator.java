@@ -32,14 +32,26 @@ public class NamesValidator implements NameValidator {
     @Override
     public ErrorCode isFirstNameCyrValid(String input) {
         if (input.isEmpty()) return ErrorCode.CYR_NAME_NULL;
-        else if (!input.matches(regexCyrillic)) return ErrorCode.CYR_NAME_NOT_VALID;
+        else if (!input.matches(regexCyrillic)) return ErrorCode.CYR_NAME_NOT_IN_CYRILLIC;
         else if (input.length() > Constants.NAME_MAX_LENGTH) return ErrorCode.CYR_NAME_TOO_LONG;
         else return ErrorCode.CYR_NAME_OK;
     }
 
     @Override
     public ErrorCode isLastNameCyrValid(String input) {
-        return null;
+        if (input.isEmpty()) return ErrorCode.CYR_LAST_NAME_NULL;
+        else if (!input.matches(regexCyrillic)) return ErrorCode.CYR_LAST_NAME_NOT_IN_CYRILLIC;
+        else if (input.length() > Constants.NAME_MAX_LENGTH)
+            return ErrorCode.CYR_LAST_NAME_TOO_LONG;
+        else return ErrorCode.CYR_LAST_NAME_OK;
+    }
+
+    @Override
+    public ErrorCode isAddressValid(String input) {
+        if (input.isEmpty()) return ErrorCode.ADDRESS_NULL;
+        else if (input.length() > Constants.ADDRESS_MAX_LENGTH) return ErrorCode.ADDRESS_TOO_LONG;
+        else return ErrorCode.ADDRESS_OK;
+
     }
 
     @Override
@@ -49,6 +61,16 @@ public class NamesValidator implements NameValidator {
 
     @Override
     public ErrorCode isIssuerAuthorityValid(String input) {
+        return null;
+    }
+
+    @Override
+    public ErrorCode isEuCountryOfIssuingValid(String input) {
+        return null;
+    }
+
+    @Override
+    public ErrorCode isLicenseCountryOfIsuingValid(String input) {
         return null;
     }
 }

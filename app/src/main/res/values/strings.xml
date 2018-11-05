@@ -71,13 +71,11 @@
     <string name="NAME_NULL">Name can\'t be empty</string>
     <string name="NAME_NOT_VALID">Name must contain only letters and symbols</string>
     <string name="CYR_NAME_NULL">Name can\'t be empty</string>
-    <string name="CYR_NAME_NOT_VALID">Field is too long</string>
     <string name="NAME_NOT_IN_CYRILLIC">Please enter your name in cyrillic</string>
     <string name="LAST_NAME_NULL">Last name can\'t be empty</string>
     <string name="LAST_NAME_NOT_VALID">Field must contain only letters and symbols</string>
     <string name="CYR_LAST_NAME_NULL">Last name can\'t be empty</string>
-    <string name="CYR_LAST_NAME_NOT_VALID">Field is too long</string>
-    <string name="LAST_NAME_NOT_IN_CYRILLIC">Please enter your last name in cyrillic</string>
+    <string name="CYR_LAST_NAME_NOT_IN_CYRILLIC">Please enter your last name in cyrillic</string>
     <string name="NOT_DIGIT">Please enter only digits</string>
     <string name="ID_INVALID">ID number is too long</string>
     <string name="ADDRESS_TOO_LONG">Address is too long</string>
@@ -125,4 +123,10 @@
     <string name="hereby_i_declare_that_all_the_provided_details_are_correct_and_understand_that_it_is_a_criminal_offense_if_i_make_a_false_declaration">Hereby I declare that all the provided details are correct and understand that it is a criminal offense if I make a false declaration.</string>
     <string name="click_below_to_submit_your_e_signature">Click below to submit your e-signature</string>
     <string name="finish_button_declaration">Finish</string>
+    <string name="ID_TOO_LONG">Field is too long</string>
+    <string name="NAME_TOO_LONG">Field is too long</string>
+    <string name="CYR_NAME_TOO_LONG">Field is too long</string>
+    <string name="CYR_LAST_NAME_TOO_LONG">Field is too long</string>
+    <string name="PHONE_TOO_LONG">Field is too long</string>
+    <string name="EMAIL_TOO_LONG">Field is too long</string>
 </resources>

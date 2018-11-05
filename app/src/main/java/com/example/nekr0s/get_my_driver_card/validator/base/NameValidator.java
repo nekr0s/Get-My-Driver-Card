@@ -12,8 +12,16 @@ public interface NameValidator {
 
     ErrorCode isLastNameCyrValid(String input);
 
+    ErrorCode isAddressValid(String input);
+
     ErrorCode isIssuerCountryValid(String input);
 
     ErrorCode isIssuerAuthorityValid(String input);
+
+    ErrorCode isEuCountryOfIssuingValid(String input);
+
+    ErrorCode isLicenseCountryOfIsuingValid(String input);
+
+
 
 }
