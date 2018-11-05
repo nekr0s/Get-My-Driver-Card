@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.User;
+import com.example.nekr0s.get_my_driver_card.views.create.base.UserHolder;
 import com.example.nekr0s.get_my_driver_card.views.create.fragments.ExchangeFragment;
 import com.example.nekr0s.get_my_driver_card.views.create.fragments.NewCardFragment;
 import com.example.nekr0s.get_my_driver_card.views.create.fragments.RenewFragment;
@@ -16,7 +17,7 @@ import com.example.nekr0s.get_my_driver_card.views.create.fragments.ReplaceFragm
 
 import butterknife.ButterKnife;
 
-public class CardCreateActivity extends AppCompatActivity {
+public class CardCreateActivity extends AppCompatActivity implements UserHolder {
 
     public static final String EXTRA_KEY = "NAVIGATE_EXTRA";
     public static final String CURRENT_USER = "CURRENT_USER";
@@ -75,4 +76,8 @@ public class CardCreateActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public User getCurrentUser() {
+        return mLoggedInUser;
+    }
 }

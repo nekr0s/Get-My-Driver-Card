@@ -25,7 +25,6 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
 
     public static final String REQUEST_SO_FAR = "REQUEST_SO_FAR";
     private Request mRequestSoFar;
-    private Attachment mAttachments;
 
     static final int REQUEST_IMAGE_CAPTURE = 143;
 
@@ -77,21 +76,6 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
         ButterKnife.bind(this);
 
         mPresenter = new DocumentsPresenter(this);
-        Drawable oldSelfieIcon = mSelfieIcon.getDrawable();
-        Drawable oldFileIcon = mAddIdIcon.getDrawable();
-
-        mNextButton.setOnClickListener(v -> {
-            if (mSelfieIcon.getDrawable().equals(oldSelfieIcon) | mAddIdIcon.getDrawable().equals(oldFileIcon) |
-                    mAddLicense.getDrawable().equals(oldFileIcon)) {
-
-                Toast.makeText(this, "Please upload all required files",
-                        Toast.LENGTH_LONG).show();
-            } else {
-                Intent intent = new Intent(this, DeclarationActivity.class);
-                startActivity(intent);
-            }
-
-        });
 
         // Gets request so far
         Intent intent = getIntent();

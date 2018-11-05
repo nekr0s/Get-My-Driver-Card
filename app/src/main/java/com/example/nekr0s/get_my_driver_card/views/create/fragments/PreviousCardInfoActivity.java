@@ -1,5 +1,6 @@
 package com.example.nekr0s.get_my_driver_card.views.create.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +8,10 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.example.nekr0s.get_my_driver_card.R;
+import com.example.nekr0s.get_my_driver_card.models.User;
+import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
+import com.example.nekr0s.get_my_driver_card.views.create.base.UserHolder;
 
 import java.util.Objects;
 
@@ -15,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class PreviousCardInfoActivity extends AppCompatActivity {
+public class PreviousCardInfoActivity extends AppCompatActivity implements UserHolder {
 
 
     @BindView(R.id.fragment_containertwo)
@@ -36,6 +40,8 @@ public class PreviousCardInfoActivity extends AppCompatActivity {
     @BindView(R.id.previous_card_next_button)
     Button mNextButton;
 
+    private User mCurrentUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +49,9 @@ public class PreviousCardInfoActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        // Get logged in  user
+        Intent intent = getIntent();
+        mCurrentUser = (User) intent.getSerializableExtra(Constants.USER_OBJ_EXTRA);
     }
 
     @OnClick(R.id.previous_card_next_button)
@@ -138,6 +147,10 @@ public class PreviousCardInfoActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public User getCurrentUser() {
+        return mCurrentUser;
+    }
 }
 
 

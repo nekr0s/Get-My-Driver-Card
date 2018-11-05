@@ -8,14 +8,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Reason;
+import com.example.nekr0s.get_my_driver_card.models.User;
+import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.views.create.adapter.ReasonsAdapter;
+import com.example.nekr0s.get_my_driver_card.views.create.base.UserHolder;
 
 import java.util.Objects;
 
@@ -60,12 +61,9 @@ public class ReplaceFragment extends Fragment {
         final ReasonsAdapter adapter = new ReasonsAdapter(getActivity());
         listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                checkBoxLogic(adapter.getItem(position), adapter, position);
-            }
-        });
+        listView
+                .setOnItemClickListener((adapterView, view1, position, id)
+                        -> checkBoxLogic(adapter.getItem(position), adapter, position));
 
         return view;
     }
@@ -113,6 +111,8 @@ public class ReplaceFragment extends Fragment {
     @OnClick(R.id.replace_reason_button)
     void openNextActivity() {
         Intent intent = new Intent(getActivity(), PreviousCardInfoActivity.class);
+        User user = ((UserHolder) getActivity()).getCurrentUser();
+        intent.putExtra(Constants.USER_OBJ_EXTRA, user);
         startActivity(intent);
     }
 }

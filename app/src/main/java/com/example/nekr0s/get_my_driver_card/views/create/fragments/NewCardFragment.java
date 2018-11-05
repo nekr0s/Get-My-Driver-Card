@@ -13,9 +13,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.nekr0s.get_my_driver_card.R;
+import com.example.nekr0s.get_my_driver_card.models.Request;
+import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.models.UserInfo;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
+import com.example.nekr0s.get_my_driver_card.utils.enums.RequestStatus;
+import com.example.nekr0s.get_my_driver_card.utils.enums.RequestType;
 import com.example.nekr0s.get_my_driver_card.views.create.attatchments.DocumentsActivity;
+import com.example.nekr0s.get_my_driver_card.views.create.base.UserHolder;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -107,15 +112,14 @@ public class NewCardFragment extends Fragment {
 //        if (validateFirstName() | validateFirstNameCyr() | validateLastName()
 //                | validateLastNameCyr() | validateID() | validateAddress() | validatePhone()
 //                | validateDateOfBirth() | validateEmail()) {
-            Intent intent = new Intent(getActivity(), DocumentsActivity.class);
+        Intent intent = new Intent(getActivity(), DocumentsActivity.class);
 
         // TODO: 11/4/2018  we have to fix this
-        //bugs with previousCardinfoActivity (review casting to cardCreateActivity and PreviousCardInfoActivity),.
-//            User user = ((CardCreateActivity) getActivity()).getLoggedInUser();
-//            user.setUserInfo(createUserInfoFromFields());
-//            Request request = new Request(RequestStatus.REQUEST_NEW, RequestType.TYPE_NEW, user);
-//            intent.putExtra(DocumentsActivity.REQUEST_SO_FAR, request);
-            startActivity(intent);
+        User user = ((UserHolder) getActivity()).getCurrentUser();
+        user.setUserInfo(createUserInfoFromFields());
+        Request request = new Request(RequestStatus.REQUEST_NEW, RequestType.TYPE_NEW, user);
+        intent.putExtra(DocumentsActivity.REQUEST_SO_FAR, request);
+        startActivity(intent);
 //        }
     }
 
