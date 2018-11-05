@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,11 +17,9 @@ import android.widget.Toast;
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
-import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
 import com.example.nekr0s.get_my_driver_card.utils.keyboard.KeyboardHider;
 import com.example.nekr0s.get_my_driver_card.views.list.ListActivity;
 
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
@@ -223,47 +220,47 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         finish();
     }
 
-    private boolean validateEmail(TextInputLayout email) {
-        String emailInput = Objects.requireNonNull(email.getEditText()).getText().toString().trim();
+//    private boolean validateEmail(TextInputLayout email) {
+//        String emailInput = Objects.requireNonNull(email.getEditText()).getText().toString().trim();
+//
+//        if (emailInput.isEmpty()) {
+//            email.setError(ErrorCode.EMAIL_NULL.getLabel(getBaseContext()));
+//            return false;
+//        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
+//            email.setError(ErrorCode.EMAIL_NOT_CORRECT.getLabel(getBaseContext()));
+//            return false;
+//        } else email.setError(null);
+//        return true;
+//
+//    }
+//
+//    private boolean validatePassword(TextInputLayout password) {
+//        String passwordInput = password.getEditText().getText().toString().trim();
+//        if (passwordInput.isEmpty()) {
+//            password.setError(ErrorCode.PASSWORD_NULL.getLabel(getBaseContext()));
+//            return false;
+//        } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
+//            password.setError(ErrorCode.PASSWORD_TOO_SIMPLE.getLabel(getBaseContext()));
+//            return false;
+//        } else password.setError(null);
+//
+//        return true;
+//    }
 
-        if (emailInput.isEmpty()) {
-            email.setError(ErrorCode.EMAIL_NULL.getLabel(getBaseContext()));
-            return false;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
-            email.setError(ErrorCode.EMAIL_NOT_CORRECT.getLabel(getBaseContext()));
-            return false;
-        } else email.setError(null);
-        return true;
-
-    }
-
-    private boolean validatePassword(TextInputLayout password) {
-        String passwordInput = password.getEditText().getText().toString().trim();
-        if (passwordInput.isEmpty()) {
-            password.setError(ErrorCode.PASSWORD_NULL.getLabel(getBaseContext()));
-            return false;
-        } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
-            password.setError(ErrorCode.PASSWORD_TOO_SIMPLE.getLabel(getBaseContext()));
-            return false;
-        } else password.setError(null);
-
-        return true;
-    }
-
-    private boolean validatePasswords(TextInputLayout password, TextInputLayout confirmPassword) {
-        String passwordInput = Objects.requireNonNull(password.getEditText()).getText().toString().trim();
-        String passwordInputTwo = Objects.requireNonNull(confirmPassword.getEditText()).getText().toString().trim();
-
-        if (!validatePassword(password)) return false;
-        else if (!passwordInput.equals(passwordInputTwo)) {
-            password.setError(ErrorCode.PASSWORDS_DONT_MATCH.getLabel(getBaseContext()));
-            confirmPassword.setError(ErrorCode.PASSWORDS_DONT_MATCH.getLabel(getBaseContext()));
-            return false;
-        } else {
-            password.setError(null);
-            confirmPassword.setError(null);
-        }
-        return true;
-    }
+//    private boolean validatePasswords(TextInputLayout password, TextInputLayout confirmPassword) {
+//        String passwordInput = Objects.requireNonNull(password.getEditText()).getText().toString().trim();
+//        String passwordInputTwo = Objects.requireNonNull(confirmPassword.getEditText()).getText().toString().trim();
+//
+//        if (!validatePassword(password)) return false;
+//        else if (!passwordInput.equals(passwordInputTwo)) {
+//            password.setError(ErrorCode.PASSWORDS_DONT_MATCH.getLabel(getBaseContext()));
+//            confirmPassword.setError(ErrorCode.PASSWORDS_DONT_MATCH.getLabel(getBaseContext()));
+//            return false;
+//        } else {
+//            password.setError(null);
+//            confirmPassword.setError(null);
+//        }
+//        return true;
+//    }
 
 }

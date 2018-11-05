@@ -2,11 +2,9 @@ package com.example.nekr0s.get_my_driver_card.validator;
 
 import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
-import com.example.nekr0s.get_my_driver_card.validator.base.Validator;
 
-public class LoginValidator implements Validator<User> {
+public class LoginValidator {
 
-    @Override
     public boolean isValid(User user) {
         return user != null &&
                 isEmailLengthValid(user) &&
