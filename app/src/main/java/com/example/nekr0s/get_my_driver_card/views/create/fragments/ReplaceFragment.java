@@ -75,8 +75,11 @@ public class ReplaceFragment extends Fragment {
     }
 
     private void checkBoxLogic(Reason reason, ReasonsAdapter adapter, int position) {
-        if (reason.isSelected()) reason.setSelected(false);
-        else {
+        if (reason.isSelected()) {
+            reason.setSelected(false);
+            editTextDateLost.setVisibility(View.GONE);
+            editTextPlaceLost.setVisibility(View.GONE);
+        } else {
             reason.setSelected(true);
             displayForms(reason.getReasonName());
         }
@@ -90,7 +93,7 @@ public class ReplaceFragment extends Fragment {
             adapter.update(mPreselectedIndex, preRecord);
         }
 
-        mPreselectedIndex = position;
+        mPreselectedIndex = (position == mPreselectedIndex) ? -1 : position;
     }
 
     private boolean isLostOrStolen(String reasonName) {

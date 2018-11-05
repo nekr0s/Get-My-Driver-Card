@@ -88,7 +88,7 @@ public class RenewFragment extends Fragment {
             adapter.update(mPreselectedIndex, preRecord);
         }
 
-        mPreselectedIndex = position;
+        mPreselectedIndex = (position == mPreselectedIndex) ? -1 : position;
     }
 
     private void reactivateButton(boolean isSelected) {
