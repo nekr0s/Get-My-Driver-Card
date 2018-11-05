@@ -3,12 +3,12 @@ package com.example.nekr0s.get_my_driver_card.views.create.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.nekr0s.get_my_driver_card.R;
@@ -30,10 +30,10 @@ public class ReplaceFragment extends Fragment {
     ListView listView;
 
     @BindView(R.id.replace_date)
-    TextInputLayout mTIL_Date;
+    EditText editTextDateLost;
 
     @BindView(R.id.replace_place)
-    TextInputLayout mTIL_Place;
+    EditText editTextPlaceLost;
 
     @BindView(R.id.replace_reason_button)
     Button mNextButton;
@@ -100,11 +100,11 @@ public class ReplaceFragment extends Fragment {
 
     private void displayForms(String reasonName) {
         if (isLostOrStolen(reasonName)) {
-            mTIL_Date.setVisibility(View.VISIBLE);
-            mTIL_Place.setVisibility(View.VISIBLE);
+            editTextDateLost.setVisibility(View.VISIBLE);
+            editTextPlaceLost.setVisibility(View.VISIBLE);
         } else {
-            mTIL_Date.setVisibility(View.GONE);
-            mTIL_Place.setVisibility(View.GONE);
+            editTextDateLost.setVisibility(View.GONE);
+            editTextPlaceLost.setVisibility(View.GONE);
         }
     }
 
