@@ -80,7 +80,7 @@
     <string name="ID_INVALID">ID number is too long</string>
     <string name="ADDRESS_TOO_LONG">Address is too long</string>
     <string name="COUNTRY_NULL">Field can\'t be empty</string>
-    <string name="COUNTRY_INVALID">Country name is too long</string>
+    <string name="COUNTRY_TOO_LONG">Country name is too long</string>
     <string name="ISSUING_AUTHORITY_NULL">Field can\'t be empty</string>
     <string name="ISSUING_AUTHORITY_INVALID">Field is too long</string>
     <string name="TACH_NULL">Field can\'t be empty</string>
@@ -129,4 +129,9 @@
     <string name="CYR_LAST_NAME_TOO_LONG">Field is too long</string>
     <string name="PHONE_TOO_LONG">Field is too long</string>
     <string name="EMAIL_TOO_LONG">Field is too long</string>
+    <string name="LICENSE_COUNTRY_ISSUER_NULL">Field can\'t be empty</string>
+    <string name="LICENSE_COUNTRY_ISSUER_INVALID">Invalid Country</string>
+    <string name="LICENSE_NUMBER_NULL">Field can\'t be empty</string>
+    <string name="LICENSE_NUMBER_INVALID">Field is too long</string>
+    <string name="COUNTRY_INVALID">Country is invalid</string>
 </resources>

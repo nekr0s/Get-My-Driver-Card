@@ -4,12 +4,15 @@ public class Constants {
 
     public static final int NAME_MAX_LENGTH = 256;
     public static final int LAST_NAME_MAX_LENGTH = 256;
-    public static final int ID_MAX_LENGTH = 20;
+    public static final int ID_MAX_LENGTH = 10;
     public static final int ADDRESS_MAX_LENGTH = 100;
     public static final int PHONE_NUMBER_MAX_LENGTH = 20;
+    public static final int COUNTRY_MAX_LENGTH = 35;
+    public static final int TACH_NUMBER_MAX_LENGTH = 20;
+
     public static final int LICENSE_ISSUER_COUNTRY_MAX_LENGTH = 35;
     public static final int LICENSE_NUMBER_MAX_LENGTH = 20;
-    public static final int EU_COUNTRY_OF_ISSUING_MAX_LENGTH = 50;
+    public static final int EU_COUNTRY_OF_ISSUING_MAX_LENGTH = 25;
 
 
     public static final int EMAIL_MIN_LENGTH = 6;

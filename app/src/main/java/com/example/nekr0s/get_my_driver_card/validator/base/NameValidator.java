@@ -20,7 +20,7 @@ public interface NameValidator {
 
     ErrorCode isEuCountryOfIssuingValid(String input);
 
-    ErrorCode isLicenseCountryOfIsuingValid(String input);
+    ErrorCode isLicenseCountryOfIssuingValid(String input);
 
 
 

@@ -85,7 +85,6 @@ public class NewCardFragment extends Fragment {
     @BindView(R.id.new_card_next_button)
     Button mNextButton;
     private List<ErrorCode> errorCodes = new ArrayList<>();
-    private int errorCounter;
 
 
     private final ValidatorDate mDateValidator = new DateValidator();
@@ -103,7 +102,6 @@ public class NewCardFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
     }
 
     @Override
@@ -115,7 +113,6 @@ public class NewCardFragment extends Fragment {
 
         return view;
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -242,75 +239,6 @@ public class NewCardFragment extends Fragment {
         }
         return true;
     }
-//        private void setErrorCorresponding (ErrorCode e){
-//            switch (e) {
-//
-//
-//                case CYR_NAME_NULL:
-//                case CYR_NAME_TOO_LONG:
-//                case CYR_NAME_NOT_IN_CYRILLIC:
-//                    mTIL_firstName_cyrillic.setError(e.getLabel(Objects.requireNonNull(getContext())));
-//                case CYR_NAME_OK:
-//                    mTIL_firstName_cyrillic.setError(null);
-//                    errorCodes.remove(e);
-//                    break;
-//
-//                case LAST_NAME_NULL:
-//                case LAST_NAME_TOO_LONG:
-//                case LAST_NAME_NOT_VALID:
-//                    mTIL_lastName.setError(e.getLabel(Objects.requireNonNull(getContext())));
-//                case LAST_NAME_OK:
-//                    mTIL_lastName.setError(null);
-//                    break;
-//
-//                case CYR_LAST_NAME_NULL:
-//                case CYR_LAST_NAME_TOO_LONG:
-//                case CYR_LAST_NAME_NOT_IN_CYRILLIC:
-//                    mTIL_lastName_cyrillic.setError(e.getLabel(Objects.requireNonNull(getContext())));
-//                case CYR_LAST_NAME_OK:
-//                    mTIL_lastName_cyrillic.setError(null);
-//                    break;
-//
-//                case ID_NULL:
-//                case ID_TOO_LONG:
-//                case ID_INVALID:
-//                    mTIL_personalNumber.setError(e.getLabel(Objects.requireNonNull(getContext())));
-//                case ID_OK:
-//                    mTIL_personalNumber.setError(null);
-//                    break;
-//
-//                case ADDRESS_NULL:
-//                case ADDRESS_TOO_LONG:
-//                    mTIL_address.setError(e.getLabel(Objects.requireNonNull(getContext())));
-//                case ADDRESS_OK:
-//                    mTIL_address.setError(null);
-//                    break;
-//
-//                case PHONE_NULL:
-//                case PHONE_TOO_LONG:
-//                case PHONE_INVALID:
-//                    mTIL_phoneNumber.setError(e.getLabel(Objects.requireNonNull(getContext())));
-//                case PHONE_OK:
-//                    mTIL_phoneNumber.setError(null);
-//                    break;
-//
-//                case DATE_NULL:
-//                case DATE_INVALID:
-//                    mTIL_dateOfBirth.setError(e.getLabel(Objects.requireNonNull(getContext())));
-//                case DATE_OK:
-//                    mTIL_dateOfBirth.setError(null);
-//                    break;
-//
-//                case EMAIL_CARD_NULL:
-//                case EMAIL_INVALID:
-//                case EMAIL_TOO_LONG:
-//                    mTIL_email_address.setError(e.getLabel(Objects.requireNonNull(getContext())));
-//                case EMAIL_OK:
-//                    mTIL_email_address.setError(null);
-//                    break;
-//
-//
-//            }
 
 
 }

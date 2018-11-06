@@ -6,8 +6,6 @@ import android.content.res.Resources;
 public enum ErrorCode {
     //Registration Validation
 
-    FIELD_TOO_LONG, //
-
 
     PASSWORD_NULL,
     PASSWORD_TOO_SIMPLE,
@@ -60,18 +58,30 @@ public enum ErrorCode {
     EMAIL_TOO_LONG,
     EMAIL_OK,
 
-    // Previous Card Info Validation
+    // EXCHANGE Fragment
     COUNTRY_NULL,
     COUNTRY_INVALID,
-
-    ISSUING_AUTHORITY_NULL,
-    ISSUING_AUTHORITY_INVALID,
+    COUNTRY_TOO_LONG,
+    COUNTRY_OK,
 
     TACH_NULL,
     TACH_NOT_VALID,
+    TACH_OK,
 
-    DATE_OF_EXPIRY_NULL,
-    DATE_NOT_VALID;
+    LICENSE_COUNTRY_ISSUER_NULL,
+    LICENSE_COUNTRY_ISSUER_INVALID,
+    LICENSE_COUNTRY_ISSUER_OK,
+
+    LICENSE_NUMBER_NULL,
+    LICENSE_NUMBER_INVALID,
+    LICENSE_NUMBER_OK,
+
+
+    // Prev Card Info
+
+    ISSUING_AUTHORITY_NULL,
+    ISSUING_AUTHORITY_INVALID,
+    ISSUING_AUTHORITY_OK;
 
 
     public String getLabel(Context context) {

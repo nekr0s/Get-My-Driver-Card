@@ -68,18 +68,16 @@
     <string name="NAME_NULL">Полето не може да бъде празно</string>
     <string name="NAME_NOT_VALID">Името трябва да съдържа само букви и символи</string>
     <string name="CYR_NAME_NULL">Името не може да бъде празно</string>
-    <string name="CYR_NAME_NOT_VALID">Името трябва да съдържа само букви и символи</string>
-    <string name="NAME_NOT_IN_CYRILLIC">Моля въведете името си на кирилица</string>
+    <string name="CYR_NAME_NOT_IN_CYRILLIC">Моля въведете името си на кирилица</string>
     <string name="LAST_NAME_NULL">Фамилното име не може да бъде празно</string>
     <string name="LAST_NAME_NOT_VALID">Името трябва да съдържа само букви и символи</string>
     <string name="CYR_LAST_NAME_NULL">Фамилното име не може да бъде празно</string>
-    <string name="CYR_LAST_NAME_NOT_VALID">Името е прекалено дълго</string>
-    <string name="LAST_NAME_NOT_IN_CYRILLIC">Моля въведете името си на кирилица</string>
+    <string name="CYR_LAST_NAME_NOT_IN_CYRILLIC">Моля въведете името си на кирилица</string>
     <string name="NOT_DIGIT">Моля въведете само числа</string>
     <string name="ID_INVALID">ЕГН/ЛНЧ е прекалено дълго</string>
     <string name="ADDRESS_TOO_LONG">Адреса е прекалено дълъг</string>
     <string name="COUNTRY_NULL">Полето не може да бъде празно</string>
-    <string name="COUNTRY_INVALID">Страната е невалидна</string>
+    <string name="COUNTRY_TOO_LONG">Страната е невалидна</string>
     <string name="ISSUING_AUTHORITY_NULL">Полето не може да бъде празно</string>
     <string name="ISSUING_AUTHORITY_INVALID">Полето е прекалено дълго</string>
     <string name="TACH_NULL">Полето не може да бъде празно</string>
@@ -129,5 +127,10 @@
     <string name="CYR_LAST_NAME_TOO_LONG">Field is too long</string>
     <string name="PHONE_TOO_LONG">Field is too long</string>
     <string name="EMAIL_TOO_LONG">Field is too long</string>
+    <string name="LICENSE_COUNTRY_ISSUER_NULL">Field can\'t be empty</string>
+    <string name="LICENSE_COUNTRY_ISSUER_INVALID">Invalid Country</string>
+    <string name="LICENSE_NUMBER_NULL">Field can\'t be empty</string>
+    <string name="LICENSE_NUMBER_INVALID">Field is too long</string>
+    <string name="COUNTRY_INVALID">Country is invalid</string>
 
 </resources>

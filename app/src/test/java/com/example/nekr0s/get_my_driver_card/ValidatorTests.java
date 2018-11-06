@@ -16,8 +16,13 @@ public class ValidatorTests {
         Validator validator = new EmailValidator();
 
         String input = "sfsfs@sdasa";
+        String input2 = "alexander@gmail.com";
+
+
 
         assertEquals(ErrorCode.EMAIL_INVALID, validator.isValid(input));
+        assertEquals(ErrorCode.EMAIL_OK, validator.isValid(input2));
+
     }
 
 }
