@@ -38,7 +38,7 @@
     <string name="state_the_place_where_that_happened">State the place where that happened</string>
     <string name="next">NEXT</string>
     <string name="renew_tachograph_card">I want to renew my tachograph card because:</string>
-    <string name="EmailRegister">Email</string>
+    <string name="UsernameRegister">Username</string>
     <string name="passwordRegister">Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="register_button">Register</string>
@@ -134,4 +134,7 @@
     <string name="LICENSE_NUMBER_NULL">Field can\'t be empty</string>
     <string name="LICENSE_NUMBER_INVALID">Field is too long</string>
     <string name="COUNTRY_INVALID">Country is invalid</string>
+    <string name="USERNAME_NULL">Username can\'t be empty</string>
+    <string name="USERNAME_TOO_SIMPLE">Username must be over 4 characters</string>
+    <string name="USERNAME_INVALID">Username is invalid</string>
 </resources>

@@ -31,7 +31,7 @@ public class EmailValidator implements Validator {
         return ErrorCode.EMAIL_OK;
     }
 
-    public boolean validateEmail(final String hex) {
+    private boolean validateEmail(final String hex) {
 
         matcher = pattern.matcher(hex);
         return matcher.matches();

@@ -7,9 +7,15 @@ public enum ErrorCode {
     //Registration Validation
 
 
+    USERNAME_NULL,
+    USERNAME_TOO_SIMPLE,
+    USERNAME_INVALID,
+    USERNAME_OK,
+
     PASSWORD_NULL,
     PASSWORD_TOO_SIMPLE,
     PASSWORDS_DONT_MATCH,
+    PASSWORD_OK,
     EVERYTHING_OK,
 
     //New Card Info Validation

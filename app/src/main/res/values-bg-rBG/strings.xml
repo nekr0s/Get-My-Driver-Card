@@ -35,7 +35,7 @@
     <string name="state_the_place_where_that_happened">Напишете мястото където се случи</string>
     <string name="next">Напред</string>
     <string name="renew_tachograph_card">Искам да подновя картата си защото:</string>
-    <string name="EmailRegister">Имейл</string>
+    <string name="UsernameRegister">Потребител</string>
     <string name="passwordRegister">Парола</string>
     <string name="confirm_password">Повтори паролата</string>
     <string name="register_button">Регистрация</string>
@@ -132,5 +132,8 @@
     <string name="LICENSE_NUMBER_NULL">Field can\'t be empty</string>
     <string name="LICENSE_NUMBER_INVALID">Field is too long</string>
     <string name="COUNTRY_INVALID">Country is invalid</string>
+    <string name="USERNAME_NULL">Username can\'t be empty</string>
+    <string name="USERNAME_TOO_SIMPLE">Username must be over 4 characters</string>
+    <string name="USERNAME_INVALID">Username is invalid</string>
 
 </resources>
