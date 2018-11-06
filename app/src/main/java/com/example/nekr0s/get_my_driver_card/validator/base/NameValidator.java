@@ -14,8 +14,6 @@ public interface NameValidator {
 
     ErrorCode isAddressValid(String input);
 
-    ErrorCode isIssuerCountryValid(String input);
-
     ErrorCode isIssuerAuthorityValid(String input);
 
     ErrorCode isEuCountryOfIssuingValid(String input);

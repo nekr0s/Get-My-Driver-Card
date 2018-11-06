@@ -51,17 +51,13 @@ public class NamesValidator implements NameValidator {
 
     }
 
-    @Override
-    public ErrorCode isIssuerCountryValid(String input) {
-        if (input.isEmpty()) return ErrorCode.COUNTRY_NULL;
-        // TODO: 11/6/2018
-        return null;
-    }
 
     @Override
     public ErrorCode isIssuerAuthorityValid(String input) {
-        // TODO: 11/6/2018
-        return null;
+        if (input.isEmpty()) return ErrorCode.ISSUING_AUTHORITY_NULL;
+        else if (input.length() > Constants.AUTHORITY_MAX_LENGTH)
+            return ErrorCode.ISSUING_AUTHORITY_INVALID;
+        else return ErrorCode.ISSUING_AUTHORITY_OK;
     }
 
     @Override

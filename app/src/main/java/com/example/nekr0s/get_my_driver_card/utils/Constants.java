@@ -9,11 +9,8 @@ public class Constants {
     public static final int PHONE_NUMBER_MAX_LENGTH = 20;
     public static final int COUNTRY_MAX_LENGTH = 35;
     public static final int TACH_NUMBER_MAX_LENGTH = 20;
-
-    public static final int LICENSE_ISSUER_COUNTRY_MAX_LENGTH = 35;
+    public static final int AUTHORITY_MAX_LENGTH = 50;
     public static final int LICENSE_NUMBER_MAX_LENGTH = 20;
-    public static final int EU_COUNTRY_OF_ISSUING_MAX_LENGTH = 25;
-
 
     public static final int EMAIL_MIN_LENGTH = 6;
     public static final int EMAIL_MAX_LENGTH = 50;

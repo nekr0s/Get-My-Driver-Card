@@ -43,7 +43,7 @@ public class DigitsValidator implements ValidatorDigits {
     public ErrorCode isLicenseNumberValid(String input) {
         if (input.isEmpty()) return ErrorCode.LICENSE_NUMBER_NULL;
         else if (!(input).matches(regexNumbersOnly)) return ErrorCode.LICENSE_NUMBER_INVALID;
-        else if ((input).length() > Constants.TACH_NUMBER_MAX_LENGTH)
+        else if ((input).length() > Constants.LICENSE_NUMBER_MAX_LENGTH)
             return ErrorCode.LICENSE_NUMBER_INVALID;
         else return ErrorCode.LICENSE_NUMBER_OK;
     }
