@@ -15,7 +15,7 @@ public class DigitsValidator implements ValidatorDigits {
 
         if (input.isEmpty()) return ErrorCode.ID_NULL;
         else if (!(input).matches(regexNumbersOnly)) return ErrorCode.ID_INVALID;
-        else if ((input).length() > 20) return ErrorCode.ID_TOO_LONG;
+        else if ((input).length() > 10) return ErrorCode.ID_TOO_LONG;
         else return ErrorCode.ID_OK;
 
 

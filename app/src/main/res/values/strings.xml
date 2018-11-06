@@ -71,7 +71,7 @@
     <string name="NAME_NULL">Name can\'t be empty</string>
     <string name="NAME_NOT_VALID">Name must contain only letters and symbols</string>
     <string name="CYR_NAME_NULL">Name can\'t be empty</string>
-    <string name="NAME_NOT_IN_CYRILLIC">Please enter your name in cyrillic</string>
+    <string name="CYR_NAME_NOT_IN_CYRILLIC">Please enter your name in cyrillic</string>
     <string name="LAST_NAME_NULL">Last name can\'t be empty</string>
     <string name="LAST_NAME_NOT_VALID">Field must contain only letters and symbols</string>
     <string name="CYR_LAST_NAME_NULL">Last name can\'t be empty</string>

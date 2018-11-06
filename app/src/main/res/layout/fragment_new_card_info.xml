@@ -32,6 +32,7 @@
             android:id="@+id/first_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/first_name"
             android:padding="16dp"
             app:counterEnabled="true"
             app:counterMaxLength="256"
@@ -40,7 +41,6 @@
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/first_name"
                 android:inputType="textPersonName"
                 android:paddingBottom="18dp" />
 
@@ -50,6 +50,7 @@
             android:id="@+id/first_name_cyrillic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/first_name_cyrillic"
             android:padding="16dp"
             app:counterEnabled="true"
             app:counterMaxLength="256"
@@ -58,7 +59,6 @@
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/first_name_cyrillic"
                 android:inputType="textPersonName"
                 android:paddingBottom="18dp" />
 
@@ -68,6 +68,7 @@
             android:id="@+id/last_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/last_name"
             android:padding="16dp"
             app:counterEnabled="true"
             app:counterMaxLength="256"
@@ -76,7 +77,6 @@
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/last_name"
                 android:inputType="textPersonName"
                 android:paddingBottom="18dp" />
 
@@ -87,6 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
+            android:hint="@string/last_name_cyrillic"
             app:counterEnabled="true"
             app:counterMaxLength="256"
             app:errorEnabled="true">
@@ -94,7 +95,6 @@
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/last_name_cyrillic"
                 android:inputType="textPersonName"
                 android:paddingBottom="18dp" />
 
@@ -105,6 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
+            android:hint="@string/personal_number"
             app:counterEnabled="true"
             app:counterMaxLength="10"
             app:errorEnabled="true">
@@ -112,7 +113,6 @@
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/personal_number"
                 android:inputType="text|number"
                 android:paddingBottom="18dp" />
 
@@ -123,6 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
+            android:hint="@string/full_address"
             app:counterEnabled="true"
             app:counterMaxLength="100"
             app:errorEnabled="true">
@@ -130,7 +131,6 @@
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/full_address"
                 android:inputType="textLongMessage"
                 android:paddingBottom="18dp" />
 
@@ -159,6 +159,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
+            android:hint="@string/date_of_birth"
             app:counterEnabled="true"
             app:counterMaxLength="10"
             app:errorEnabled="true">
@@ -166,7 +167,6 @@
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/date_of_birth"
                 android:inputType="date"
                 android:paddingBottom="18dp" />
 
@@ -177,6 +177,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
+            android:hint="@string/email_address"
             app:counterEnabled="true"
             app:counterMaxLength="255"
             app:errorEnabled="true">
@@ -184,7 +185,6 @@
             <android.support.design.widget.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/email_address"
                 android:inputType="textEmailAddress"
                 android:paddingBottom="18dp" />
 
