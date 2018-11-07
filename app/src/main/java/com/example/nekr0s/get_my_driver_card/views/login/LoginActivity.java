@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,10 +19,12 @@ import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
 import com.example.nekr0s.get_my_driver_card.utils.keyboard.KeyboardHider;
+import com.example.nekr0s.get_my_driver_card.validator.RegisterValidator;
+import com.example.nekr0s.get_my_driver_card.validator.base.ValidatorLogin;
 import com.example.nekr0s.get_my_driver_card.views.list.ListActivity;
 
-import java.util.Objects;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 import butterknife.BindView;
@@ -52,8 +53,8 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     @BindView(R.id.text_no_account)
     TextView mNoAccount;
 
-    @BindView(R.id.email_edittext)
-    EditText mEmailEditText;
+    @BindView(R.id.username_edittext)
+    EditText mUsernameEditText;
 
     @BindView(R.id.password_edittext)
     EditText mPasswordEditText;
@@ -63,12 +64,8 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     SmartLogin mSmartLogin;
     private LoginContracts.Presenter mPresenter;
     private AlertDialog mAlertDialog;
-    private static final Pattern PASSWORD_PATTERN =
-            Pattern.compile("^" +
-                    "(?=.*[a-zA-Z])" +      //any letter
-                    "(?=\\S+$)" +           //no white spaces
-                    ".{4,}" +               //at least 4 characters
-                    "$");
+    private List<ErrorCode> errorCodes = new ArrayList<>();
+    private final ValidatorLogin mRegisterValidator = new RegisterValidator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,9 +120,9 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
 
     @Override
     public SmartUser doCustomLogin() {
-        mPresenter.login(mEmailEditText.getText().toString(), mPasswordEditText.getText().toString());
+        mPresenter.login(mUsernameEditText.getText().toString(), mPasswordEditText.getText().toString());
         SmartUser user = new SmartUser();
-        user.setEmail(mEmailEditText.getText().toString());
+        user.setEmail(mUsernameEditText.getText().toString());
         return user;
     }
 
@@ -133,7 +130,7 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     // to be inspected (not complete)
     public SmartUser doCustomSignup() {
         SmartUser user = new SmartUser();
-        user.setEmail(mEmailEditText.getText().toString());
+        user.setEmail(mUsernameEditText.getText().toString());
         return user;
     }
 
@@ -165,20 +162,27 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         final TextInputLayout tilPasswordRegister = view.findViewById(R.id.text_input_password_one);
         final TextInputLayout tilPasswordConfirm = view.findViewById(R.id.text_input_password_two);
 
+//        errorCodes.add(mRegisterValidator.isUsernameValid(Objects.requireNonNull(tilUsernameRegister
+//                .getEditText()).getText().toString().trim()));
+//        errorCodes.add(mRegisterValidator.isPasswordValid(tilPasswordRegister
+//                        .getEditText().getText().toString().trim(),
+//                Objects.requireNonNull(tilPasswordConfirm.getEditText())
+//                        .getText().toString().trim()));
+//        errorCodes.add(mRegisterValidator.isPasswordValid(tilPasswordConfirm.getEditText()
+//                .getText().toString().trim(), tilPasswordRegister
+//                .getEditText().getText().toString().trim()));
+
         Button mConfirmButton = view.findViewById(R.id.register_confirm_button);
         mBuilder.setView(view);
         mAlertDialog = mBuilder.create();
         mAlertDialog.show();
         mConfirmButton.setOnClickListener(v -> {
-            //commented only for tests
-//            if (validateEmail(tilUsernameRegister) ||
-//                    validatePasswords(tilPasswordConfirm, tilPasswordRegister)) {
 
             User user = new User(tilUsernameRegister.getEditText().getText().toString(),
                     tilPasswordRegister.getEditText().getText().toString());
 
             mPresenter.register(user);
-//            }
+
         });
     }
 
@@ -222,48 +226,44 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         finish();
     }
 
-
-    private boolean validateEmail(TextInputLayout email) {
-        String emailInput = Objects.requireNonNull(email.getEditText()).getText().toString().trim();
-
-        if (emailInput.isEmpty()) {
-            email.setError(ErrorCode.EMAIL_NULL.getLabel(getBaseContext()));
-            return false;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
-            email.setError(ErrorCode.EMAIL_NOT_CORRECT.getLabel(getBaseContext()));
-            return false;
-        } else email.setError(null);
-        return true;
-
-    }
-
-    private boolean validatePassword(TextInputLayout password) {
-        String passwordInput = password.getEditText().getText().toString().trim();
-        if (passwordInput.isEmpty()) {
-            password.setError(ErrorCode.PASSWORD_NULL.getLabel(getBaseContext()));
-            return false;
-        } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
-            password.setError(ErrorCode.PASSWORD_TOO_SIMPLE.getLabel(getBaseContext()));
-            return false;
-        } else password.setError(null);
-
-        return true;
-    }
-
-    private boolean validatePasswords(TextInputLayout password, TextInputLayout confirmPassword) {
-        String passwordInput = Objects.requireNonNull(password.getEditText()).getText().toString().trim();
-        String passwordInputTwo = Objects.requireNonNull(confirmPassword.getEditText()).getText().toString().trim();
-
-        if (!validatePassword(password)) return false;
-        else if (!passwordInput.equals(passwordInputTwo)) {
-            password.setError(ErrorCode.PASSWORDS_DONT_MATCH.getLabel(getBaseContext()));
-            confirmPassword.setError(ErrorCode.PASSWORDS_DONT_MATCH.getLabel(getBaseContext()));
-            return false;
-        } else {
-            password.setError(null);
-            confirmPassword.setError(null);
-        }
-        return true;
-    }
+//    public boolean setErrors(List<ErrorCode> errors, TextInputLayout username,
+//                             TextInputLayout password, TextInputLayout confirmPassword) {
+//
+//        int errorCount = 0;
+//
+//        for (int i = 0; i < 2; i++) {
+//
+//            switch (i) {
+//                case 0:
+//                    if (errors.get(0).equals(ErrorCode.USERNAME_OK))
+//                        username.setError(null);
+//                    else {
+//                        username.setError(errors
+//                                .get(0).getLabel(Objects.requireNonNull(getBaseContext())));
+//                        errorCount++;
+//                    }
+//
+//                case 1:
+//                    if (errors.get(1).equals(ErrorCode.PASSWORD_OK))
+//                        password.setError(null);
+//                    else {
+//                        password.setError(errors.get(1)
+//                                .getLabel(Objects.requireNonNull(getBaseContext())));
+//                        errorCount++;
+//                    }
+//                case 2:
+//                    if (errors.get(2).equals(ErrorCode.PASSWORD_OK))
+//                        confirmPassword.setError(null);
+//                    else {
+//                        confirmPassword.setError(errors.get(2)
+//                                .getLabel(Objects.requireNonNull(getBaseContext())));
+//                        errorCount++;
+//                    }
+//            }
+//
+//        }
+//        errors.clear();
+//        return errorCount == 0;
+//    }
 
 }

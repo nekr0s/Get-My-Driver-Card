@@ -9,7 +9,7 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/email_edittext"
+        android:id="@+id/username_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"

@@ -11,8 +11,15 @@ import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
+import com.example.nekr0s.get_my_driver_card.validator.base.DateValidator;
+import com.example.nekr0s.get_my_driver_card.validator.base.DigitsValidator;
+import com.example.nekr0s.get_my_driver_card.validator.base.NameValidator;
+import com.example.nekr0s.get_my_driver_card.validator.base.NamesValidator;
+import com.example.nekr0s.get_my_driver_card.validator.base.ValidatorDigits;
 import com.example.nekr0s.get_my_driver_card.views.create.base.UserHolder;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -41,6 +48,10 @@ public class PreviousCardInfoActivity extends AppCompatActivity implements UserH
     Button mNextButton;
 
     private User mCurrentUser;
+    private List<ErrorCode> errorCodes = new ArrayList<>();
+    private final NameValidator mNameValidator = new NamesValidator();
+    private final ValidatorDigits mDigitsValidator = new DigitsValidator();
+    private final DateValidator mDateValidator = new DateValidator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,96 +67,68 @@ public class PreviousCardInfoActivity extends AppCompatActivity implements UserH
 
     @OnClick(R.id.previous_card_next_button)
     void openNextFragment() {
-        //commented for testing
-//        if (validateCountryIssuer() | validateIssuingAuthority() |
-//                validateTachCardNumber() | validateDateOfExpiry()) {
 
+        errorCodes.add(mNameValidator.isEuCountryOfIssuingValid(Objects.requireNonNull(mTIL_previous_eu_country_of_issuing
+                .getEditText()).getText().toString().trim()));
+        errorCodes.add(mNameValidator.isIssuerAuthorityValid(Objects.requireNonNull(mTIL_issuing_authority
+                .getEditText()).getText().toString().trim()));
+        errorCodes.add(mDigitsValidator.isTachNumberValid(Objects.requireNonNull(mTIL_previous_tachograph_card_number
+                .getEditText()).getText().toString().trim()));
+        errorCodes.add(mDateValidator.isDateValid(Objects.requireNonNull(mTIL_date_of_expiry.getEditText())
+                .getText().toString().trim()));
 
-        NewCardFragment nextFrag = new NewCardFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_containertwo, nextFrag, "newCardFragment")
-                .addToBackStack(null)
-                .commit();
-//        }
+        if (setErrors(errorCodes)) {
+            NewCardFragment nextFrag = new NewCardFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_containertwo, nextFrag, "newCardFragment")
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 
-    private boolean validateCountryIssuer() {
-        String regexNames = "^[a-zA-Z]*$";
 
-        String countryIssuerInput = Objects.requireNonNull(mTIL_previous_eu_country_of_issuing
-                .getEditText()).getText().toString().trim();
+    public boolean setErrors(List<ErrorCode> errors) {
 
-        if (countryIssuerInput.isEmpty()) {
-            mTIL_previous_eu_country_of_issuing.setError(ErrorCode.COUNTRY_NULL
-                    .getLabel(getBaseContext()));
-            return false;
-        } else if (!countryIssuerInput.matches(regexNames)) {
-            mTIL_previous_eu_country_of_issuing.setError(ErrorCode.COUNTRY_INVALID
-                    .getLabel(getBaseContext()));
-            return false;
-        } else mTIL_previous_eu_country_of_issuing.setError(null);
-        return true;
+        int errorCount = 0;
 
+        for (int i = 0; i < 3; i++) {
+
+            switch (i) {
+                case 0:
+                    if (errorCodes.get(0).equals(ErrorCode.COUNTRY_OK))
+                        mTIL_previous_eu_country_of_issuing.setError(null);
+                    else {
+                        mTIL_previous_eu_country_of_issuing.setError(errorCodes
+                                .get(0).getLabel(getBaseContext()));
+                        errorCount++;
+                    }
+                case 1:
+                    if (errorCodes.get(1).equals(ErrorCode.ISSUING_AUTHORITY_OK))
+                        mTIL_issuing_authority.setError(null);
+                    else {
+                        mTIL_issuing_authority.setError(errorCodes.get(1).getLabel(getBaseContext()));
+                        errorCount++;
+                    }
+                case 2:
+                    if (errorCodes.get(2).equals(ErrorCode.TACH_OK))
+                        mTIL_previous_tachograph_card_number.setError(null);
+                    else {
+                        mTIL_previous_tachograph_card_number.setError(errorCodes.get(2).getLabel(getBaseContext()));
+                        errorCount++;
+                    }
+                case 3:
+                    if (errorCodes.get(3).equals(ErrorCode.DATE_OK))
+                        mTIL_date_of_expiry.setError(null);
+                    else {
+                        mTIL_date_of_expiry.setError(errorCodes.get(3).getLabel(getBaseContext()));
+                        errorCount++;
+                    }
+            }
+
+        }
+        errors.clear();
+        return errorCount == 0;
     }
-
-    private boolean validateIssuingAuthority() {
-        String regexNames = "^[a-zA-Z]*$";
-
-        String authorityInput = Objects.requireNonNull(mTIL_issuing_authority
-                .getEditText()).getText().toString().trim();
-
-        if (authorityInput.isEmpty()) {
-            mTIL_issuing_authority.setError(ErrorCode.ISSUING_AUTHORITY_NULL
-                    .getLabel(getBaseContext()));
-            return false;
-        } else if (!authorityInput.matches(regexNames)) {
-            mTIL_issuing_authority.setError(ErrorCode.ISSUING_AUTHORITY_INVALID
-                    .getLabel(getBaseContext()));
-            return false;
-        } else mTIL_issuing_authority.setError(null);
-
-        return true;
-
-    }
-
-    private boolean validateTachCardNumber() {
-        String regexNumbersOnly = "^[0-9]*$";
-
-        String tachNumberInput = Objects.requireNonNull(mTIL_previous_tachograph_card_number.
-                getEditText()).getText().toString().trim();
-
-        if (tachNumberInput.isEmpty()) {
-            mTIL_previous_tachograph_card_number.setError(ErrorCode.TACH_NULL
-                    .getLabel(getBaseContext()));
-            return false;
-        } else if (!tachNumberInput.matches(regexNumbersOnly)) {
-            mTIL_previous_tachograph_card_number.setError(ErrorCode.TACH_NOT_VALID
-                    .getLabel(getBaseContext()));
-            return false;
-        } else mTIL_previous_tachograph_card_number.setError(null);
-
-        return true;
-
-    }
-
-    private boolean validateDateOfExpiry() {
-        String regexDate = getString(R.string.date_exp);
-
-        String dateOfExpiryInput = Objects.requireNonNull(mTIL_date_of_expiry.
-                getEditText()).getText().toString().trim();
-
-        if (dateOfExpiryInput.isEmpty()) {
-            mTIL_date_of_expiry.setError(ErrorCode.DATE_OF_EXPIRY_NULL
-                    .getLabel(getBaseContext()));
-            return false;
-        } else if (!dateOfExpiryInput.matches(regexDate)) {
-            mTIL_date_of_expiry.setError(ErrorCode.DATE_NOT_VALID
-                    .getLabel(getBaseContext()));
-            return false;
-        } else mTIL_date_of_expiry.setError(null);
-        return true;
-    }
-
 
     @Override
     public User getCurrentUser() {

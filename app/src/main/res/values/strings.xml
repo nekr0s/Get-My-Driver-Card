@@ -38,7 +38,7 @@
     <string name="state_the_place_where_that_happened">State the place where that happened</string>
     <string name="next">NEXT</string>
     <string name="renew_tachograph_card">I want to renew my tachograph card because:</string>
-    <string name="EmailRegister">Email</string>
+    <string name="UsernameRegister">Username</string>
     <string name="passwordRegister">Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="register_button">Register</string>
@@ -71,18 +71,16 @@
     <string name="NAME_NULL">Name can\'t be empty</string>
     <string name="NAME_NOT_VALID">Name must contain only letters and symbols</string>
     <string name="CYR_NAME_NULL">Name can\'t be empty</string>
-    <string name="CYR_NAME_NOT_VALID">Field is too long</string>
-    <string name="NAME_NOT_IN_CYRILLIC">Please enter your name in cyrillic</string>
+    <string name="CYR_NAME_NOT_IN_CYRILLIC">Please enter your name in cyrillic</string>
     <string name="LAST_NAME_NULL">Last name can\'t be empty</string>
     <string name="LAST_NAME_NOT_VALID">Field must contain only letters and symbols</string>
     <string name="CYR_LAST_NAME_NULL">Last name can\'t be empty</string>
-    <string name="CYR_LAST_NAME_NOT_VALID">Field is too long</string>
-    <string name="LAST_NAME_NOT_IN_CYRILLIC">Please enter your last name in cyrillic</string>
+    <string name="CYR_LAST_NAME_NOT_IN_CYRILLIC">Please enter your last name in cyrillic</string>
     <string name="NOT_DIGIT">Please enter only digits</string>
     <string name="ID_INVALID">ID number is too long</string>
     <string name="ADDRESS_TOO_LONG">Address is too long</string>
     <string name="COUNTRY_NULL">Field can\'t be empty</string>
-    <string name="COUNTRY_INVALID">Country name is too long</string>
+    <string name="COUNTRY_TOO_LONG">Country name is too long</string>
     <string name="ISSUING_AUTHORITY_NULL">Field can\'t be empty</string>
     <string name="ISSUING_AUTHORITY_INVALID">Field is too long</string>
     <string name="TACH_NULL">Field can\'t be empty</string>
@@ -128,4 +126,18 @@
     <string name="channel_name">CardNotification</string>
     <string name="channel_description">Notifies when a card request is approved.</string>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="ID_TOO_LONG">Field is too long</string>
+    <string name="NAME_TOO_LONG">Field is too long</string>
+    <string name="CYR_NAME_TOO_LONG">Field is too long</string>
+    <string name="CYR_LAST_NAME_TOO_LONG">Field is too long</string>
+    <string name="PHONE_TOO_LONG">Field is too long</string>
+    <string name="EMAIL_TOO_LONG">Field is too long</string>
+    <string name="LICENSE_COUNTRY_ISSUER_NULL">Field can\'t be empty</string>
+    <string name="LICENSE_COUNTRY_ISSUER_INVALID">Invalid Country</string>
+    <string name="LICENSE_NUMBER_NULL">Field can\'t be empty</string>
+    <string name="LICENSE_NUMBER_INVALID">Field is too long</string>
+    <string name="COUNTRY_INVALID">Country is invalid</string>
+    <string name="USERNAME_NULL">Username can\'t be empty</string>
+    <string name="USERNAME_TOO_SIMPLE">Username must be over 4 characters</string>
+    <string name="USERNAME_INVALID">Username is invalid</string>
 </resources>

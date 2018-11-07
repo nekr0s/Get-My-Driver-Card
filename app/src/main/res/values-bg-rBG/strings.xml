@@ -35,7 +35,7 @@
     <string name="state_the_place_where_that_happened">Напишете мястото където се случи</string>
     <string name="next">Напред</string>
     <string name="renew_tachograph_card">Искам да подновя картата си защото:</string>
-    <string name="EmailRegister">Имейл</string>
+    <string name="UsernameRegister">Потребител</string>
     <string name="passwordRegister">Парола</string>
     <string name="confirm_password">Повтори паролата</string>
     <string name="register_button">Регистрация</string>
@@ -68,18 +68,16 @@
     <string name="NAME_NULL">Полето не може да бъде празно</string>
     <string name="NAME_NOT_VALID">Името трябва да съдържа само букви и символи</string>
     <string name="CYR_NAME_NULL">Името не може да бъде празно</string>
-    <string name="CYR_NAME_NOT_VALID">Името трябва да съдържа само букви и символи</string>
-    <string name="NAME_NOT_IN_CYRILLIC">Моля въведете името си на кирилица</string>
+    <string name="CYR_NAME_NOT_IN_CYRILLIC">Моля въведете името си на кирилица</string>
     <string name="LAST_NAME_NULL">Фамилното име не може да бъде празно</string>
     <string name="LAST_NAME_NOT_VALID">Името трябва да съдържа само букви и символи</string>
     <string name="CYR_LAST_NAME_NULL">Фамилното име не може да бъде празно</string>
-    <string name="CYR_LAST_NAME_NOT_VALID">Името е прекалено дълго</string>
-    <string name="LAST_NAME_NOT_IN_CYRILLIC">Моля въведете името си на кирилица</string>
+    <string name="CYR_LAST_NAME_NOT_IN_CYRILLIC">Моля въведете името си на кирилица</string>
     <string name="NOT_DIGIT">Моля въведете само числа</string>
     <string name="ID_INVALID">ЕГН/ЛНЧ е прекалено дълго</string>
     <string name="ADDRESS_TOO_LONG">Адреса е прекалено дълъг</string>
     <string name="COUNTRY_NULL">Полето не може да бъде празно</string>
-    <string name="COUNTRY_INVALID">Страната е невалидна</string>
+    <string name="COUNTRY_TOO_LONG">Страната е невалидна</string>
     <string name="ISSUING_AUTHORITY_NULL">Полето не може да бъде празно</string>
     <string name="ISSUING_AUTHORITY_INVALID">Полето е прекалено дълго</string>
     <string name="TACH_NULL">Полето не може да бъде празно</string>
@@ -123,5 +121,19 @@
     <string name="hereby_i_declare_that_all_the_provided_details_are_correct_and_understand_that_it_is_a_criminal_offense_if_i_make_a_false_declaration">С това декларирам, че всички предоставени подробности са правилни и разбирам, че е престъпление, ако направя фалшива декларация.</string>
     <string name="click_below_to_submit_your_e_signature">Натиснете отдолу за да се подпишете</string>
     <string name="finish_button_declaration">Завърши</string>
+    <string name="ID_TOO_LONG">Field is too long</string>
+    <string name="NAME_TOO_LONG">Field is too long</string>
+    <string name="CYR_NAME_TOO_LONG">Field is too long</string>
+    <string name="CYR_LAST_NAME_TOO_LONG">Field is too long</string>
+    <string name="PHONE_TOO_LONG">Field is too long</string>
+    <string name="EMAIL_TOO_LONG">Field is too long</string>
+    <string name="LICENSE_COUNTRY_ISSUER_NULL">Field can\'t be empty</string>
+    <string name="LICENSE_COUNTRY_ISSUER_INVALID">Invalid Country</string>
+    <string name="LICENSE_NUMBER_NULL">Field can\'t be empty</string>
+    <string name="LICENSE_NUMBER_INVALID">Field is too long</string>
+    <string name="COUNTRY_INVALID">Country is invalid</string>
+    <string name="USERNAME_NULL">Username can\'t be empty</string>
+    <string name="USERNAME_TOO_SIMPLE">Username must be over 4 characters</string>
+    <string name="USERNAME_INVALID">Username is invalid</string>
 
 </resources>

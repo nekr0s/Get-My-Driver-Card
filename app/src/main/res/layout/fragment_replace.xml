@@ -26,8 +26,7 @@
         android:layout_margin="10dp"
         android:autofillHints="Hello"
         android:hint="@string/state_date_when_that_happened"
-        android:inputType="date"
-        android:visibility="gone" />
+        android:inputType="date" />
 
     <EditText
         android:id="@+id/replace_place"
@@ -38,8 +37,7 @@
         android:layout_marginBottom="10dp"
         android:autofillHints="Hello"
         android:hint="@string/state_the_place_where_that_happened"
-        android:inputType="text"
-        android:visibility="gone" />
+        android:inputType="text" />
 
 
     <ListView
