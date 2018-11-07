@@ -1,8 +1,8 @@
 package com.example.nekr0s.get_my_driver_card.views.preview;
 
-import com.example.nekr0s.get_my_driver_card.models.Request;
+import android.graphics.Bitmap;
 
-import java.util.List;
+import com.example.nekr0s.get_my_driver_card.models.Request;
 
 public interface RequestPreviewContracts {
 
@@ -12,6 +12,8 @@ public interface RequestPreviewContracts {
         void subscribe(View view);
 
         void unsubscribe();
+
+        Bitmap convertStringBytesToBitmap(String bytes);
     }
 
     interface View {
@@ -23,6 +25,8 @@ public interface RequestPreviewContracts {
 
         void showError(Throwable throwable);
 
-        void navigateToHome(Request request);
+        void navigateToList(Request request);
+
+
     }
 }

@@ -1,19 +1,21 @@
 package com.example.nekr0s.get_my_driver_card.services;
 
+import android.content.Context;
+
 import com.example.nekr0s.get_my_driver_card.GetMyDriverCardApplication;
 import com.example.nekr0s.get_my_driver_card.models.User;
-import com.example.nekr0s.get_my_driver_card.repositories.base.Repository;
-import com.example.nekr0s.get_my_driver_card.services.base.Service;
+import com.example.nekr0s.get_my_driver_card.repositories.base.UsersLoginOnce;
+import com.example.nekr0s.get_my_driver_card.services.base.UsersService;
 
 import java.io.IOException;
 import java.util.List;
 
-public class HttpUsersService implements Service<User> {
+public class HttpUsersService implements UsersService<User> {
 
-    private final Repository<User> mRepository;
+    private final UsersLoginOnce<User> mRepository;
 
-    public HttpUsersService() {
-        mRepository = GetMyDriverCardApplication.getUsersRepository();
+    public HttpUsersService(Context context) {
+        mRepository = GetMyDriverCardApplication.getUsersRepository(context);
     }
 
     @Override
@@ -29,5 +31,10 @@ public class HttpUsersService implements Service<User> {
     @Override
     public User create(User item) throws Exception {
         return mRepository.add(item);
+    }
+
+    @Override
+    public User login(String username, String password) throws IOException {
+        return mRepository.login(username, password);
     }
 }

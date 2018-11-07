@@ -14,8 +14,8 @@ public class LoginValidator implements Validator<User> {
     }
 
     private boolean isEmailLengthValid(User user) {
-        return user.getEmail().length() >= Constants.EMAIL_MIN_LENGTH &&
-                user.getEmail().length() <= Constants.EMAIL_MAX_LENGTH;
+        return user.getUsername().length() >= Constants.EMAIL_MIN_LENGTH &&
+                user.getUsername().length() <= Constants.EMAIL_MAX_LENGTH;
     }
 
     private boolean isPasswordLengthValid(User user) {

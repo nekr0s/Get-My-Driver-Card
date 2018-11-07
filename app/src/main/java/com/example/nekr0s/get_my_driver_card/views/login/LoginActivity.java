@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         ButterKnife.bind(this);
 
         mConfig = new SmartLoginConfig(this, this);
-        mPresenter = new LoginPresenter();
+        mPresenter = new LoginPresenter(this);
         mConfig.setFacebookAppId(getString(R.string.facebook_app_id));
         mConfig.setFacebookPermissions(null);
         mConfig.setGoogleApiClient(null);
@@ -161,7 +161,7 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         final AlertDialog.Builder mBuilder = new AlertDialog.Builder(LoginActivity.this);
         View view = getLayoutInflater().inflate(R.layout.layout_dialog, null);
 
-        final TextInputLayout tilEmailRegister = view.findViewById(R.id.text_input_email_register);
+        final TextInputLayout tilUsernameRegister = view.findViewById(R.id.text_input_email_register);
         final TextInputLayout tilPasswordRegister = view.findViewById(R.id.text_input_password_one);
         final TextInputLayout tilPasswordConfirm = view.findViewById(R.id.text_input_password_two);
 
@@ -171,14 +171,13 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         mAlertDialog.show();
         mConfirmButton.setOnClickListener(v -> {
             //commented only for tests
-//            if (validateEmail(tilEmailRegister) ||
+//            if (validateEmail(tilUsernameRegister) ||
 //                    validatePasswords(tilPasswordConfirm, tilPasswordRegister)) {
 
-                User user = new User(tilEmailRegister.getEditText().getText().toString(),
-                        tilPasswordRegister.getEditText().getText().toString());
+            User user = new User(tilUsernameRegister.getEditText().getText().toString(),
+                    tilPasswordRegister.getEditText().getText().toString());
 
-//                mPresenter.register(user);
-                navigateToHome(user);
+            mPresenter.register(user);
 //            }
         });
     }
@@ -222,6 +221,7 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         startActivity(intent);
         finish();
     }
+
 
     private boolean validateEmail(TextInputLayout email) {
         String emailInput = Objects.requireNonNull(email.getEditText()).getText().toString().trim();

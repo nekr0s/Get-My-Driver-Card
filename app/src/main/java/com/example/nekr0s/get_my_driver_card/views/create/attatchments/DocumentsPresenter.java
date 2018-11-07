@@ -10,7 +10,9 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
+import android.util.Base64;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -62,22 +64,22 @@ public class DocumentsPresenter implements DocumentsContracts.Presenter {
         mView = null;
     }
 
-    @Override
-    public void savePicToGallery() {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(mCurrentPhotoPath);
-        Uri contentUri = FileProvider.getUriForFile(mContext,
-                "com.example.nekr0s.get_my_driver_card.fileprovider",
-                f);
-        mediaScanIntent.setData(contentUri);
-        mContext.sendBroadcast(mediaScanIntent);
-//        MediaScannerConnection.scanFile(mContext,
-//                new String[]{f.toString()}, null,
-//                (path, uri) -> {
-//                    Log.i("ExternalStorage", "Scanned " + path + ":");
-//                    Log.i("ExternalStorage", "-> uri=" + uri);
-//                });
-    }
+//    @Override
+//    public void savePicToGallery() {
+//        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+//        File f = new File(mCurrentPhotoPath);
+//        Uri contentUri = FileProvider.getUriForFile(mContext,
+//                "com.example.nekr0s.get_my_driver_card.fileprovider",
+//                f);
+//        mediaScanIntent.setData(contentUri);
+//        mContext.sendBroadcast(mediaScanIntent);
+////        MediaScannerConnection.scanFile(mContext,
+////                new String[]{f.toString()}, null,
+////                (path, uri) -> {
+////                    Log.i("ExternalStorage", "Scanned " + path + ":");
+////                    Log.i("ExternalStorage", "-> uri=" + uri);
+////                });
+//    }
 
     @Override
     public File createImageFile() throws IOException {
@@ -105,6 +107,14 @@ public class DocumentsPresenter implements DocumentsContracts.Presenter {
     @Override
     public String getCurrentPath() {
         return mCurrentPhotoPath;
+    }
+
+    @Override
+    public String getByteString(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
+        byte[] bytes = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Request;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -18,13 +19,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CustomRecyclerView extends RecyclerView.Adapter<CustomRecyclerView.ItemViewHolder> {
+public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ItemViewHolder> {
 
     private List<Request> mRequests;
     private OnItemClickListener mOnRequestClickListener;
 
-    public CustomRecyclerView(List<Request> mRequests) {
-        this.mRequests = mRequests;
+    public RequestsAdapter() {
+        this.mRequests = new ArrayList<>();
     }
 
     @NonNull
@@ -51,8 +52,16 @@ public class CustomRecyclerView extends RecyclerView.Adapter<CustomRecyclerView.
     }
 
     public void sortByStatus() {
-        mRequests.sort(Comparator.comparingInt(o -> o.getStatus().getNum()));
+        mRequests.sort(Comparator.comparing(Request::getRequestStatus));
         notifyDataSetChanged();
+    }
+
+    public void clear() {
+        mRequests.clear();
+    }
+
+    public void addAll(List<Request> requests) {
+        mRequests.addAll(requests);
     }
 
 //    public void sortByDate() {
@@ -95,9 +104,9 @@ public class CustomRecyclerView extends RecyclerView.Adapter<CustomRecyclerView.
         void bind(Request request) {
             mRequest = request;
 
-            mId.setText(String.valueOf(mRequest.getRequestId()));
-            mType.setText(mRequest.getRequestType());
-            mStatus.setText(mRequest.getStatusString());
+            mId.append(" " + String.valueOf(mRequest.getRequestId()));
+            mType.append(" " + mRequest.getRequestType());
+            mStatus.append(" " + mRequest.getStatusString());
             mStatusColor.setColorFilter(mRequest.color());
         }
 

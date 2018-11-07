@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nekr0s.get_my_driver_card.R;
-import com.example.nekr0s.get_my_driver_card.models.Attachment;
 import com.example.nekr0s.get_my_driver_card.models.Request;
 import com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity;
 
@@ -28,10 +26,10 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
 
     static final int REQUEST_IMAGE_CAPTURE = 143;
 
-    private String mSelfiePath;
-    private String mPersonalIdPath;
-    private String mDriverLicensePath;
-    private String mPreviousCardPath;
+    private String mSelfieByteString;
+    private String mPersonalIdByteString;
+    private String mDriverLicenseByteString;
+    private String mPreviousCardByteString;
 
 
     @BindView(R.id.documents_header)
@@ -113,17 +111,17 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
 
     @OnClick(R.id.documents_next_button)
     void openDeclarationActivity() {
-        if (mPersonalIdPath == null || mSelfiePath == null || mDriverLicensePath == null) {
+        if (mPersonalIdByteString == null || mSelfieByteString == null || mDriverLicenseByteString == null) {
             Toast.makeText(this, "Please provide all pictures.", Toast.LENGTH_SHORT).show();
             return;
         }
         Intent intent = new Intent(this, DeclarationActivity.class);
         intent.putExtra(DeclarationActivity.ALMOST_READY_REQUEST, mRequestSoFar);
-        intent.putExtra(DeclarationActivity.SELFIE_PATH, mSelfiePath);
-        intent.putExtra(DeclarationActivity.PERSONAL_ID_PATH, mPersonalIdPath);
-        intent.putExtra(DeclarationActivity.DRIVER_LICENSE_PATH, mPersonalIdPath);
-        if (mPreviousCardPath != null)
-            intent.putExtra(DeclarationActivity.PREVIOUS_CARD_PATH, mPreviousCardPath);
+        intent.putExtra(DeclarationActivity.SELFIE_BYTESTRING, mSelfieByteString);
+        intent.putExtra(DeclarationActivity.PERSONAL_ID_BYTESTRING, mPersonalIdByteString);
+        intent.putExtra(DeclarationActivity.DRIVER_LICENSE_BYTESTRING, mPersonalIdByteString);
+        if (mPreviousCardByteString != null)
+            intent.putExtra(DeclarationActivity.PREVIOUS_CARD_BYTESTRING, mPreviousCardByteString);
         startActivity(intent);
     }
 
@@ -181,19 +179,19 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
         switch (whichButton) {
             case "Capture Photo":
                 mSelfieIcon.setImageBitmap(bitmap);
-                mSelfiePath = mPresenter.getCurrentPath();
+                mSelfieByteString = mPresenter.getByteString(bitmap);
                 break;
             case "Add Personal ID":
                 mAddIdIcon.setImageBitmap(bitmap);
-                mPersonalIdPath = mPresenter.getCurrentPath();
+                mPersonalIdByteString = mPresenter.getByteString(bitmap);
                 break;
             case "Add driver license":
                 mAddLicense.setImageBitmap(bitmap);
-                mDriverLicensePath = mPresenter.getCurrentPath();
+                mDriverLicenseByteString = mPresenter.getByteString(bitmap);
                 break;
             case "Add previous card":
                 mAddLicense.setImageBitmap(bitmap);
-                mPreviousCardPath = mPresenter.getCurrentPath();
+                mPreviousCardByteString = mPresenter.getByteString(bitmap);
                 break;
         }
     }

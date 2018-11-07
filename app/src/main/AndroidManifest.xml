@@ -27,6 +27,9 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -52,6 +55,12 @@
         <activity android:name=".views.signature.DeclarationActivity" />
         <activity android:name=".views.create.attatchments.DocumentsActivity" />
         <activity android:name=".views.preview.RequestPreviewActivity" />
+
+        <service android:name=".utils.notifications.MyFCMClass">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
     </application>
 

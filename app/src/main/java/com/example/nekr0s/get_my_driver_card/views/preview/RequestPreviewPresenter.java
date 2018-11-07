@@ -1,9 +1,17 @@
 package com.example.nekr0s.get_my_driver_card.views.preview;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
 import com.example.nekr0s.get_my_driver_card.GetMyDriverCardApplication;
 import com.example.nekr0s.get_my_driver_card.async.base.SchedulerProvider;
 import com.example.nekr0s.get_my_driver_card.models.Request;
 import com.example.nekr0s.get_my_driver_card.services.base.Service;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
@@ -15,8 +23,8 @@ public class RequestPreviewPresenter implements RequestPreviewContracts.Presente
     private final SchedulerProvider mSchedulerProvider;
     private final Service<Request> mService;
 
-    public RequestPreviewPresenter() {
-        mService = GetMyDriverCardApplication.getRequestsService();
+    public RequestPreviewPresenter(Context context) {
+        mService = GetMyDriverCardApplication.getRequestsService(context);
         mSchedulerProvider = GetMyDriverCardApplication.getSchedulerProvider();
     }
 
@@ -35,7 +43,7 @@ public class RequestPreviewPresenter implements RequestPreviewContracts.Presente
                 .observeOn(mSchedulerProvider.ui())
                 .doOnEach(x -> mView.hideLoading())
                 .doOnError(mView::showError)
-                .subscribe(s -> mView.navigateToHome(request));
+                .subscribe(s -> mView.navigateToList(request));
     }
 
     @Override
@@ -46,5 +54,12 @@ public class RequestPreviewPresenter implements RequestPreviewContracts.Presente
     @Override
     public void unsubscribe() {
         mView = null;
+    }
+
+    @Override
+    public Bitmap convertStringBytesToBitmap(String bytes) {
+        InputStream stream = new ByteArrayInputStream(Base64
+                .decode(bytes.getBytes(), Base64.DEFAULT));
+        return BitmapFactory.decodeStream(stream);
     }
 }

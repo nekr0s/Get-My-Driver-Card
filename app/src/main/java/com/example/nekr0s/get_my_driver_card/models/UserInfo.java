@@ -19,7 +19,6 @@ public class UserInfo implements Serializable {
     public UserInfo(String firstName, String firstNameCyrillic, String lastName, String lastNameCyrillic,
                     String personalNumber, String dateOfBirth, String address,
                     String phoneNumber, String email) {
-
         this.firstName = firstName;
         this.firstNameCyrillic = firstNameCyrillic;
         this.lastName = lastName;
@@ -113,4 +112,5 @@ public class UserInfo implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }

@@ -21,7 +21,7 @@
         android:autofillHints="@string/valid_email_address"
         android:backgroundTint="@color/common_google_signin_btn_text_dark_focused"
         android:ems="10"
-        android:hint="@string/email"
+        android:hint="@string/username"
         android:inputType="textEmailAddress"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textColorHint="@color/common_google_signin_btn_text_dark_focused" />

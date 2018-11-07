@@ -1,22 +1,11 @@
 package com.example.nekr0s.get_my_driver_card.views.login;
 
+import android.content.Context;
+
 import com.example.nekr0s.get_my_driver_card.GetMyDriverCardApplication;
 import com.example.nekr0s.get_my_driver_card.async.base.SchedulerProvider;
 import com.example.nekr0s.get_my_driver_card.models.User;
-import com.example.nekr0s.get_my_driver_card.services.base.Service;
-import com.example.nekr0s.get_my_driver_card.utils.Constants;
-
-import org.springframework.http.HttpAuthentication;
-import org.springframework.http.HttpBasicAuthentication;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.Collections;
+import com.example.nekr0s.get_my_driver_card.services.base.UsersService;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
@@ -24,12 +13,14 @@ import io.reactivex.disposables.Disposable;
 
 public class LoginPresenter implements LoginContracts.Presenter {
 
-    private final Service<User> mUsersService;
+    private final UsersService<User> mUsersService;
     private final SchedulerProvider mSchedulerProvider;
     private LoginContracts.View mView;
+    // Dont do that!
+    private String unHashedPassword;
 
-    LoginPresenter() {
-        mUsersService = GetMyDriverCardApplication.getUsersService();
+    LoginPresenter(Context context) {
+        mUsersService = GetMyDriverCardApplication.getUsersService(context);
         mSchedulerProvider = GetMyDriverCardApplication.getSchedulerProvider();
     }
 
@@ -39,36 +30,24 @@ public class LoginPresenter implements LoginContracts.Presenter {
         Disposable disposable = Observable
                 .create((ObservableOnSubscribe<User>) emitter -> {
                     User createUser = mUsersService.create(user);
+                    if (createUser == null) throw new Exception("User already exists.");
+                    unHashedPassword = user.getPassword();
                     emitter.onNext(createUser);
                     emitter.onComplete();
                 })
                 .subscribeOn(mSchedulerProvider.background())
                 .observeOn(mSchedulerProvider.ui())
                 .doOnEach(x -> mView.hideLoading())
-                .doOnError(mView::showError)
-                .subscribe(s -> mView.navigateToHome(user));
+                .subscribe(u -> login(u.getUsername(), unHashedPassword), e -> mView.showError(e));
     }
 
     @Override
-    public void login(String email, String password) {
+    public void login(String username, String password) {
         mView.showLoading();
-        final String url = Constants.BASE_SERVER_URL + "/users/me";
         Disposable disposable = Observable
                 .create((ObservableOnSubscribe<User>) emitter -> {
-                    // Populate
-                    HttpAuthentication authHeader = new HttpBasicAuthentication(email, password);
-                    HttpHeaders requestHeaders = new HttpHeaders();
-                    requestHeaders.setAuthorization(authHeader);
-                    requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-
-                    // Create rest template
-                    RestTemplate restTemplate = new RestTemplate();
-                    restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-
-                    ResponseEntity<User> responseEntity = restTemplate
-                            .exchange(url, HttpMethod.GET, new HttpEntity<>(requestHeaders),
-                                    User.class);
-                    emitter.onNext(responseEntity.getBody());
+                    User currentUser = mUsersService.login(username, password);
+                    emitter.onNext(currentUser);
                     emitter.onComplete();
                 })
                 .subscribeOn(mSchedulerProvider.background())

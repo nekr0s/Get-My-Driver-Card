@@ -1,27 +1,34 @@
 package com.example.nekr0s.get_my_driver_card.models;
 
-import com.example.nekr0s.get_my_driver_card.utils.Constants;
-
 import java.io.Serializable;
 
 public class Attachment implements Serializable {
 
+    // We use strings and logtext because of bugs with Gson
+
     private int attachmentId;
 
-    private byte[] faceShot;
+    private String faceShot;
 
-    private byte[] idShot;
+    private String idShot;
 
-    private byte[] signature;
+    private String signature;
 
-    private byte[] driverLicense;
+    private String driverLicense;
 
-    private byte[] previousTachCard;
+    private String previousTachCard;
 
-    private byte[] previousEuCard;
+    private String previousEuCard;
 
     public Attachment() {
         // keep empty pls
+    }
+
+    public Attachment(String faceShot, String idShot, String signature, String driverLicense) {
+        this.faceShot = faceShot;
+        this.idShot = idShot;
+        this.signature = signature;
+        this.driverLicense = driverLicense;
     }
 
     public int getAttachmentId() {
@@ -32,58 +39,51 @@ public class Attachment implements Serializable {
         this.attachmentId = attachmentId;
     }
 
-    public byte[] getFaceShot() {
+    public String getFaceShot() {
         return faceShot;
     }
 
-    public void setFaceShot(byte[] faceShot) {
+    public void setFaceShot(String faceShot) {
         this.faceShot = faceShot;
     }
 
-    public byte[] getIdShot() {
+    public String getIdShot() {
         return idShot;
     }
 
-    public void setIdShot(byte[] idShot) {
+    public void setIdShot(String idShot) {
         this.idShot = idShot;
     }
 
-    public byte[] getSignature() {
+    public String getSignature() {
         return signature;
     }
 
-    public void setSignature(byte[] signature) {
+    public void setSignature(String signature) {
         this.signature = signature;
     }
 
-    public byte[] getDriverLicense() {
+    public String getDriverLicense() {
         return driverLicense;
     }
 
-    public void setDriverLicense(byte[] driverLicense) {
+    public void setDriverLicense(String driverLicense) {
         this.driverLicense = driverLicense;
     }
 
-    public byte[] getPreviousTachCard() {
+    public String getPreviousTachCard() {
         return previousTachCard;
     }
 
-    public void setPreviousTachCard(byte[] previousTachCard) {
+    public void setPreviousTachCard(String previousTachCard) {
         this.previousTachCard = previousTachCard;
     }
 
-    public byte[] getPreviousEuCard() {
+    public String getPreviousEuCard() {
         return previousEuCard;
     }
 
-    public void setPreviousEuCard(byte[] previousEuCard) {
+    public void setPreviousEuCard(String previousEuCard) {
         this.previousEuCard = previousEuCard;
-    }
-
-    public boolean checkPictureBytes(int flag) throws NullPointerException {
-        if (flag != Constants.NEEDS_BONUS)
-            return idShot.length != 0 && driverLicense.length != 0 && faceShot.length != 0;
-        else return idShot.length != 0 && driverLicense.length != 0 && faceShot.length != 0 &&
-                previousTachCard.length != 0;
     }
 }

@@ -11,11 +11,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nekr0s.get_my_driver_card.R;
+import com.example.nekr0s.get_my_driver_card.models.Attachment;
 import com.example.nekr0s.get_my_driver_card.models.Request;
+import com.example.nekr0s.get_my_driver_card.utils.enums.RequestType;
+import com.example.nekr0s.get_my_driver_card.views.list.ListActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity.ALMOST_READY_REQUEST;
+import static com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity.DRIVER_LICENSE_BYTESTRING;
+import static com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity.PERSONAL_ID_BYTESTRING;
+import static com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity.PREVIOUS_CARD_BYTESTRING;
+import static com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity.SELFIE_BYTESTRING;
+import static com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity.SIGNATURE_BYTESTRING;
 
 public class RequestPreviewActivity extends AppCompatActivity implements RequestPreviewContracts.View {
 
@@ -33,10 +43,10 @@ public class RequestPreviewActivity extends AppCompatActivity implements Request
     ImageView mSignatureContainer;
 
     @BindView(R.id.preview_header)
-    TextView mHeaderMssg;
+    TextView mHeaderMsg;
 
     @BindView(R.id.request_reason)
-    TextView mHeaderMssgTwo;
+    TextView mHeaderMsgTwo;
 
     @BindView(R.id.cyr_name)
     EditText mCyrName;
@@ -60,7 +70,7 @@ public class RequestPreviewActivity extends AppCompatActivity implements Request
     EditText mPhoneNumber;
 
     @BindView(R.id.preview_additional_info)
-    EditText mAdditionalInfo;
+    TextView mAdditionalInfo;
 
     @BindView(R.id.icon_address)
     ImageView mIconAddress;
@@ -69,10 +79,16 @@ public class RequestPreviewActivity extends AppCompatActivity implements Request
     ImageView mIconPhoneNumber;
 
     @BindView(R.id.icon_date_of_birth)
-    EditText mIconDate;
+    ImageView mIconDateOfBirth;
 
     @BindView(R.id.icon_email)
-    EditText mIconEmail;
+    ImageView mIconEmail;
+
+    @BindView(R.id.icon_info)
+    ImageView mIconInfo;
+
+    @BindView(R.id.preview_email)
+    EditText mEmail;
 
     @BindView(R.id.request_preview_submit_button)
     Button mSubmitButton;
@@ -81,7 +97,7 @@ public class RequestPreviewActivity extends AppCompatActivity implements Request
     private RequestPreviewContracts.Presenter mPresenter;
 
     public static final String BUTTON_VISIBLE = "BUTTON_VISIBLE";
-    public static final String REQUEST_FIN = "REQUEST_FIN";
+    public static final String FROM_LIST = "JUST_SHOW_PREVIEW";
 
 
     @Override
@@ -91,16 +107,72 @@ public class RequestPreviewActivity extends AppCompatActivity implements Request
 
         ButterKnife.bind(this);
 
+        mPresenter = new RequestPreviewPresenter(this);
+
+        // Get intent
         Intent intent = getIntent();
         if (intent.getBooleanExtra(BUTTON_VISIBLE, false)) {
             mSubmitButton.setVisibility(View.VISIBLE);
         }
-        mRequest = (Request) intent.getSerializableExtra(REQUEST_FIN);
+
+        if (intent.getSerializableExtra(FROM_LIST) != null) getFromList(intent);
+        else getFromCreation(intent);
+
+
+        displayRequestPreview();
+    }
+
+    private void getFromList(Intent intent) {
+        mRequest = (Request) intent.getSerializableExtra(FROM_LIST);
+    }
+
+    private void getFromCreation(Intent intent) {
+        mRequest = (Request) intent.getSerializableExtra(ALMOST_READY_REQUEST);
+        String mSelfieByteString = intent.getStringExtra(SELFIE_BYTESTRING);
+        String mPersonalIdByteString = intent.getStringExtra(PERSONAL_ID_BYTESTRING);
+        String mDriverLicenseByteString = intent.getStringExtra(DRIVER_LICENSE_BYTESTRING);
+        String mSignatureByteString = intent.getStringExtra(SIGNATURE_BYTESTRING);
+
+        mRequest.setAttachment(new Attachment(mSelfieByteString, mPersonalIdByteString,
+                mSignatureByteString, mDriverLicenseByteString));
+
+        if (mRequest.getRequestType().equals(RequestType.TYPE_EXCHANGE)) {
+            String mPreviousCardByteString = intent.getStringExtra(PREVIOUS_CARD_BYTESTRING);
+            mRequest.getAttachment().setPreviousEuCard(mPreviousCardByteString);
+        }
+    }
+
+    private void displayRequestPreview() {
+        mPhotoContainer.setImageBitmap(mPresenter.convertStringBytesToBitmap(mRequest
+                .getAttachment().getFaceShot()));
+        mSignatureContainer.setImageBitmap(mPresenter.convertStringBytesToBitmap(mRequest
+                .getAttachment().getSignature()));
+        mCyrName.setText(mRequest.getUser().getUserInfo().getFirstNameCyrillic());
+        mCyrSurname.setText(mRequest.getUser().getUserInfo().getLastNameCyrillic());
+        mName.setText(mRequest.getUser().getUserInfo().getFirstName());
+        mLastName.setText(mRequest.getUser().getUserInfo().getLastName());
+        mAddress.setText(mRequest.getUser().getUserInfo().getAddress());
+        mBirthDate.setText(mRequest.getUser().getUserInfo().getDateOfBirth());
+        mPhoneNumber.setText(mRequest.getUser().getUserInfo().getPhoneNumber());
+        mEmail.setText(mRequest.getUser().getUserInfo().getEmail());
+        mAdditionalInfo.setText("TODO");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.subscribe(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mPresenter.unsubscribe();
     }
 
     @OnClick(R.id.request_preview_submit_button)
     void onSubmitButtonClicked() {
-
+        mPresenter.submit(mRequest);
     }
 
     @Override
@@ -124,7 +196,9 @@ public class RequestPreviewActivity extends AppCompatActivity implements Request
     }
 
     @Override
-    public void navigateToHome(Request request) {
-        Intent intent = new Intent();
+    public void navigateToList(Request request) {
+        Intent intent = new Intent(this, ListActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

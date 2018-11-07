@@ -104,31 +104,9 @@ public class RenewFragment extends Fragment {
 
     @OnClick(R.id.renew_next_button)
     void openNextActivity() {
-
-
-        //only for test
-//        Intent intent = new Intent(getActivity(), MyCameraActivity.class);
-//        startActivity(intent);
-
-
-        //only for test
-//        Intent intent = new Intent(getActivity(), DocumentsActivity.class);
-//        startActivity(intent);
-
-        //only for test
-//        Intent intent = new Intent(getActivity(), DeclarationActivity.class);
-//        startActivity(intent);
-
-        // only for test
-//        Intent intent = new Intent(getActivity(), RequestPreviewActivity.class);
-//        startActivity(intent);
-
-//        //the real deal
         Intent intent = new Intent(getActivity(), PreviousCardInfoActivity.class);
         User user = ((UserHolder) getActivity()).getCurrentUser();
         intent.putExtra(Constants.USER_OBJ_EXTRA, user);
         startActivity(intent);
-
-
     }
 }

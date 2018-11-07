@@ -17,13 +17,13 @@ public interface DocumentsContracts {
 
         void unsubscribe();
 
-        void savePicToGallery();
-
         File createImageFile() throws IOException;
 
         Bitmap getBitmap(BitmapFactory.Options bmOptions);
 
         String getCurrentPath();
+
+        String getByteString(Bitmap bitmap);
     }
 
     interface View {

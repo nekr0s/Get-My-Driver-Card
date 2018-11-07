@@ -117,7 +117,7 @@ public class NewCardFragment extends Fragment {
         // TODO: 11/4/2018  we have to fix this
         User user = ((UserHolder) getActivity()).getCurrentUser();
         user.setUserInfo(createUserInfoFromFields());
-        Request request = new Request(RequestStatus.REQUEST_NEW, RequestType.TYPE_NEW, user);
+        Request request = new Request(RequestStatus.REQUEST_NEW, RequestType.TYPE_NEW, null, user);
         intent.putExtra(DocumentsActivity.REQUEST_SO_FAR, request);
         startActivity(intent);
 //        }

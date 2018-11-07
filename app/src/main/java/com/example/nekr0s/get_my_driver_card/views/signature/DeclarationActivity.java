@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -13,8 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nekr0s.get_my_driver_card.R;
-import com.example.nekr0s.get_my_driver_card.models.Attachment;
 import com.example.nekr0s.get_my_driver_card.models.Request;
+import com.example.nekr0s.get_my_driver_card.utils.enums.RequestType;
 import com.example.nekr0s.get_my_driver_card.views.preview.RequestPreviewActivity;
 
 import java.io.ByteArrayOutputStream;
@@ -24,11 +25,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class DeclarationActivity extends Activity {
-    public static final String SELFIE_PATH = "SELFIE_PATH";
-    public static final String PERSONAL_ID_PATH = "PID_PATH";
-    public static final String DRIVER_LICENSE_PATH = "DL_PATH";
-    public static final String PREVIOUS_CARD_PATH = "PREV_PATH";
+    public static final String SELFIE_BYTESTRING = "SELFIE_BYTESTRING";
+    public static final String PERSONAL_ID_BYTESTRING = "PID_PATH";
+    public static final String DRIVER_LICENSE_BYTESTRING = "DL_PATH";
+    public static final String PREVIOUS_CARD_BYTESTRING = "PREV_PATH";
     private static final int REQUEST_SIGN_HERE = 6;
+    public static final String SIGNATURE_BYTESTRING = "SIGNATURE";
     @BindView(R.id.header_msg_declaration)
     TextView mHeader;
 
@@ -47,6 +49,11 @@ public class DeclarationActivity extends Activity {
     private Request mRequestSoFar;
 
     public static final String ALMOST_READY_REQUEST = "ALMOST_READY_REQUEST";
+    private String mSelfieByteString;
+    private String mPersonalIdByteString;
+    private String mDriverLicenseByteString;
+    private String mPreviousCardByteString;
+    private String mSignatureByteString;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,8 +62,14 @@ public class DeclarationActivity extends Activity {
 
         ButterKnife.bind(this);
 
-        // Get and set all Attachments
-        initIntents();
+        // Get intent
+        Intent intent = getIntent();
+        mRequestSoFar = (Request) intent.getSerializableExtra(ALMOST_READY_REQUEST);
+        mSelfieByteString = intent.getStringExtra(SELFIE_BYTESTRING);
+        mPersonalIdByteString = intent.getStringExtra(PERSONAL_ID_BYTESTRING);
+        mDriverLicenseByteString = intent.getStringExtra(DRIVER_LICENSE_BYTESTRING);
+        if (mRequestSoFar.getRequestType().equals(RequestType.TYPE_EXCHANGE))
+            mPreviousCardByteString = intent.getStringExtra(PREVIOUS_CARD_BYTESTRING);
 
         //disable button if checkbox is not checked else enable button
         mCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -82,15 +95,23 @@ public class DeclarationActivity extends Activity {
                 Bitmap bitmap = BitmapFactory.decodeFile(signaturePath);
                 mSignImage.setBackground(null);
                 mSignImage.setImageBitmap(bitmap);
-                mRequestSoFar.getAttachment().setSignature(getBitmapAsByteArray(bitmap));
+                mSignatureByteString = getByteString(bitmap);
             }
         }
     }
 
     @OnClick(R.id.finish_button)
     void finalizeRequest() {
-        if (mRequestSoFar.getAttachment().getSignature() != null && mCheckBox.isChecked()) {
+        if (mSignatureByteString != null && mCheckBox.isChecked()) {
             Intent intent = new Intent(this, RequestPreviewActivity.class);
+            intent.putExtra(ALMOST_READY_REQUEST, mRequestSoFar);
+            intent.putExtra(SELFIE_BYTESTRING, mSelfieByteString);
+            intent.putExtra(PERSONAL_ID_BYTESTRING, mPersonalIdByteString);
+            intent.putExtra(DRIVER_LICENSE_BYTESTRING, mDriverLicenseByteString);
+            intent.putExtra(SIGNATURE_BYTESTRING, mSignatureByteString);
+            intent.putExtra(RequestPreviewActivity.BUTTON_VISIBLE, true);
+            if (mRequestSoFar.getRequestType().equals(RequestType.TYPE_EXCHANGE))
+                intent.putExtra(PREVIOUS_CARD_BYTESTRING, mPreviousCardByteString);
             startActivity(intent);
         } else if (!mCheckBox.isChecked()) {
             Toast.makeText(this, "Please accept the declaration.", Toast.LENGTH_SHORT).show();
@@ -99,31 +120,11 @@ public class DeclarationActivity extends Activity {
         }
     }
 
-    private byte[] getBitmapAsByteArray(Bitmap bitmap) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream);
-        return stream.toByteArray();
+    private String getByteString(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
+        byte[] bytes = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
 
-    private Bitmap getBitmap(String path) {
-        return BitmapFactory.decodeFile(path);
-    }
-
-    private void initIntents() {
-        // Get intent
-        Intent intent = getIntent();
-        mRequestSoFar = (Request) intent.getSerializableExtra(ALMOST_READY_REQUEST);
-        String selfiePath = intent.getStringExtra(SELFIE_PATH);
-        String personalIdPath = intent.getStringExtra(PERSONAL_ID_PATH);
-        String driverLicensePath = intent.getStringExtra(DRIVER_LICENSE_PATH);
-
-        byte[] sBytes = getBitmapAsByteArray(getBitmap(selfiePath));
-        byte[] pBytes = getBitmapAsByteArray(getBitmap(personalIdPath));
-        byte[] dBytes = getBitmapAsByteArray(getBitmap(driverLicensePath));
-
-        mRequestSoFar.setAttachment(new Attachment());
-        mRequestSoFar.getAttachment().setFaceShot(sBytes);
-        mRequestSoFar.getAttachment().setDriverLicense(dBytes);
-        mRequestSoFar.getAttachment().setIdShot(pBytes);
-    }
 }

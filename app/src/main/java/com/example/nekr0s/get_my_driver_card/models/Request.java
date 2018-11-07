@@ -2,6 +2,7 @@ package com.example.nekr0s.get_my_driver_card.models;
 
 import android.graphics.Color;
 
+import com.example.nekr0s.get_my_driver_card.utils.enums.RequestReason;
 import com.example.nekr0s.get_my_driver_card.utils.enums.RequestStatus;
 import com.example.nekr0s.get_my_driver_card.utils.enums.RequestType;
 
@@ -11,15 +12,17 @@ import java.time.format.DateTimeFormatter;
 
 public class Request implements Serializable {
     private int requestId;
-    private RequestStatus status;
-    private RequestType type;
+    private RequestStatus requestStatus;
+    private RequestType requestType;
+    private RequestReason requestReason;
     private String requestDate;
     private Attachment attachment;
     private User user;
 
-    public Request(RequestStatus status, RequestType type, User user) {
-        this.status = status;
-        this.type = type;
+    public Request(RequestStatus status, RequestType requestType, RequestReason reason, User user) {
+        this.requestStatus = status;
+        this.requestType = requestType;
+        this.requestReason = reason;
         setRequestDate(LocalDateTime.now());
         this.user = user;
     }
@@ -32,20 +35,16 @@ public class Request implements Serializable {
         this.requestId = requestId;
     }
 
-    public RequestStatus getStatus() {
-        return status;
+    public RequestStatus getRequestStatus() {
+        return requestStatus;
     }
 
-    public void setStatus(RequestStatus status) {
-        this.status = status;
+    public void setRequestStatus(RequestStatus requestStatus) {
+        this.requestStatus = requestStatus;
     }
 
-    public RequestType getType() {
-        return type;
-    }
-
-    public void setType(RequestType type) {
-        this.type = type;
+    public void setRequestType(RequestType requestType) {
+        this.requestType = requestType;
     }
 
     public User getUser() {
@@ -66,7 +65,7 @@ public class Request implements Serializable {
 
     // methods
     public int color() {
-        switch (status) {
+        switch (requestStatus) {
             case REQUEST_APPROVED:
                 return Color.GREEN;
             case REQUEST_WAITING:
@@ -78,7 +77,7 @@ public class Request implements Serializable {
     }
 
     public String getStatusString() {
-        switch (status) {
+        switch (requestStatus) {
             case REQUEST_NEW:
                 return "New";
             case REQUEST_WAITING:
@@ -92,7 +91,7 @@ public class Request implements Serializable {
     }
 
     public String getRequestType() {
-        switch (type) {
+        switch (requestType) {
             case TYPE_NEW:
                 return "Brand new card";
             case TYPE_EXCHANGE:
@@ -112,5 +111,13 @@ public class Request implements Serializable {
     private void setRequestDate(LocalDateTime requestDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
         this.requestDate = requestDate.format(formatter);
+    }
+
+    public RequestReason getRequestReason() {
+        return requestReason;
+    }
+
+    public void setRequestReason(RequestReason requestReason) {
+        this.requestReason = requestReason;
     }
 }

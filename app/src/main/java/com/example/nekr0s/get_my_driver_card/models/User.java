@@ -11,7 +11,7 @@ import java.util.Set;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements Serializable {
     private int id;
-    private String email;
+    private String username;
     private String password;
     private UserInfo userInfo;
     private Set<Role> roles;
@@ -20,8 +20,8 @@ public class User implements Serializable {
         // keep empty pls
     }
 
-    public User(String email, String password) {
-        this.email = email;
+    public User(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
@@ -33,12 +33,12 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -68,6 +68,6 @@ public class User implements Serializable {
     @NonNull
     @Override
     public String toString() {
-        return email;
+        return username;
     }
 }

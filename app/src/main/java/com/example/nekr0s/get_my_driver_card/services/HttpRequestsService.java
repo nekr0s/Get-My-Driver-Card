@@ -1,5 +1,7 @@
 package com.example.nekr0s.get_my_driver_card.services;
 
+import android.content.Context;
+
 import com.example.nekr0s.get_my_driver_card.GetMyDriverCardApplication;
 import com.example.nekr0s.get_my_driver_card.models.Request;
 import com.example.nekr0s.get_my_driver_card.repositories.base.RequestRepository;
@@ -12,8 +14,8 @@ public class HttpRequestsService implements RequestService {
 
     private final RequestRepository mRequestsRepository;
 
-    public HttpRequestsService() {
-        mRequestsRepository = GetMyDriverCardApplication.getRequestRepository();
+    public HttpRequestsService(Context context) {
+        mRequestsRepository = GetMyDriverCardApplication.getRequestRepository(context);
     }
 
     @Override

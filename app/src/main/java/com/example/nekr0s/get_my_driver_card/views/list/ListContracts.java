@@ -6,17 +6,23 @@ import java.util.List;
 
 public interface ListContracts {
     interface Presenter {
-        void loadRequests();
+        void loadRequestsAdmin();
+
+        void loadRequestsUser(int userId);
 
         void subscribe(View view);
 
         void unsubscribe();
+
+        void selectRequest(Request request);
     }
 
     interface View {
         void setPresenter(Presenter presenter);
 
         void showRequests(List<Request> requestList);
+
+        void showRequestPreview(Request request);
 
         void showEmptyRequestList();
 

@@ -13,7 +13,7 @@
         layout="@layout/toolbar" />
 
     <com.github.clans.fab.FloatingActionMenu
-        android:id="@+id/menu"
+        android:id="@+id/floating_action_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -101,7 +101,7 @@
     </com.github.clans.fab.FloatingActionMenu>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/empty_request_list_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -115,7 +115,15 @@
         android:text="@string/header_message"
         android:textColor="@color/bluenontransp"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_requests"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userToolbar"
+        android:visibility="gone" />
 
 
 </RelativeLayout>

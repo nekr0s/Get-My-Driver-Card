@@ -4,7 +4,7 @@
     <string name="logout_text">Изход</string>
     <string name="sign_in_google">Влез с Facebook</string>
     <string name="sign_in_facebook">Влез с google</string>
-    <string name="email">Имейл</string>
+    <string name="username">Потребителско име</string>
     <string name="password">Парола</string>
     <string name="sign_in">Вход</string>
     <string name="no_account">Нямаш акаунт? Направи си</string>
