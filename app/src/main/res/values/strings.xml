@@ -3,7 +3,6 @@
     <string name="logout_text">Log out</string>
     <string name="sign_in_google">Sign in with google</string>
     <string name="sign_in_facebook">Sign in with facebook</string>
-    <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="sign_in">Sign in</string>
     <string name="no_account">No account yet? Create one</string>
@@ -140,4 +139,6 @@
     <string name="USERNAME_NULL">Username can\'t be empty</string>
     <string name="USERNAME_TOO_SIMPLE">Username must be over 4 characters</string>
     <string name="USERNAME_INVALID">Username is invalid</string>
+    <string name="username">Username</string>
+    <string name="passwordlogin">Password</string>
 </resources>

@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#eb000000</color>
     <color name="colorAccent">#06dd0d</color>
     <color name="colorPrimaryShadow">#f2f2f2</color>
-    <color name="black80percent">#99000000</color>
+    <color name="black60percent">#99000000</color>
     <color name="blue80percent">#8130f1ff</color>
     <color name="bluenontransp">#cd30f1ff</color>
     <color name="red">#f70c04</color>
@@ -14,5 +14,11 @@
     <color name="white60percent">#80f2f2f2</color>
     <color name="transparent">#00f2f2f2</color>
     <color name="Onyx50percent">#40353839</color>
+    <color name="newloginColor">#99FAEBD8</color>
+    <color name="facebooktransparent">#BF3b5998</color>
+    <color name="googletransparent">#BFea4335</color>
+    <color name="Onyx10percent">#1A353839</color>
+    <color name="black80percent">#CC000000</color>
+
 
 </resources>

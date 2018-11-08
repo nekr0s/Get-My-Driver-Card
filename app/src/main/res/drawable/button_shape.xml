@@ -2,6 +2,10 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <corners android:radius="3dp" />
+    <gradient
+        android:startColor="@color/Onyx10percent"
+
+        android:endColor="@color/Onyx10percent" />
     <stroke
         android:width="5px"
         android:color="#000000" />

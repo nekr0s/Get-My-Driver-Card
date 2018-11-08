@@ -4,7 +4,6 @@
     <string name="logout_text">Изход</string>
     <string name="sign_in_google">Влез с Facebook</string>
     <string name="sign_in_facebook">Влез с google</string>
-    <string name="username">Потребителско име</string>
     <string name="password">Парола</string>
     <string name="sign_in">Вход</string>
     <string name="no_account">Нямаш акаунт? Направи си</string>
@@ -135,5 +134,10 @@
     <string name="USERNAME_NULL">Username can\'t be empty</string>
     <string name="USERNAME_TOO_SIMPLE">Username must be over 4 characters</string>
     <string name="USERNAME_INVALID">Username is invalid</string>
+    <string name="channel_description">Нотификира когато заявката за картата е приета</string>
+    <string name="channel_name">Нотификация за карта</string>
+    <string name="passwordlogin">Парола</string>
+    <string name="username">Потребителско име</string>
+
 
 </resources>
