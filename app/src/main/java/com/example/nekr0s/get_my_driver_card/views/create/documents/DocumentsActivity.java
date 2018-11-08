@@ -1,19 +1,22 @@
-package com.example.nekr0s.get_my_driver_card.views.create.attatchments;
+package com.example.nekr0s.get_my_driver_card.views.create.documents;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Request;
+import com.example.nekr0s.get_my_driver_card.utils.PhotoEncodeHelper;
 import com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity;
+import com.facebook.drawee.view.SimpleDraweeView;
+
+import java.io.FileNotFoundException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,16 +39,16 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
     TextView mHeaderMsg;
 
     @BindView(R.id.selfie_icon)
-    ImageView mSelfieIcon;
+    SimpleDraweeView mSelfieIcon;
 
     @BindView(R.id.add_ID_icon)
-    ImageView mAddIdIcon;
+    SimpleDraweeView mAddIdIcon;
 
     @BindView(R.id.driver_license_photo)
-    ImageView mAddLicense;
+    SimpleDraweeView mAddLicense;
 
     @BindView(R.id.previous_card_icon)
-    ImageView mAddPreviousCard;
+    SimpleDraweeView mAddPreviousCard;
 
     @BindView(R.id.selfie_button)
     Button mSelfieButton;
@@ -129,7 +132,11 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_CANCELED) {
             if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null) {
-                fillIcon(mClickedButton);
+                try {
+                    fillIcon(mClickedButton);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -156,42 +163,43 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
     }
 
     @Override
-    public void fillIcon(String whichButton) {
+    public void fillIcon(String whichButton) throws FileNotFoundException {
         // Get the dimensions of the View
-        int targetW = mSelfieIcon.getWidth();
-        int targetH = mSelfieIcon.getHeight();
-
-        // Get the dimensions of the bitmap
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
-
-        // Determine how much to scale down the image
-        int scaleFactor = Math.max(photoW / targetW, photoH / targetH);
-
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
+//        int targetW = mSelfieIcon.getWidth();
+//        int targetH = mSelfieIcon.getHeight();
+//
+//        // Get the dimensions of the bitmap
+//        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+//        bmOptions.inJustDecodeBounds = true;
+//        int photoW = bmOptions.outWidth;
+//        int photoH = bmOptions.outHeight;
+//
+//        // Determine how much to scale down the image
+//        int scaleFactor = Math.max(photoW / targetW, photoH / targetH);
+//
+//        // Decode the image file into a Bitmap sized to fill the View
+//        bmOptions.inJustDecodeBounds = false;
+//        bmOptions.inSampleSize = scaleFactor;
         // For attachments
-        Bitmap bitmap = mPresenter.getBitmap(bmOptions);
+        Uri uri = mPresenter.getCurrentUri();
+        String encodedString = PhotoEncodeHelper.getByteString(uri, this);
 
         switch (whichButton) {
             case "Capture Photo":
-                mSelfieIcon.setImageBitmap(bitmap);
-                mSelfieByteString = mPresenter.getByteString(bitmap);
+                mSelfieIcon.setImageURI(uri);
+                mSelfieByteString = encodedString;
                 break;
             case "Add Personal ID":
-                mAddIdIcon.setImageBitmap(bitmap);
-                mPersonalIdByteString = mPresenter.getByteString(bitmap);
+                mAddIdIcon.setImageURI(uri);
+                mPersonalIdByteString = encodedString;
                 break;
             case "Add driver license":
-                mAddLicense.setImageBitmap(bitmap);
-                mDriverLicenseByteString = mPresenter.getByteString(bitmap);
+                mAddLicense.setImageURI(uri);
+                mDriverLicenseByteString = encodedString;
                 break;
             case "Add previous card":
-                mAddLicense.setImageBitmap(bitmap);
-                mPreviousCardByteString = mPresenter.getByteString(bitmap);
+                mAddLicense.setImageURI(uri);
+                mPreviousCardByteString = encodedString;
                 break;
         }
     }

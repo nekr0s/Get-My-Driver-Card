@@ -1,10 +1,12 @@
-package com.example.nekr0s.get_my_driver_card.views.create.attatchments;
+package com.example.nekr0s.get_my_driver_card.views.create.documents;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public interface DocumentsContracts {
@@ -21,9 +23,7 @@ public interface DocumentsContracts {
 
         Bitmap getBitmap(BitmapFactory.Options bmOptions);
 
-        String getCurrentPath();
-
-        String getByteString(Bitmap bitmap);
+        Uri getCurrentUri();
     }
 
     interface View {
@@ -33,6 +33,6 @@ public interface DocumentsContracts {
 
         void showError(Throwable throwable);
 
-        void fillIcon(String whichButton);
+        void fillIcon(String whichButton) throws FileNotFoundException;
     }
 }

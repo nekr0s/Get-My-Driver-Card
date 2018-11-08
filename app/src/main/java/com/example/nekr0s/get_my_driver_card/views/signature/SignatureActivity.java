@@ -28,6 +28,7 @@ import com.example.nekr0s.get_my_driver_card.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -70,6 +71,7 @@ public class SignatureActivity extends AppCompatActivity {
         if (!file.exists()) {
             file.mkdir();
         }
+
     }
 
     Button.OnClickListener onButtonClick = new Button.OnClickListener() {
@@ -82,7 +84,11 @@ public class SignatureActivity extends AppCompatActivity {
                 mGetSign.setEnabled(false);
             } else if (v == mGetSign) {
                 Log.v("log_tag", "Panel Saved");
-                isStoragePermissionGranted();
+                try {
+                    isStoragePermissionGranted();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else if (v == mCancel) {
                 Log.v("log_tag", "Panel Canceled");
                 // Calling the BillDetailsActivity
@@ -93,11 +99,11 @@ public class SignatureActivity extends AppCompatActivity {
     };
 
 
-    public boolean isStoragePermissionGranted() {
+    public boolean isStoragePermissionGranted() throws IOException {
         if (ActivityCompat.checkSelfPermission(view.getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED) {
             view.setDrawingCacheEnabled(true);
-            mSignature.save(view, StoredPath);
+            mSignature.save(view);
             Toast.makeText(getApplicationContext(), "Successfully Saved", Toast.LENGTH_SHORT).show();
             // Calling the same class
             recreate();
@@ -115,7 +121,11 @@ public class SignatureActivity extends AppCompatActivity {
         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
             view.setDrawingCacheEnabled(true);
-            mSignature.save(view, StoredPath);
+            try {
+                mSignature.save(view);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             Toast.makeText(getApplicationContext(), "Successfully Saved", Toast.LENGTH_SHORT).show();
             // Calling the same class
             recreate();
@@ -145,7 +155,8 @@ public class SignatureActivity extends AppCompatActivity {
             paint.setStrokeWidth(STROKE_WIDTH);
         }
 
-        public void save(View v, String StoredPath) {
+        public void save(View v) throws IOException {
+
             Log.v("log_tag", "Width: " + v.getWidth());
             Log.v("log_tag", "Height: " + v.getHeight());
             if (bitmap == null) {
@@ -160,7 +171,7 @@ public class SignatureActivity extends AppCompatActivity {
                 // Convert the output file to Image such as .png
                 bitmap.compress(Bitmap.CompressFormat.PNG, 90, mFileOutStream);
                 Intent intent = new Intent(SignatureActivity.this, DeclarationActivity.class);
-                intent.putExtra("imagePath", StoredPath);
+                intent.putExtra("filePath", StoredPath);
                 setResult(RESULT_OK, intent);
                 finish();
                 mFileOutStream.flush();
@@ -169,6 +180,7 @@ public class SignatureActivity extends AppCompatActivity {
             } catch (Exception e) {
                 Log.v("log_tag", e.toString());
             }
+
 
         }
 

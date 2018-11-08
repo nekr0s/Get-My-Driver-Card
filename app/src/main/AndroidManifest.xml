@@ -53,7 +53,7 @@
         <activity android:name=".views.create.fragments.PreviousCardInfoActivity" />
         <activity android:name=".views.signature.SignatureActivity" />
         <activity android:name=".views.signature.DeclarationActivity" />
-        <activity android:name=".views.create.attatchments.DocumentsActivity" />
+        <activity android:name=".views.create.documents.DocumentsActivity" />
         <activity android:name=".views.preview.RequestPreviewActivity" />
 
         <service android:name=".utils.notifications.MyFCMClass">

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -62,15 +63,15 @@
         android:textSize="16sp" />
 
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/sign_here"
         android:layout_width="316dp"
         android:layout_height="275dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="111dp"
-        android:background="@drawable/signature_icon"
         android:clickable="true"
-        tools:ignore="ContentDescription" />
+        fresco:actualImageScaleType="focusCrop"
+        fresco:placeholderImage="@drawable/signature_icon" />
 
 </RelativeLayout>

@@ -4,21 +4,25 @@ package com.example.nekr0s.get_my_driver_card.views.signature;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.FileProvider;
 import android.util.Base64;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Request;
+import com.example.nekr0s.get_my_driver_card.utils.PhotoEncodeHelper;
 import com.example.nekr0s.get_my_driver_card.utils.enums.RequestType;
 import com.example.nekr0s.get_my_driver_card.views.preview.RequestPreviewActivity;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +39,7 @@ public class DeclarationActivity extends Activity {
     TextView mHeader;
 
     @BindView(R.id.sign_here)
-    ImageView mSignImage;
+    SimpleDraweeView mSignImage;
 
     @BindView(R.id.checkbox)
     CheckBox mCheckBox;
@@ -90,12 +94,16 @@ public class DeclarationActivity extends Activity {
         if (resultCode != RESULT_CANCELED) {
             if (requestCode == REQUEST_SIGN_HERE && resultCode == RESULT_OK && data != null) {
                 Bundle bundle = data.getExtras();
-                // dosmth
-                String signaturePath = bundle.getString("imagePath");
-                Bitmap bitmap = BitmapFactory.decodeFile(signaturePath);
-                mSignImage.setBackground(null);
-                mSignImage.setImageBitmap(bitmap);
-                mSignatureByteString = getByteString(bitmap);
+                File signatureFile = new File(bundle.getString("filePath"));
+                Uri signatureURI = FileProvider.getUriForFile(this,
+                        "com.example.nekr0s.get_my_driver_card.fileprovider",
+                        signatureFile);
+                mSignImage.setImageURI(signatureURI);
+                try {
+                    mSignatureByteString = PhotoEncodeHelper.getByteString(signatureURI, this);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

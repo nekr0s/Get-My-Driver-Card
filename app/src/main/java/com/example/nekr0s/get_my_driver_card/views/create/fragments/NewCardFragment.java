@@ -26,7 +26,7 @@ import com.example.nekr0s.get_my_driver_card.validator.base.NamesValidator;
 import com.example.nekr0s.get_my_driver_card.validator.base.Validator;
 import com.example.nekr0s.get_my_driver_card.validator.base.ValidatorDate;
 import com.example.nekr0s.get_my_driver_card.validator.base.ValidatorDigits;
-import com.example.nekr0s.get_my_driver_card.views.create.attatchments.DocumentsActivity;
+import com.example.nekr0s.get_my_driver_card.views.create.documents.DocumentsActivity;
 import com.example.nekr0s.get_my_driver_card.views.create.base.UserHolder;
 
 import java.util.ArrayList;

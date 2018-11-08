@@ -22,6 +22,7 @@ import com.example.nekr0s.get_my_driver_card.services.HttpUsersService;
 import com.example.nekr0s.get_my_driver_card.services.base.RequestService;
 import com.example.nekr0s.get_my_driver_card.services.base.UsersService;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
@@ -40,6 +41,12 @@ public class GetMyDriverCardApplication extends Application {
     private static Repository<Attachment> mAttachmentRepository;
     private static JsonParser<Attachment> mJsonParserAttachment;
     private static ClearableCookieJar mCookieJar;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Fresco.initialize(this);
+    }
 
     public static SchedulerProvider getSchedulerProvider() {
         if (mSchedulerProvider == null)

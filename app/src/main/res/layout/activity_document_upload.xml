@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/test_background_two"
-    tools:context=".views.create.attatchments.DocumentsActivity">
+    tools:context=".views.create.documents.DocumentsActivity">
 
     <TextView
         android:id="@+id/documents_header"
@@ -23,7 +23,7 @@
         android:textSize="17sp"
         android:textStyle="bold" />
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/selfie_icon"
         android:layout_width="130dp"
         android:layout_height="130dp"
@@ -31,18 +31,18 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="35dp"
         android:layout_marginTop="100dp"
-        app:srcCompat="@drawable/selfie_icon"
-        tools:ignore="ContentDescription" />
+        fresco:actualImageScaleType="fitCenter"
+        fresco:placeholderImage="@drawable/selfie_icon" />
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/add_ID_icon"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_alignTop="@+id/selfie_icon"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="35dp"
-        android:src="@drawable/add_file_icon"
-        tools:ignore="ContentDescription" />
+        android:scaleType="fitXY"
+        fresco:placeholderImage="@drawable/add_file_icon" />
 
     <Button
         android:id="@+id/selfie_button"
@@ -67,26 +67,26 @@
         android:text="@string/add_personal_id"
         android:textColor="@color/black" />
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/driver_license_photo"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_below="@id/add_ID_button"
         android:layout_marginStart="35dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/add_file_icon"
-        tools:ignore="ContentDescription" />
+        android:scaleType="fitXY"
+        fresco:placeholderImage="@drawable/add_file_icon" />
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/previous_card_icon"
         android:layout_width="130dp"
-        android:layout_height="128dp"
+        android:layout_height="130dp"
         android:layout_below="@id/add_ID_button"
         android:layout_alignStart="@+id/add_ID_icon"
         android:layout_alignTop="@+id/driver_license_photo"
-        android:src="@drawable/add_file_icon"
+        android:scaleType="fitXY"
         android:visibility="gone"
-        tools:ignore="ContentDescription" />
+        fresco:placeholderImage="@drawable/add_file_icon" />
 
     <Button
         android:id="@+id/driver_license_button"
@@ -95,8 +95,8 @@
         android:layout_below="@+id/driver_license_photo"
         android:layout_marginStart="35dp"
         android:layout_marginTop="10dp"
-        android:paddingBottom="6dp"
         android:background="@drawable/button_shape"
+        android:paddingBottom="6dp"
         android:text="@string/add_driver_license"
         android:textColor="@color/black" />
 
