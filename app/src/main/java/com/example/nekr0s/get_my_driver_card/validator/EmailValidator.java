@@ -28,7 +28,7 @@ public class EmailValidator implements Validator {
 
         if (input.isEmpty()) return ErrorCode.EMAIL_CARD_NULL;
         else if (!validateEmail(input)) return ErrorCode.EMAIL_INVALID;
-        else if (input.length() > Constants.USERNAME_MAX_LENGTH) return ErrorCode.EMAIL_TOO_LONG;
+        else if (input.length() > Constants.EMAIL_MAX_LENGHT) return ErrorCode.EMAIL_TOO_LONG;
         return ErrorCode.EMAIL_OK;
     }
 
