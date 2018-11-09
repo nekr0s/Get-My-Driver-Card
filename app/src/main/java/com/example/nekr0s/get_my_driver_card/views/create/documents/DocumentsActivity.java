@@ -126,6 +126,7 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
         if (mPreviousCardByteString != null)
             intent.putExtra(DeclarationActivity.PREVIOUS_CARD_BYTESTRING, mPreviousCardByteString);
         startActivity(intent);
+        finish();
     }
 
     @Override

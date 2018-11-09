@@ -64,6 +64,11 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ItemVi
         mRequests.addAll(requests);
     }
 
+    public void add(Request request) {
+        mRequests.add(request);
+        notifyDataSetChanged();
+    }
+
 //    public void sortByDate() {
 //        Collections.sort(datestring, new Comparator<String>() {
 //            DateFormat f = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");

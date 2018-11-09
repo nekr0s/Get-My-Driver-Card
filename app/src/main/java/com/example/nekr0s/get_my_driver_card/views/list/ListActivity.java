@@ -89,14 +89,18 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
 
         // Get intent
         mUser = (User) getIntent().getSerializableExtra(Constants.USER_OBJ_EXTRA);
-        toolbar.setTitle(mUser.getUsername());
+        if (getIntent().getSerializableExtra(Constants.CREATED_REQUEST_OBJ) != null) {
+            Request request = (Request) getIntent().getSerializableExtra(Constants.CREATED_REQUEST_OBJ);
+            mRequestsAdapter.add(request);
+            mUser = request.getUser();
+        }
 
         // Toolbar
         setSupportActionBar(toolbar);
         ImageView i = toolbar.findViewById(R.id.toolbar_logout);
         i.setOnClickListener(item -> logoutCurrentUser());
 
-        //spinner adapter
+        // Spinner adapter
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource
                 (this, R.array.sort_by_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -193,14 +197,17 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String item = parent.getItemAtPosition(position).toString();
-
         switch (item) {
             case "STATUS":
+                mRequestsAdapter.sortByStatus();
                 Toast.makeText(this, "Status", Toast.LENGTH_SHORT).show();
+                break;
             case "DATE":
                 Toast.makeText(this, "Date", Toast.LENGTH_SHORT).show();
+                break;
             case "TYPE":
                 Toast.makeText(this, "Type", Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 

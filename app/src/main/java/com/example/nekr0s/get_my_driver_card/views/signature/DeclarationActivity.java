@@ -121,6 +121,7 @@ public class DeclarationActivity extends Activity {
             if (mRequestSoFar.getRequestType().equals(RequestType.TYPE_EXCHANGE))
                 intent.putExtra(PREVIOUS_CARD_BYTESTRING, mPreviousCardByteString);
             startActivity(intent);
+            finish();
         } else if (!mCheckBox.isChecked()) {
             Toast.makeText(this, "Please accept the declaration.", Toast.LENGTH_SHORT).show();
         } else {

@@ -106,18 +106,6 @@ public class NewCardFragment extends Fragment implements CardCreateContracts.Vie
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.subscribe(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mPresenter.unsubscribe();
-    }
-
-    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
     }

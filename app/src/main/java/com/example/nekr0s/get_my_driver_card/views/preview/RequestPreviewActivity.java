@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Attachment;
 import com.example.nekr0s.get_my_driver_card.models.Request;
+import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.utils.enums.RequestStatus;
 import com.example.nekr0s.get_my_driver_card.utils.enums.RequestType;
 import com.example.nekr0s.get_my_driver_card.views.list.ListActivity;
@@ -222,6 +223,7 @@ public class RequestPreviewActivity extends AppCompatActivity implements Request
     @Override
     public void navigateToList(Request request) {
         Intent intent = new Intent(this, ListActivity.class);
+        intent.putExtra(Constants.CREATED_REQUEST_OBJ, request);
         startActivity(intent);
         finish();
     }
@@ -246,7 +248,7 @@ public class RequestPreviewActivity extends AppCompatActivity implements Request
                 mRequest.setRequestStatus(RequestStatus.REQUEST_WAITING);
                 break;
         }
-//        mPresenter.update(mRequest);
+        mPresenter.update(mRequest);
     }
 
     @Override
