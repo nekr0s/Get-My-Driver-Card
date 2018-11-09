@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface RequestRepository extends Repository<Request> {
     List<Request> getAllCurrentUser(int userId) throws IOException;
+
+    void updateStatus(Request request) throws IOException;
 }

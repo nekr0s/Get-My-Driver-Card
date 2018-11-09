@@ -90,6 +90,20 @@ public class Request implements Serializable {
         return "Invalid";
     }
 
+    public String getShortStatusString() {
+        switch (requestStatus) {
+            case REQUEST_NEW:
+                return "NEW";
+            case REQUEST_WAITING:
+                return "WAITING";
+            case REQUEST_DISAPPROVED:
+                return "DISAPPROVED";
+            case REQUEST_APPROVED:
+                return "APPROVED";
+        }
+        return "INVALID";
+    }
+
     public String getRequestType() {
         switch (requestType) {
             case TYPE_NEW:

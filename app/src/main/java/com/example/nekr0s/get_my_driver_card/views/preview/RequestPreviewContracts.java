@@ -9,6 +9,8 @@ public interface RequestPreviewContracts {
     interface Presenter {
         void submit(Request request);
 
+        void update(Request request);
+
         void subscribe(View view);
 
         void unsubscribe();

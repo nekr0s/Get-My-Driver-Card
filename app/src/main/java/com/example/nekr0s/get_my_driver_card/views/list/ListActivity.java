@@ -95,6 +95,7 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
     protected void onResume() {
         super.onResume();
         mPresenter.subscribe(this);
+        if (mRequestsAdapter.getItemCount() > 0) return;
         if (mUser.getRoles().size() > 1) {
             mFloatingActionMenu.setVisibility(View.GONE);
             mPresenter.loadRequestsAdmin();
@@ -171,6 +172,7 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
     public void onClick(Request request) {
         Intent intent = new Intent(this, RequestPreviewActivity.class);
         intent.putExtra(RequestPreviewActivity.FROM_LIST, request);
+        if (mUser.getRoles().size() > 1) intent.putExtra(RequestPreviewActivity.IS_ADMIN, true);
         startActivity(intent);
     }
 

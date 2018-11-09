@@ -81,6 +81,31 @@ public class OkHttpHttpRequester implements HttpRequester {
     }
 
     @Override
+    public void put(String url, String body) throws IOException {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        RequestBody requestBody = RequestBody.create(
+                MediaType.parse("application/json"),
+                body
+        );
+
+        Request request = new Request.Builder()
+                .put(requestBody)
+                .url(url)
+                .build();
+
+        OkHttpClient client = new OkHttpClient.Builder()
+//                .cookieJar(mCookieJar)
+//                .addInterceptor(interceptor)
+                .build();
+
+        Response response = client.newCall(request)
+                .execute();
+
+    }
+
+    @Override
     public String login(String username, String password) throws IOException {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

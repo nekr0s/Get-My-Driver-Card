@@ -49,4 +49,11 @@ public class RequestsRepository implements RequestRepository {
         jsonArray = mHttpRequester.get(url);
         return mJsonParser.fromJsonArray(jsonArray);
     }
+
+    @Override
+    public void updateStatus(Request request) throws IOException {
+        String url = mServerUrl + "/secured/update";
+        String requestBody = mJsonParser.toJson(request);
+        mHttpRequester.put(url, requestBody);
+    }
 }

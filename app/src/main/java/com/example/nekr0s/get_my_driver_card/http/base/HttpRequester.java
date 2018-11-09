@@ -7,5 +7,7 @@ public interface HttpRequester {
 
     String post(String url, String body) throws IOException;
 
+    void put(String url, String body) throws IOException;
+
     String login(String username, String password) throws IOException;
 }

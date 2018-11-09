@@ -1,18 +1,23 @@
 package com.example.nekr0s.get_my_driver_card.views.preview;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Attachment;
 import com.example.nekr0s.get_my_driver_card.models.Request;
+import com.example.nekr0s.get_my_driver_card.utils.enums.RequestStatus;
 import com.example.nekr0s.get_my_driver_card.utils.enums.RequestType;
 import com.example.nekr0s.get_my_driver_card.views.list.ListActivity;
 
@@ -27,8 +32,16 @@ import static com.example.nekr0s.get_my_driver_card.views.signature.DeclarationA
 import static com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity.SELFIE_BYTESTRING;
 import static com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity.SIGNATURE_BYTESTRING;
 
-public class RequestPreviewActivity extends AppCompatActivity implements RequestPreviewContracts.View {
+public class RequestPreviewActivity extends AppCompatActivity implements RequestPreviewContracts.View, AdapterView.OnItemSelectedListener {
 
+    @BindView(R.id.adminToolbar)
+    android.support.v7.widget.Toolbar mAdminToolbar;
+
+    @BindView(R.id.admin_panel_change_status_spinner)
+    Spinner mAdminSpinner;
+
+    @BindView(R.id.admin_panel_request_status_tv)
+    TextView mOnlyAdminTextViewStatus;
 
     @BindView(R.id.administration_icon)
     ImageView mAdministrationIcon;
@@ -97,6 +110,7 @@ public class RequestPreviewActivity extends AppCompatActivity implements Request
     private RequestPreviewContracts.Presenter mPresenter;
 
     public static final String BUTTON_VISIBLE = "BUTTON_VISIBLE";
+    public static final String IS_ADMIN = "TOOLBAR_VISIBLE";
     public static final String FROM_LIST = "JUST_SHOW_PREVIEW";
 
 
@@ -111,16 +125,26 @@ public class RequestPreviewActivity extends AppCompatActivity implements Request
 
         // Get intent
         Intent intent = getIntent();
-        if (intent.getBooleanExtra(BUTTON_VISIBLE, false)) {
-            mSubmitButton.setVisibility(View.VISIBLE);
-        }
-
+        // It's either from List or Creation
         if (intent.getSerializableExtra(FROM_LIST) != null) getFromList(intent);
         else getFromCreation(intent);
+        // If admin - display admin panel
+        if (intent.getBooleanExtra(IS_ADMIN, false)) {
+            mAdminToolbar.setVisibility(View.VISIBLE);
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                    R.array.status_array, android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            mAdminSpinner.setAdapter(adapter);
+            mAdminSpinner.setOnItemSelectedListener(this);
+            mOnlyAdminTextViewStatus.append(mRequest.getShortStatusString());
 
+        }
+        if (intent.getBooleanExtra(BUTTON_VISIBLE, false))
+            mSubmitButton.setVisibility(View.VISIBLE);
 
         displayRequestPreview();
     }
+
 
     private void getFromList(Intent intent) {
         mRequest = (Request) intent.getSerializableExtra(FROM_LIST);
@@ -200,5 +224,33 @@ public class RequestPreviewActivity extends AppCompatActivity implements Request
         Intent intent = new Intent(this, ListActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String requestStatusString = parent.getItemAtPosition(position).toString();
+        mOnlyAdminTextViewStatus.setText("Request status: " + parent.getItemAtPosition(position));
+        if (mOnlyAdminTextViewStatus.getText().toString().endsWith(requestStatusString)) return;
+        switch (requestStatusString) {
+            case "NEW":
+                mRequest.setRequestStatus(RequestStatus.REQUEST_NEW);
+                break;
+            case "APPROVED":
+                mRequest.setRequestStatus(RequestStatus.REQUEST_APPROVED);
+                break;
+            case "DISAPPROVED":
+                mRequest.setRequestStatus(RequestStatus.REQUEST_DISAPPROVED);
+                break;
+            case "WAITING":
+                mRequest.setRequestStatus(RequestStatus.REQUEST_WAITING);
+                break;
+        }
+//        mPresenter.update(mRequest);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

@@ -141,4 +141,10 @@
     <string name="USERNAME_INVALID">Username is invalid</string>
     <string name="username">Username</string>
     <string name="passwordlogin">Password</string>
+    <string-array name="status_array">
+        <item>NEW</item>
+        <item>APPROVED</item>
+        <item>DISAPPROVED</item>
+        <item>WAITING</item>
+    </string-array>
 </resources>

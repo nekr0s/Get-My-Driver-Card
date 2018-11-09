@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
+
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -14,12 +16,18 @@
         android:layout_marginStart="0dp"
         android:background="@color/white">
 
+        <include
+            android:id="@+id/adminToolbar"
+            layout="@layout/admin_panel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
         <ImageView
             android:id="@+id/ministry_icon"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_below="@id/adminToolbar"
             android:layout_marginStart="20dp"
             android:layout_marginTop="16dp"
             app:srcCompat="@drawable/ministry_icon"
@@ -29,6 +37,7 @@
             android:id="@+id/administration_icon"
             android:layout_width="74dp"
             android:layout_height="64dp"
+            android:layout_below="@id/adminToolbar"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="20dp"
@@ -37,16 +46,12 @@
 
         <TextView
             android:id="@+id/preview_header"
-            android:layout_width="184dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/administration_icon"
-            android:layout_alignBottom="@+id/request_reason"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="70dp"
+            android:layout_below="@id/adminToolbar"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="106dp"
-            android:lines="3"
+            android:layout_toStartOf="@+id/administration_icon"
+            android:layout_toEndOf="@+id/ministry_icon"
             android:text="@string/republic_of_bulgaria_ministry_of_transport_earta"
             android:textAlignment="center"
             android:textSize="15sp"

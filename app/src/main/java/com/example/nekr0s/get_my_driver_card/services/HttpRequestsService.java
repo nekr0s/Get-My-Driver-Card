@@ -37,4 +37,9 @@ public class HttpRequestsService implements RequestService {
     public List<Request> getCurrentUserRequests(int userId) throws IOException {
         return mRequestsRepository.getAllCurrentUser(userId);
     }
+
+    @Override
+    public void updateStatus(Request request) throws IOException {
+        mRequestsRepository.updateStatus(request);
+    }
 }

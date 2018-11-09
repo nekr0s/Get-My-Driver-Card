@@ -8,7 +8,7 @@ import android.util.Base64;
 import com.example.nekr0s.get_my_driver_card.GetMyDriverCardApplication;
 import com.example.nekr0s.get_my_driver_card.async.base.SchedulerProvider;
 import com.example.nekr0s.get_my_driver_card.models.Request;
-import com.example.nekr0s.get_my_driver_card.services.base.Service;
+import com.example.nekr0s.get_my_driver_card.services.base.RequestService;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -21,7 +21,7 @@ public class RequestPreviewPresenter implements RequestPreviewContracts.Presente
 
     private RequestPreviewContracts.View mView;
     private final SchedulerProvider mSchedulerProvider;
-    private final Service<Request> mService;
+    private final RequestService mService;
 
     public RequestPreviewPresenter(Context context) {
         mService = GetMyDriverCardApplication.getRequestsService(context);
@@ -37,6 +37,23 @@ public class RequestPreviewPresenter implements RequestPreviewContracts.Presente
                 .create((ObservableOnSubscribe<Request>) emitter -> {
                     Request createRequest = mService.create(request);
                     emitter.onNext(createRequest);
+                    emitter.onComplete();
+                })
+                .subscribeOn(mSchedulerProvider.background())
+                .observeOn(mSchedulerProvider.ui())
+                .doOnEach(x -> mView.hideLoading())
+                .doOnError(mView::showError)
+                .subscribe(s -> mView.navigateToList(request));
+    }
+
+    @Override
+    public void update(Request request) {
+        // Async task to update a request
+        mView.showLoading();
+        Disposable disposable = Observable
+                .create((ObservableOnSubscribe<Request>) emitter -> {
+                    mService.updateStatus(request);
+                    emitter.onNext(request);
                     emitter.onComplete();
                 })
                 .subscribeOn(mSchedulerProvider.background())

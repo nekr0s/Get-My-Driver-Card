@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface RequestService extends Service<Request> {
     List<Request> getCurrentUserRequests(int userId) throws IOException;
+
+    void updateStatus(Request request) throws IOException;
 }
