@@ -4,6 +4,7 @@ public class Constants {
 
     public static final int NAME_MAX_LENGTH = 256;
     public static final int LAST_NAME_MAX_LENGTH = 256;
+    public static final int EMAIL_MAX_LENGHT = 256;
     public static final int ID_MAX_LENGTH = 10;
     public static final int ADDRESS_MAX_LENGTH = 100;
     public static final int PHONE_NUMBER_MAX_LENGTH = 20;
