@@ -21,13 +21,14 @@ import com.example.nekr0s.get_my_driver_card.utils.enums.RequestType;
 import com.example.nekr0s.get_my_driver_card.validator.DateValidator;
 import com.example.nekr0s.get_my_driver_card.validator.DigitsValidator;
 import com.example.nekr0s.get_my_driver_card.validator.EmailValidator;
-import com.example.nekr0s.get_my_driver_card.validator.base.NameValidator;
 import com.example.nekr0s.get_my_driver_card.validator.NamesValidator;
+import com.example.nekr0s.get_my_driver_card.validator.base.NameValidator;
 import com.example.nekr0s.get_my_driver_card.validator.base.Validator;
 import com.example.nekr0s.get_my_driver_card.validator.base.ValidatorDate;
 import com.example.nekr0s.get_my_driver_card.validator.base.ValidatorDigits;
-import com.example.nekr0s.get_my_driver_card.views.create.documents.DocumentsActivity;
+import com.example.nekr0s.get_my_driver_card.views.create.CardCreateContracts;
 import com.example.nekr0s.get_my_driver_card.views.create.base.UserHolder;
+import com.example.nekr0s.get_my_driver_card.views.create.documents.DocumentsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class NewCardFragment extends Fragment {
+public class NewCardFragment extends Fragment implements CardCreateContracts.View {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
 
@@ -73,6 +74,7 @@ public class NewCardFragment extends Fragment {
 
     @BindView(R.id.new_card_next_button)
     Button mNextButton;
+    private CardCreateContracts.Presenter mPresenter;
     private List<ErrorCode> errorCodes = new ArrayList<>();
 
 
@@ -104,9 +106,20 @@ public class NewCardFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.subscribe(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mPresenter.unsubscribe();
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
     }
 
     @Override
@@ -149,6 +162,11 @@ public class NewCardFragment extends Fragment {
                 mTIL_address.getEditText().getText().toString(),
                 mTIL_phoneNumber.getEditText().getText().toString(),
                 mTIL_email_address.getEditText().getText().toString());
+    }
+
+    @Override
+    public void setPresenter(CardCreateContracts.Presenter presenter) {
+
     }
 
 //    public boolean setErrors(List<ErrorCode> errors) {

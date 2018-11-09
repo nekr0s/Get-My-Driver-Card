@@ -13,14 +13,13 @@ import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
 import com.example.nekr0s.get_my_driver_card.validator.DateValidator;
 import com.example.nekr0s.get_my_driver_card.validator.DigitsValidator;
-import com.example.nekr0s.get_my_driver_card.validator.base.NameValidator;
 import com.example.nekr0s.get_my_driver_card.validator.NamesValidator;
+import com.example.nekr0s.get_my_driver_card.validator.base.NameValidator;
 import com.example.nekr0s.get_my_driver_card.validator.base.ValidatorDigits;
 import com.example.nekr0s.get_my_driver_card.views.create.base.UserHolder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,22 +67,12 @@ public class PreviousCardInfoActivity extends AppCompatActivity implements UserH
     @OnClick(R.id.previous_card_next_button)
     void openNextFragment() {
 
-        errorCodes.add(mNameValidator.isEuCountryOfIssuingValid(Objects.requireNonNull(mTIL_previous_eu_country_of_issuing
-                .getEditText()).getText().toString().trim()));
-        errorCodes.add(mNameValidator.isIssuerAuthorityValid(Objects.requireNonNull(mTIL_issuing_authority
-                .getEditText()).getText().toString().trim()));
-        errorCodes.add(mDigitsValidator.isTachNumberValid(Objects.requireNonNull(mTIL_previous_tachograph_card_number
-                .getEditText()).getText().toString().trim()));
-        errorCodes.add(mDateValidator.isDateValid(Objects.requireNonNull(mTIL_date_of_expiry.getEditText())
-                .getText().toString().trim()));
 
-        if (setErrors(errorCodes)) {
-            NewCardFragment nextFrag = new NewCardFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_containertwo, nextFrag, "newCardFragment")
-                    .addToBackStack(null)
-                    .commit();
-        }
+        NewCardFragment nextFrag = new NewCardFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_containertwo, nextFrag, "newCardFragment")
+                .addToBackStack(null)
+                .commit();
     }
 
 
