@@ -13,8 +13,8 @@ import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
 import com.example.nekr0s.get_my_driver_card.validator.DateValidator;
 import com.example.nekr0s.get_my_driver_card.validator.DigitsValidator;
-import com.example.nekr0s.get_my_driver_card.validator.base.NameValidator;
 import com.example.nekr0s.get_my_driver_card.validator.NamesValidator;
+import com.example.nekr0s.get_my_driver_card.validator.base.NameValidator;
 import com.example.nekr0s.get_my_driver_card.validator.base.ValidatorDigits;
 import com.example.nekr0s.get_my_driver_card.views.create.base.UserHolder;
 
@@ -77,13 +77,13 @@ public class PreviousCardInfoActivity extends AppCompatActivity implements UserH
         errorCodes.add(mDateValidator.isDateValid(Objects.requireNonNull(mTIL_date_of_expiry.getEditText())
                 .getText().toString().trim()));
 
-        if (setErrors(errorCodes)) {
+//        if (setErrors(errorCodes)) {
             NewCardFragment nextFrag = new NewCardFragment();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_containertwo, nextFrag, "newCardFragment")
                     .addToBackStack(null)
                     .commit();
-        }
+//        }
     }
 
 
