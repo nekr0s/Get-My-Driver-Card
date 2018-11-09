@@ -6,6 +6,12 @@ import com.example.nekr0s.get_my_driver_card.GetMyDriverCardApplication;
 import com.example.nekr0s.get_my_driver_card.async.base.SchedulerProvider;
 import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.services.base.UsersService;
+import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
+import com.example.nekr0s.get_my_driver_card.validator.RegisterValidator;
+import com.example.nekr0s.get_my_driver_card.validator.base.ValidatorLogin;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
@@ -16,12 +22,14 @@ public class LoginPresenter implements LoginContracts.Presenter {
     private final UsersService<User> mUsersService;
     private final SchedulerProvider mSchedulerProvider;
     private LoginContracts.View mView;
+    private final ValidatorLogin mLoginValidator;
     // Dont do that!
     private String unHashedPassword;
 
     LoginPresenter(Context context) {
         mUsersService = GetMyDriverCardApplication.getUsersService(context);
         mSchedulerProvider = GetMyDriverCardApplication.getSchedulerProvider();
+        mLoginValidator = new RegisterValidator();
     }
 
     @Override
@@ -64,5 +72,13 @@ public class LoginPresenter implements LoginContracts.Presenter {
     @Override
     public void unsubscribe() {
         mView = null;
+    }
+
+    @Override
+    public Set<ErrorCode> checkCredentials(String username, String pass, String passConf) {
+        Set<ErrorCode> errorCodes = new HashSet<>();
+        errorCodes.add(mLoginValidator.isUsernameValid(username));
+        errorCodes.add(mLoginValidator.isPasswordValid(pass, passConf));
+        return errorCodes;
     }
 }

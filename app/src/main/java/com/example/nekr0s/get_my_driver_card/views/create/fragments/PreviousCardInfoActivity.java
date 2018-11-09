@@ -11,10 +11,10 @@ import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
-import com.example.nekr0s.get_my_driver_card.validator.base.DateValidator;
-import com.example.nekr0s.get_my_driver_card.validator.base.DigitsValidator;
+import com.example.nekr0s.get_my_driver_card.validator.DateValidator;
+import com.example.nekr0s.get_my_driver_card.validator.DigitsValidator;
 import com.example.nekr0s.get_my_driver_card.validator.base.NameValidator;
-import com.example.nekr0s.get_my_driver_card.validator.base.NamesValidator;
+import com.example.nekr0s.get_my_driver_card.validator.NamesValidator;
 import com.example.nekr0s.get_my_driver_card.validator.base.ValidatorDigits;
 import com.example.nekr0s.get_my_driver_card.views.create.base.UserHolder;
 
@@ -87,48 +87,48 @@ public class PreviousCardInfoActivity extends AppCompatActivity implements UserH
     }
 
 
-    public boolean setErrors(List<ErrorCode> errors) {
-
-        int errorCount = 0;
-
-        for (int i = 0; i < 3; i++) {
-
-            switch (i) {
-                case 0:
-                    if (errorCodes.get(0).equals(ErrorCode.COUNTRY_OK))
-                        mTIL_previous_eu_country_of_issuing.setError(null);
-                    else {
-                        mTIL_previous_eu_country_of_issuing.setError(errorCodes
-                                .get(0).getLabel(getBaseContext()));
-                        errorCount++;
-                    }
-                case 1:
-                    if (errorCodes.get(1).equals(ErrorCode.ISSUING_AUTHORITY_OK))
-                        mTIL_issuing_authority.setError(null);
-                    else {
-                        mTIL_issuing_authority.setError(errorCodes.get(1).getLabel(getBaseContext()));
-                        errorCount++;
-                    }
-                case 2:
-                    if (errorCodes.get(2).equals(ErrorCode.TACH_OK))
-                        mTIL_previous_tachograph_card_number.setError(null);
-                    else {
-                        mTIL_previous_tachograph_card_number.setError(errorCodes.get(2).getLabel(getBaseContext()));
-                        errorCount++;
-                    }
-                case 3:
-                    if (errorCodes.get(3).equals(ErrorCode.DATE_OK))
-                        mTIL_date_of_expiry.setError(null);
-                    else {
-                        mTIL_date_of_expiry.setError(errorCodes.get(3).getLabel(getBaseContext()));
-                        errorCount++;
-                    }
-            }
-
-        }
-        errors.clear();
-        return errorCount == 0;
-    }
+//    public boolean setErrors(List<ErrorCode> errors) {
+//
+//        int errorCount = 0;
+//
+//        for (int i = 0; i < 3; i++) {
+//
+//            switch (i) {
+//                case 0:
+//                    if (errorCodes.get(0).equals(ErrorCode.COUNTRY_OK))
+//                        mTIL_previous_eu_country_of_issuing.setError(null);
+//                    else {
+//                        mTIL_previous_eu_country_of_issuing.setError(errorCodes
+//                                .get(0).getLabel(getBaseContext()));
+//                        errorCount++;
+//                    }
+//                case 1:
+//                    if (errorCodes.get(1).equals(ErrorCode.ISSUING_AUTHORITY_OK))
+//                        mTIL_issuing_authority.setError(null);
+//                    else {
+//                        mTIL_issuing_authority.setError(errorCodes.get(1).getLabel(getBaseContext()));
+//                        errorCount++;
+//                    }
+//                case 2:
+//                    if (errorCodes.get(2).equals(ErrorCode.TACH_OK))
+//                        mTIL_previous_tachograph_card_number.setError(null);
+//                    else {
+//                        mTIL_previous_tachograph_card_number.setError(errorCodes.get(2).getLabel(getBaseContext()));
+//                        errorCount++;
+//                    }
+//                case 3:
+//                    if (errorCodes.get(3).equals(ErrorCode.DATE_OK))
+//                        mTIL_date_of_expiry.setError(null);
+//                    else {
+//                        mTIL_date_of_expiry.setError(errorCodes.get(3).getLabel(getBaseContext()));
+//                        errorCount++;
+//                    }
+//            }
+//
+//        }
+//        errors.clear();
+//        return errorCount == 0;
+//    }
 
     @Override
     public User getCurrentUser() {

@@ -1,7 +1,7 @@
 package com.example.nekr0s.get_my_driver_card;
 
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
-import com.example.nekr0s.get_my_driver_card.validator.base.EmailValidator;
+import com.example.nekr0s.get_my_driver_card.validator.EmailValidator;
 import com.example.nekr0s.get_my_driver_card.validator.base.Validator;
 
 import org.junit.Test;

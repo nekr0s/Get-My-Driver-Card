@@ -1,7 +1,8 @@
-package com.example.nekr0s.get_my_driver_card.validator.base;
+package com.example.nekr0s.get_my_driver_card.validator;
 
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
+import com.example.nekr0s.get_my_driver_card.validator.base.NameValidator;
 
 
 public class NamesValidator implements NameValidator {
@@ -15,7 +16,6 @@ public class NamesValidator implements NameValidator {
         if (input.isEmpty()) return ErrorCode.NAME_NULL;
         else if (input.length() > Constants.NAME_MAX_LENGTH) return ErrorCode.NAME_TOO_LONG;
         else return ErrorCode.NAME_OK;
-
     }
 
     @Override

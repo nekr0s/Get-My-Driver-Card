@@ -24,7 +24,10 @@ import com.example.nekr0s.get_my_driver_card.validator.base.ValidatorLogin;
 import com.example.nekr0s.get_my_driver_card.views.list.ListActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 import butterknife.BindView;
@@ -158,34 +161,34 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         final AlertDialog.Builder mBuilder = new AlertDialog.Builder(LoginActivity.this);
         View view = getLayoutInflater().inflate(R.layout.layout_dialog, null);
 
+
         final TextInputLayout tilUsernameRegister = view.findViewById(R.id.text_input_email_register);
         final TextInputLayout tilPasswordRegister = view.findViewById(R.id.text_input_password_one);
         final TextInputLayout tilPasswordConfirm = view.findViewById(R.id.text_input_password_two);
 
-//        errorCodes.add(mRegisterValidator.isUsernameValid(Objects.requireNonNull(tilUsernameRegister
-//                .getEditText()).getText().toString().trim()));
-//        errorCodes.add(mRegisterValidator.isPasswordValid(tilPasswordRegister
-//                        .getEditText().getText().toString().trim(),
-//                Objects.requireNonNull(tilPasswordConfirm.getEditText())
-//                        .getText().toString().trim()));
-//        errorCodes.add(mRegisterValidator.isPasswordValid(tilPasswordConfirm.getEditText()
-//                .getText().toString().trim(), tilPasswordRegister
-//                .getEditText().getText().toString().trim()));
+        Map<String, TextInputLayout> tils = new HashMap<>();
+
+        tils.put("username", tilUsernameRegister);
+        tils.put("password_one", tilPasswordRegister);
+        tils.put("password_two", tilPasswordConfirm);
 
         Button mConfirmButton = view.findViewById(R.id.register_confirm_button);
         mBuilder.setView(view);
         mAlertDialog = mBuilder.create();
         mAlertDialog.show();
         mConfirmButton.setOnClickListener(v -> {
-
-            User user = new User(tilUsernameRegister.getEditText().getText().toString(),
-                    tilPasswordRegister.getEditText().getText().toString());
-
-            mPresenter.register(user);
-
+            Set<ErrorCode> errorCodes = mPresenter
+                    .checkCredentials(tilUsernameRegister.getEditText().getText().toString().trim(),
+                            tilPasswordRegister.getEditText().getText().toString().trim(),
+                            tilPasswordConfirm.getEditText().getText().toString().trim());
+            if (errorCodes.contains(ErrorCode.USERNAME_OK) && errorCodes.contains(ErrorCode.PASSWORD_OK)) {
+                User user = new User(tilUsernameRegister.getEditText().getText().toString(),
+                        tilPasswordRegister.getEditText().getText().toString());
+                mPresenter.register(user);
+            } else
+                setRegisterErrors(errorCodes, tils);
         });
     }
-
 
     @Override
     public void setPresenter(LoginContracts.Presenter presenter) {
@@ -203,6 +206,31 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     public void hideLoading() {
         mCustomLoginButton.doneLoadingAnimation(Color.parseColor("#dc4e41"),
                 BitmapFactory.decodeResource(getResources(), R.drawable.ic_done_white_48dp));
+    }
+
+    @Override
+    public void setRegisterErrors(Set<ErrorCode> errors, Map<String, TextInputLayout> tils) {
+        for (ErrorCode errorCode : errors) {
+            switch (errorCode) {
+                case USERNAME_NULL:
+                case USERNAME_TOO_SIMPLE:
+                    tils.get("username").setError(errorCode.getLabel(getBaseContext()));
+                    break;
+                case USERNAME_OK:
+                    tils.get("username").setError(null);
+                    break;
+                case PASSWORD_NULL:
+                case PASSWORD_TOO_SIMPLE:
+                    tils.get("password_one").setError(errorCode.getLabel(getBaseContext()));
+                case PASSWORDS_DONT_MATCH:
+                    tils.get("password_one").setError(null);
+                    tils.get("password_two").setError(errorCode.getLabel(getBaseContext()));
+                    break;
+                case PASSWORD_OK:
+                    tils.get("password_two").setError(null);
+                    break;
+            }
+        }
     }
 
     @Override

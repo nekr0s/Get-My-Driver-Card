@@ -12,9 +12,9 @@ import android.widget.Button;
 
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
-import com.example.nekr0s.get_my_driver_card.validator.base.DigitsValidator;
+import com.example.nekr0s.get_my_driver_card.validator.DigitsValidator;
 import com.example.nekr0s.get_my_driver_card.validator.base.NameValidator;
-import com.example.nekr0s.get_my_driver_card.validator.base.NamesValidator;
+import com.example.nekr0s.get_my_driver_card.validator.NamesValidator;
 import com.example.nekr0s.get_my_driver_card.validator.base.ValidatorDigits;
 
 import java.util.ArrayList;

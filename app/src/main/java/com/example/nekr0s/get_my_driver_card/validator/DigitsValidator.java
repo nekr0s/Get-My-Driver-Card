@@ -1,7 +1,8 @@
-package com.example.nekr0s.get_my_driver_card.validator.base;
+package com.example.nekr0s.get_my_driver_card.validator;
 
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
+import com.example.nekr0s.get_my_driver_card.validator.base.ValidatorDigits;
 
 public class DigitsValidator implements ValidatorDigits {
 

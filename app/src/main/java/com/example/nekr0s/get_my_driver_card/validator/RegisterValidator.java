@@ -22,23 +22,16 @@ public class RegisterValidator implements ValidatorLogin {
                     "$");
 
 
-    private static final String USERNAME_PATTERN =
-            "/^[a-zA-Z0-9]+([_ -]?[a-zA-Z0-9])*$/";
-
     public RegisterValidator() {
         pattern = Pattern.compile(PASSWORD_PATTERN);
-        patterntwo = Pattern.compile(USERNAME_PATTERN);
     }
 
     @Override
     public ErrorCode isUsernameValid(String input) {
         if (input.isEmpty()) return ErrorCode.USERNAME_NULL;
-        if (input.length() < Constants.EMAIL_MIN_LENGTH || input.length() > Constants.EMAIL_MAX_LENGTH)
+        if (input.length() < Constants.USERNAME_MIN_LENGTH || input.length() > Constants.USERNAME_MAX_LENGTH)
             return ErrorCode.USERNAME_TOO_SIMPLE;
-        else if (!validateUsername(input)) return ErrorCode.USERNAME_INVALID;
         else return ErrorCode.USERNAME_OK;
-
-
     }
 
     @Override
@@ -50,17 +43,7 @@ public class RegisterValidator implements ValidatorLogin {
     }
 
     private boolean validatePassword(final String hex) {
-
         matcher = pattern.matcher(hex);
         return matcher.matches();
-
     }
-
-    private boolean validateUsername(final String hex) {
-
-        matchertwo = patterntwo.matcher(hex);
-        return matchertwo.matches();
-
-    }
-
 }

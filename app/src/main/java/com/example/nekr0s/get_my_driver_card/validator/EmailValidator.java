@@ -1,8 +1,9 @@
-package com.example.nekr0s.get_my_driver_card.validator.base;
+package com.example.nekr0s.get_my_driver_card.validator;
 
 
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
+import com.example.nekr0s.get_my_driver_card.validator.base.Validator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,7 +28,7 @@ public class EmailValidator implements Validator {
 
         if (input.isEmpty()) return ErrorCode.EMAIL_CARD_NULL;
         else if (!validateEmail(input)) return ErrorCode.EMAIL_INVALID;
-        else if (input.length() > Constants.EMAIL_MAX_LENGTH) return ErrorCode.EMAIL_TOO_LONG;
+        else if (input.length() > Constants.USERNAME_MAX_LENGTH) return ErrorCode.EMAIL_TOO_LONG;
         return ErrorCode.EMAIL_OK;
     }
 
