@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ListActivity extends AppCompatActivity implements ListContracts.View, RequestsAdapter.OnItemClickListener {
+public class ListActivity extends AppCompatActivity implements ListContracts.View, RequestsAdapter.OnItemClickListener, AdapterView.OnItemSelectedListener {
 
     private static final String TOPIC = "GetMyDriverCard";
     @BindView(R.id.userToolbar)
@@ -55,6 +58,10 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
 
     @BindView(R.id.new_card)
     FloatingActionButton mFAB_NewCard;
+
+    @BindView(R.id.spinner_id)
+    Spinner mDropDownSpinner;
+
 
     private User mUser;
     private ListContracts.Presenter mPresenter;
@@ -88,6 +95,13 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
         setSupportActionBar(toolbar);
         ImageView i = toolbar.findViewById(R.id.toolbar_logout);
         i.setOnClickListener(item -> logoutCurrentUser());
+
+        //spinner adapter
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource
+                (this, R.array.sort_by_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mDropDownSpinner.setAdapter(adapter);
+        mDropDownSpinner.setOnItemSelectedListener(this);
 
     }
 
@@ -176,5 +190,23 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
         startActivity(intent);
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String item = parent.getItemAtPosition(position).toString();
+
+        switch (item) {
+            case "STATUS":
+                Toast.makeText(this, "Status", Toast.LENGTH_SHORT).show();
+            case "DATE":
+                Toast.makeText(this, "Date", Toast.LENGTH_SHORT).show();
+            case "TYPE":
+                Toast.makeText(this, "Type", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }
 

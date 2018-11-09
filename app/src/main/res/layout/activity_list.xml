@@ -100,6 +100,26 @@
 
     </com.github.clans.fab.FloatingActionMenu>
 
+
+    <RelativeLayout
+        android:id="@+id/spinner_layout"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="60dp"
+        android:padding="8dp"
+        android:background="@color/white"
+        android:visibility="gone">
+
+        <Spinner
+            style="@style/Widget.AppCompat.DropDownItem.Spinner"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:id="@+id/spinner_id"
+
+            />
+    </RelativeLayout>
+
+
     <TextView
         android:id="@+id/empty_request_list_textview"
         android:layout_width="wrap_content"

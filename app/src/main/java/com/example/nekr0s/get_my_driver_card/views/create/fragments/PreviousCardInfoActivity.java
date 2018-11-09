@@ -67,12 +67,20 @@ public class PreviousCardInfoActivity extends AppCompatActivity implements UserH
     @OnClick(R.id.previous_card_next_button)
     void openNextFragment() {
 
-
         NewCardFragment nextFrag = new NewCardFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_containertwo, nextFrag, "newCardFragment")
                 .addToBackStack(null)
                 .commit();
+//        errorCodes.add(mNameValidator.isEuCountryOfIssuingValid(Objects.requireNonNull(mTIL_previous_eu_country_of_issuing
+//                .getEditText()).getText().toString().trim()));
+//        errorCodes.add(mNameValidator.isIssuerAuthorityValid(Objects.requireNonNull(mTIL_issuing_authority
+//                .getEditText()).getText().toString().trim()));
+//        errorCodes.add(mDigitsValidator.isTachNumberValid(Objects.requireNonNull(mTIL_previous_tachograph_card_number
+//                .getEditText()).getText().toString().trim()));
+//        errorCodes.add(mDateValidator.isDateValid(Objects.requireNonNull(mTIL_date_of_expiry.getEditText())
+//                .getText().toString().trim()));
+
     }
 
 
