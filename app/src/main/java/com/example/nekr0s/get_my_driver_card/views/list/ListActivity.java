@@ -149,6 +149,7 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
         mRequestsAdapter.clear();
         mRequestsAdapter.addAll(requestList);
         mRequestsAdapter.notifyDataSetChanged();
+        mSpinnerLayout.setVisibility(View.VISIBLE);
         mEmptyListTextView.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
     }

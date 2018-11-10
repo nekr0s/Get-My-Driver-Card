@@ -11,6 +11,7 @@
     <color name="LonelyBlue">#005995</color>
     <color name="Onyx">#353839</color>
     <color name="CanvasBackground">#ffffff</color>
+    <color name="white90percent">#E6FFFFFF</color>
     <color name="white60percent">#80f2f2f2</color>
     <color name="transparent">#00f2f2f2</color>
     <color name="Onyx50percent">#40353839</color>

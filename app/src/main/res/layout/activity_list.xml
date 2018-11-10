@@ -104,17 +104,17 @@
     <RelativeLayout
         android:id="@+id/spinner_layout"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginTop="60dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userToolbar"
         android:background="@color/white"
         android:padding="8dp"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <Spinner
             android:id="@+id/spinner_id"
             style="@style/Widget.AppCompat.DropDownItem.Spinner"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
 
             />
     </RelativeLayout>
@@ -143,6 +143,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/spinner_layout"
+        android:background="@null"
         android:visibility="gone" />
 
 
