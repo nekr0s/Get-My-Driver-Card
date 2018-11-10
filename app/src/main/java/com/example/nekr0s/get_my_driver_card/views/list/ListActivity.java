@@ -91,11 +91,6 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
 
         // Get intent
         mUser = (User) getIntent().getSerializableExtra(Constants.USER_OBJ_EXTRA);
-        if (getIntent().getSerializableExtra(Constants.CREATED_REQUEST_OBJ) != null) {
-            Request request = (Request) getIntent().getSerializableExtra(Constants.CREATED_REQUEST_OBJ);
-            mRequestsAdapter.add(request);
-            mUser = request.getUser();
-        }
 
         mFloatingActionMenu.bringToFront();
 

@@ -58,7 +58,7 @@ public class OkHttpHttpRequester implements HttpRequester {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         RequestBody requestBody = RequestBody.create(
-                MediaType.parse("application/json"),
+                MediaType.parse("application/json; charset=UTF-8"),
                 body
         );
 
@@ -68,8 +68,8 @@ public class OkHttpHttpRequester implements HttpRequester {
                 .build();
 
         OkHttpClient client = new OkHttpClient.Builder()
-//                .cookieJar(mCookieJar)
-//                .addInterceptor(interceptor)
+                .cookieJar(mCookieJar)
+                .addInterceptor(interceptor)
                 .build();
 
         Response response = client.newCall(request)

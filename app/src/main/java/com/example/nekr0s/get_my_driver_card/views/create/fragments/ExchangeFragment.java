@@ -13,8 +13,8 @@ import android.widget.Button;
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
 import com.example.nekr0s.get_my_driver_card.validator.DigitsValidator;
-import com.example.nekr0s.get_my_driver_card.validator.base.NameValidator;
 import com.example.nekr0s.get_my_driver_card.validator.NamesValidator;
+import com.example.nekr0s.get_my_driver_card.validator.base.NameValidator;
 import com.example.nekr0s.get_my_driver_card.validator.base.ValidatorDigits;
 
 import java.util.ArrayList;
@@ -78,71 +78,69 @@ public class ExchangeFragment extends Fragment {
 
     @OnClick(R.id.exchange_next_button)
     void openNextFragment() {
+//
+//        errorCodes.add(mNameValidator.isEuCountryOfIssuingValid(Objects.requireNonNull(mTIL_eu_country_of_issuing
+//                .getEditText()).getText().toString().trim()));
+//        errorCodes.add(mDigitsValidator.isTachNumberValid(Objects.requireNonNull(mTIL_tachograph_card_number
+//                .getEditText()).getText().toString().trim()));
+//        errorCodes.add(mNameValidator.isLicenseCountryOfIssuingValid(Objects.requireNonNull(mTIL_driver_licence_country
+//                .getEditText()).getText().toString().trim()));
+//        errorCodes.add(mDigitsValidator.isLicenseNumberValid(Objects.requireNonNull(mTIL_driving_licence_number
+//                .getEditText()).getText().toString().trim()));
 
-        errorCodes.add(mNameValidator.isEuCountryOfIssuingValid(Objects.requireNonNull(mTIL_eu_country_of_issuing
-                .getEditText()).getText().toString().trim()));
-        errorCodes.add(mDigitsValidator.isTachNumberValid(Objects.requireNonNull(mTIL_tachograph_card_number
-                .getEditText()).getText().toString().trim()));
-        errorCodes.add(mNameValidator.isLicenseCountryOfIssuingValid(Objects.requireNonNull(mTIL_driver_licence_country
-                .getEditText()).getText().toString().trim()));
-        errorCodes.add(mDigitsValidator.isLicenseNumberValid(Objects.requireNonNull(mTIL_driving_licence_number
-                .getEditText()).getText().toString().trim()));
-
-        if (setErrors(errorCodes)) {
-            NewCardFragment nextFrag = new NewCardFragment();
-            Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, nextFrag, "newCardFragment")
-                    .hide(ExchangeFragment.this)
-                    .addToBackStack(ExchangeFragment.class.getName())
-                    .commit();
-        }
+        NewCardFragment nextFrag = new NewCardFragment();
+        Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, nextFrag, "newCardFragment")
+                .hide(ExchangeFragment.this)
+                .addToBackStack(ExchangeFragment.class.getName())
+                .commit();
     }
-
-    public boolean setErrors(List<ErrorCode> errors) {
-
-        int errorCount = 0;
-
-        for (int i = 0; i < 3; i++) {
-
-            switch (i) {
-                case 0:
-                    if (errorCodes.get(0).equals(ErrorCode.COUNTRY_OK))
-                        mTIL_eu_country_of_issuing.setError(null);
-                    else {
-                        mTIL_eu_country_of_issuing.setError(errorCodes
-                                .get(0).getLabel(Objects.requireNonNull(getContext())));
-                        errorCount++;
-                    }
-
-                case 1:
-                    if (errorCodes.get(1).equals(ErrorCode.TACH_OK))
-                        mTIL_tachograph_card_number.setError(null);
-                    else {
-                        mTIL_tachograph_card_number.setError(errorCodes.get(1)
-                                .getLabel(Objects.requireNonNull(getContext())));
-                        errorCount++;
-                    }
-                case 2:
-                    if (errorCodes.get(2).equals(ErrorCode.LICENSE_COUNTRY_ISSUER_OK))
-                        mTIL_driver_licence_country.setError(null);
-                    else {
-                        mTIL_driver_licence_country.setError(errorCodes.get(2)
-                                .getLabel(Objects.requireNonNull(getContext())));
-                        errorCount++;
-                    }
-                case 3:
-                    if (errorCodes.get(3).equals(ErrorCode.LICENSE_NUMBER_OK))
-                        mTIL_driving_licence_number.setError(null);
-                    else {
-                        mTIL_driving_licence_number.setError(errorCodes.get(3)
-                                .getLabel(Objects.requireNonNull(getContext())));
-                        errorCount++;
-
-                    }
-            }
-
-        }
-        errors.clear();
-        return errorCount == 0;
-    }
+//
+//    public boolean setErrors(List<ErrorCode> errors) {
+//
+//        int errorCount = 0;
+//
+//        for (int i = 0; i < 3; i++) {
+//
+//            switch (i) {
+//                case 0:
+//                    if (errorCodes.get(0).equals(ErrorCode.COUNTRY_OK))
+//                        mTIL_eu_country_of_issuing.setError(null);
+//                    else {
+//                        mTIL_eu_country_of_issuing.setError(errorCodes
+//                                .get(0).getLabel(Objects.requireNonNull(getContext())));
+//                        errorCount++;
+//                    }
+//
+//                case 1:
+//                    if (errorCodes.get(1).equals(ErrorCode.TACH_OK))
+//                        mTIL_tachograph_card_number.setError(null);
+//                    else {
+//                        mTIL_tachograph_card_number.setError(errorCodes.get(1)
+//                                .getLabel(Objects.requireNonNull(getContext())));
+//                        errorCount++;
+//                    }
+//                case 2:
+//                    if (errorCodes.get(2).equals(ErrorCode.LICENSE_COUNTRY_ISSUER_OK))
+//                        mTIL_driver_licence_country.setError(null);
+//                    else {
+//                        mTIL_driver_licence_country.setError(errorCodes.get(2)
+//                                .getLabel(Objects.requireNonNull(getContext())));
+//                        errorCount++;
+//                    }
+//                case 3:
+//                    if (errorCodes.get(3).equals(ErrorCode.LICENSE_NUMBER_OK))
+//                        mTIL_driving_licence_number.setError(null);
+//                    else {
+//                        mTIL_driving_licence_number.setError(errorCodes.get(3)
+//                                .getLabel(Objects.requireNonNull(getContext())));
+//                        errorCount++;
+//
+//                    }
+//            }
+//
+//        }
+//        errors.clear();
+//        return errorCount == 0;
+//    }
 }

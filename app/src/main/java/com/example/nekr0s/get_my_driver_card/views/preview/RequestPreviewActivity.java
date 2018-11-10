@@ -223,7 +223,7 @@ public class RequestPreviewActivity extends AppCompatActivity implements Request
     @Override
     public void navigateToList(Request request) {
         Intent intent = new Intent(this, ListActivity.class);
-        intent.putExtra(Constants.CREATED_REQUEST_OBJ, request);
+        intent.putExtra(Constants.USER_OBJ_EXTRA, request.getUser());
         startActivity(intent);
         finish();
     }

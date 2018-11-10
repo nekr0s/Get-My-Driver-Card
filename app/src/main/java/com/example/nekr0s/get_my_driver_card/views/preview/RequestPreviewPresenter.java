@@ -23,7 +23,7 @@ public class RequestPreviewPresenter implements RequestPreviewContracts.Presente
     private final SchedulerProvider mSchedulerProvider;
     private final RequestService mService;
 
-    public RequestPreviewPresenter(Context context) {
+    RequestPreviewPresenter(Context context) {
         mService = GetMyDriverCardApplication.getRequestsService(context);
         mSchedulerProvider = GetMyDriverCardApplication.getSchedulerProvider();
     }
