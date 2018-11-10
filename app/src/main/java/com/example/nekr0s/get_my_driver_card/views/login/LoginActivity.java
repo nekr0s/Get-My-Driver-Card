@@ -19,13 +19,9 @@ import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
 import com.example.nekr0s.get_my_driver_card.utils.keyboard.KeyboardHider;
-import com.example.nekr0s.get_my_driver_card.validator.RegisterValidator;
-import com.example.nekr0s.get_my_driver_card.validator.base.ValidatorLogin;
 import com.example.nekr0s.get_my_driver_card.views.list.ListActivity;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -67,8 +63,6 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
     SmartLogin mSmartLogin;
     private LoginContracts.Presenter mPresenter;
     private AlertDialog mAlertDialog;
-    private List<ErrorCode> errorCodes = new ArrayList<>();
-    private final ValidatorLogin mRegisterValidator = new RegisterValidator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

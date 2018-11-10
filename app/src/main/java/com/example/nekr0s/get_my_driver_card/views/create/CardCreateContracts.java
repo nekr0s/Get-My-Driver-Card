@@ -13,7 +13,7 @@ public interface CardCreateContracts {
     interface View {
         void setPresenter(Presenter presenter);
 
-        void setRegisterErrors(Set<ErrorCode> errors, Map<String, TextInputLayout> tils);
+        void setRegisterErrors(Map<String, TextInputLayout> tils);
 
     }
 

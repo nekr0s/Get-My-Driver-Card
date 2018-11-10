@@ -1,5 +1,8 @@
 package com.example.nekr0s.get_my_driver_card.views.create;
 
+import android.content.Context;
+
+import com.example.nekr0s.get_my_driver_card.GetMyDriverCardApplication;
 import com.example.nekr0s.get_my_driver_card.async.base.SchedulerProvider;
 import com.example.nekr0s.get_my_driver_card.models.Request;
 import com.example.nekr0s.get_my_driver_card.services.base.Service;
@@ -26,9 +29,9 @@ public class CardCreatePresenter implements CardCreateContracts.Presenter {
     private ValidatorDate mDateValidator;
     private Validator mValidator;
 
-    public CardCreatePresenter(Service mUsersService, SchedulerProvider mSchedulerProvider) {
-        this.mUsersService = mUsersService;
-        this.mSchedulerProvider = mSchedulerProvider;
+    public CardCreatePresenter(Context context) {
+        this.mUsersService = GetMyDriverCardApplication.getUsersService(context);
+        this.mSchedulerProvider = GetMyDriverCardApplication.getSchedulerProvider();
         mNameValidator = new NamesValidator();
         mDigitsValidator = new DigitsValidator();
         mDateValidator = new DateValidator();

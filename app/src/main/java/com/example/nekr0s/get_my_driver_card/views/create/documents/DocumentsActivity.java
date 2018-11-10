@@ -165,22 +165,6 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
 
     @Override
     public void fillIcon(String whichButton) throws FileNotFoundException {
-        // Get the dimensions of the View
-//        int targetW = mSelfieIcon.getWidth();
-//        int targetH = mSelfieIcon.getHeight();
-//
-//        // Get the dimensions of the bitmap
-//        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-//        bmOptions.inJustDecodeBounds = true;
-//        int photoW = bmOptions.outWidth;
-//        int photoH = bmOptions.outHeight;
-//
-//        // Determine how much to scale down the image
-//        int scaleFactor = Math.max(photoW / targetW, photoH / targetH);
-//
-//        // Decode the image file into a Bitmap sized to fill the View
-//        bmOptions.inJustDecodeBounds = false;
-//        bmOptions.inSampleSize = scaleFactor;
         // For attachments
         Uri uri = mPresenter.getCurrentUri();
         String encodedString = PhotoEncodeHelper.getByteString(uri, this);

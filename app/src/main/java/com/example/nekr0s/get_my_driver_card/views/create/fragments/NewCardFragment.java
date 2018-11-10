@@ -1,6 +1,7 @@
 package com.example.nekr0s.get_my_driver_card.views.create.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -11,17 +12,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.nekr0s.get_my_driver_card.R;
+import com.example.nekr0s.get_my_driver_card.models.Request;
+import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.models.UserInfo;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
-import com.example.nekr0s.get_my_driver_card.validator.DateValidator;
-import com.example.nekr0s.get_my_driver_card.validator.DigitsValidator;
-import com.example.nekr0s.get_my_driver_card.validator.EmailValidator;
-import com.example.nekr0s.get_my_driver_card.validator.NamesValidator;
-import com.example.nekr0s.get_my_driver_card.validator.base.NameValidator;
-import com.example.nekr0s.get_my_driver_card.validator.base.Validator;
-import com.example.nekr0s.get_my_driver_card.validator.base.ValidatorDate;
-import com.example.nekr0s.get_my_driver_card.validator.base.ValidatorDigits;
+import com.example.nekr0s.get_my_driver_card.utils.enums.RequestStatus;
+import com.example.nekr0s.get_my_driver_card.utils.enums.RequestType;
 import com.example.nekr0s.get_my_driver_card.views.create.CardCreateContracts;
+import com.example.nekr0s.get_my_driver_card.views.create.CardCreatePresenter;
+import com.example.nekr0s.get_my_driver_card.views.create.base.UserHolder;
+import com.example.nekr0s.get_my_driver_card.views.create.documents.DocumentsActivity;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -72,13 +72,6 @@ public class NewCardFragment extends Fragment implements CardCreateContracts.Vie
     private CardCreateContracts.Presenter mPresenter;
     private Set<ErrorCode> errorCodes = new HashSet<>();
 
-
-    private final ValidatorDate mDateValidator = new DateValidator();
-    private final Validator mValidator = new EmailValidator();
-    private final NameValidator mNameValidator = new NamesValidator();
-    private final ValidatorDigits mDigitsValidator = new DigitsValidator();
-
-
     public static NewCardFragment newInstance() {
         return new NewCardFragment();
     }
@@ -87,7 +80,20 @@ public class NewCardFragment extends Fragment implements CardCreateContracts.Vie
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPresenter = new CardCreatePresenter(getContext());
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.subscribe(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mPresenter.unsubscribe();
     }
 
     @Override
@@ -115,18 +121,24 @@ public class NewCardFragment extends Fragment implements CardCreateContracts.Vie
 
         errorCodes = mPresenter.checkFields(getAllFieldsString());
 
-        setRegisterErrors(errorCodes, getAllTils());
+        setRegisterErrors(getAllTils());
 
+        if (allErrorCodesOk()) {
+            Intent intent = new Intent(getActivity(), DocumentsActivity.class);
+            User user = ((UserHolder) getActivity()).getCurrentUser();
+            user.setUserInfo(createUserInfoFromFields());
+            Request request = new Request(RequestStatus.REQUEST_NEW, RequestType.TYPE_NEW, null, user);
+            intent.putExtra(DocumentsActivity.REQUEST_SO_FAR, request);
+            startActivity(intent);
+        }
+    }
 
-        // TODO: 11/10/2018 Check is all fields are okay and continue , fix the nullPointer
-//        Intent intent = new Intent(getActivity(), DocumentsActivity.class);
-//        User user = ((UserHolder) getActivity()).getCurrentUser();
-//        user.setUserInfo(createUserInfoFromFields());
-//        Request request = new Request(RequestStatus.REQUEST_NEW, RequestType.TYPE_NEW, null, user);
-//        intent.putExtra(DocumentsActivity.REQUEST_SO_FAR, request);
-//        startActivity(intent);
-
-
+    private boolean allErrorCodesOk() {
+        return errorCodes.contains(ErrorCode.NAME_OK) && errorCodes.contains(ErrorCode.CYR_NAME_OK) &&
+                errorCodes.contains(ErrorCode.LAST_NAME_OK) && errorCodes.contains(ErrorCode.CYR_LAST_NAME_OK) &&
+                errorCodes.contains(ErrorCode.DATE_OK) && errorCodes.contains(ErrorCode.PHONE_OK) &&
+                errorCodes.contains(ErrorCode.ADDRESS_OK) && errorCodes.contains(ErrorCode.ID_OK) &&
+                errorCodes.contains(ErrorCode.EMAIL_OK);
     }
 
     private UserInfo createUserInfoFromFields() {
@@ -147,9 +159,8 @@ public class NewCardFragment extends Fragment implements CardCreateContracts.Vie
     }
 
     @Override
-    public void setRegisterErrors(Set<ErrorCode> errors, Map<String, TextInputLayout> tils) {
-
-        for (ErrorCode errorCode : errors) {
+    public void setRegisterErrors(Map<String, TextInputLayout> tils) {
+        for (ErrorCode errorCode : errorCodes) {
             switch (errorCode) {
                 case NAME_NULL:
                 case NAME_NOT_VALID:
@@ -201,10 +212,10 @@ public class NewCardFragment extends Fragment implements CardCreateContracts.Vie
                 case PHONE_NULL:
                 case PHONE_TOO_LONG:
                 case PHONE_INVALID:
-                    tils.get("phone").setError(errorCode.getLabel(getContext()));
+                    tils.get("phoneNumber").setError(errorCode.getLabel(getContext()));
                     break;
                 case PHONE_OK:
-                    tils.get("phone").setError(null);
+                    tils.get("phoneNumber").setError(null);
                     break;
                 case DATE_NULL:
                 case DATE_INVALID:
@@ -227,17 +238,18 @@ public class NewCardFragment extends Fragment implements CardCreateContracts.Vie
     }
 
     private Map<String, String> getAllFieldsString() {
-        Map<String, String> allFields = new HashMap<>();
-        allFields.put("firstName", mTIL_firstName.getEditText().getText().toString().trim());
-        allFields.put("firstNameCyr", mTIL_firstName_cyrillic.getEditText().getText().toString().trim());
-        allFields.put("lastName", mTIL_lastName.getEditText().getText().toString().trim());
-        allFields.put("lastNameCyr", mTIL_lastName_cyrillic.getEditText().getText().toString().trim());
-        allFields.put("personalNumber", mTIL_personalNumber.getEditText().getText().toString().trim());
-        allFields.put("address", mTIL_address.getEditText().getText().toString().trim());
-        allFields.put("phoneNumber", mTIL_phoneNumber.getEditText().getText().toString().trim());
-        allFields.put("dateOfBirth", mTIL_dateOfBirth.getEditText().getText().toString().trim());
-        allFields.put("email", mTIL_email_address.getEditText().getText().toString().trim());
-        return allFields;
+        Map<String, TextInputLayout> tils = getAllTils();
+        Map<String, String> tilsToString = new HashMap<>();
+        tilsToString.put("firstName", tils.get("firstName").getEditText().getText().toString().trim());
+        tilsToString.put("firstNameCyr", tils.get("firstNameCyr").getEditText().getText().toString().trim());
+        tilsToString.put("lastName", tils.get("lastName").getEditText().getText().toString().trim());
+        tilsToString.put("lastNameCyr", tils.get("lastNameCyr").getEditText().getText().toString().trim());
+        tilsToString.put("personalNumber", tils.get("personalNumber").getEditText().getText().toString().trim());
+        tilsToString.put("address", tils.get("address").getEditText().getText().toString().trim());
+        tilsToString.put("phoneNumber", tils.get("phoneNumber").getEditText().getText().toString().trim());
+        tilsToString.put("dateOfBirth", tils.get("dateOfBirth").getEditText().getText().toString().trim());
+        tilsToString.put("email", tils.get("email").getEditText().getText().toString().trim());
+        return tilsToString;
     }
 
     private Map<String, TextInputLayout> getAllTils() {
@@ -253,8 +265,6 @@ public class NewCardFragment extends Fragment implements CardCreateContracts.Vie
         allTills.put("email", mTIL_email_address);
         return allTills;
     }
-
-
 
 
 }
