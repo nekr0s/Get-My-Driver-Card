@@ -26,6 +26,7 @@ import com.example.nekr0s.get_my_driver_card.views.create.documents.DocumentsAct
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -119,6 +120,7 @@ public class NewCardFragment extends Fragment implements CardCreateContracts.Vie
     @OnClick(R.id.new_card_next_button)
     void openDocumentsActivity() {
 
+
         errorCodes = mPresenter.checkFields(getAllFieldsString());
 
         setRegisterErrors(getAllTils());
@@ -142,15 +144,15 @@ public class NewCardFragment extends Fragment implements CardCreateContracts.Vie
     }
 
     private UserInfo createUserInfoFromFields() {
-        return new UserInfo(mTIL_firstName.getEditText().getText().toString(),
-                mTIL_firstName_cyrillic.getEditText().getText().toString(),
-                mTIL_lastName.getEditText().getText().toString(),
-                mTIL_lastName_cyrillic.getEditText().getText().toString(),
-                mTIL_personalNumber.getEditText().getText().toString(),
-                mTIL_dateOfBirth.getEditText().getText().toString(),
-                mTIL_address.getEditText().getText().toString(),
-                mTIL_phoneNumber.getEditText().getText().toString(),
-                mTIL_email_address.getEditText().getText().toString());
+        return new UserInfo(Objects.requireNonNull(mTIL_firstName.getEditText()).getText().toString(),
+                Objects.requireNonNull(mTIL_firstName_cyrillic.getEditText()).getText().toString(),
+                Objects.requireNonNull(mTIL_lastName.getEditText()).getText().toString(),
+                Objects.requireNonNull(mTIL_lastName_cyrillic.getEditText()).getText().toString(),
+                Objects.requireNonNull(mTIL_personalNumber.getEditText()).getText().toString(),
+                Objects.requireNonNull(mTIL_dateOfBirth.getEditText()).getText().toString(),
+                Objects.requireNonNull(mTIL_address.getEditText()).getText().toString(),
+                Objects.requireNonNull(mTIL_phoneNumber.getEditText()).getText().toString(),
+                Objects.requireNonNull(mTIL_email_address.getEditText()).getText().toString());
     }
 
     @Override

@@ -11,13 +11,16 @@
 
     <TextView
         android:id="@+id/exchange_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:background="@color/Onyx50percent"
         android:padding="16dp"
         android:text="@string/exchange_fragment_message"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="19sp"
         android:textStyle="bold" />
 
 
@@ -106,8 +109,8 @@
         android:paddingEnd="5dp"
         android:paddingBottom="10dp"
         android:text="@string/next"
-        android:textSize="16sp"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="16sp" />
 
 
 </LinearLayout>

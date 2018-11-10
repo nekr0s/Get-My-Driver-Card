@@ -24,6 +24,8 @@ public interface CardCreateContracts {
 
         Set<ErrorCode> checkFields(Map<String, String> allFields);
 
+        Set<ErrorCode> checkFieldsExchange(Map<String, String> allFields);
+
 
         void save(Request request);
     }
