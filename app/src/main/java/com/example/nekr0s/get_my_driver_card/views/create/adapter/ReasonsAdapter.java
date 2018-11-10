@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Reason;
+import com.example.nekr0s.get_my_driver_card.utils.enums.RequestReason;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -64,7 +65,7 @@ public class ReasonsAdapter extends BaseAdapter {
         } else holder = (ViewHolder) view.getTag();
 
         Reason reason = reasons.get(position);
-        holder.tvReasonName.setText(reason.getReasonName());
+        holder.tvReasonName.setText(reason.getRequestReasonString());
         if (reason.isSelected()) holder.ivCheckBox.setBackgroundResource(R.drawable.checked);
         else holder.ivCheckBox.setBackgroundResource(R.drawable.check);
         return view;
@@ -78,13 +79,14 @@ public class ReasonsAdapter extends BaseAdapter {
 
     private void initReasons() {
         reasons = new ArrayList<>(Arrays.asList(
-                new Reason(false, activity.getString(R.string.card_has_been_stolen)),
-                new Reason(false, activity.getString(R.string.lost_my_card)),
-                new Reason(false, activity.getString(R.string.card_is_malfunctioning)),
-                new Reason(false, activity.getString(R.string.card_has_been_damaged)),
-                new Reason(false, activity.getString(R.string.change_my_address)),
-                new Reason(false, activity.getString(R.string.change_my_name)),
-                new Reason(false, activity.getString(R.string.change_my_photo))));
+                new Reason(false, RequestReason.REASON_STOLEN, activity.getString(R.string.card_has_been_stolen)),
+                new Reason(false, RequestReason.REASON_LOST, activity.getString(R.string.lost_my_card)),
+                new Reason(false, RequestReason.REASON_MALFUNCTIONING, activity.getString(R.string.card_is_malfunctioning)),
+                new Reason(false, RequestReason.REASON_DAMAGED, activity.getString(R.string.card_has_been_damaged)),
+                new Reason(false, RequestReason.REASON_ADDRESS_CHANGE, activity.getString(R.string.change_my_address)),
+                new Reason(false, RequestReason.REASON_NAME_CHANGE, activity.getString(R.string.change_my_name)),
+                new Reason(false, RequestReason.REASON_PHOTO_CHANGE, activity.getString(R.string.change_my_photo))))
+        ;
     }
 
     class ViewHolder {

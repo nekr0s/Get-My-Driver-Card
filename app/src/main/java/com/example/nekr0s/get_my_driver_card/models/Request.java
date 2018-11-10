@@ -15,6 +15,7 @@ public class Request implements Serializable {
     private RequestStatus requestStatus;
     private RequestType requestType;
     private RequestReason requestReason;
+    private String additionalInfo;
     private String requestDate;
     private Attachment attachment;
     private User user;
@@ -133,5 +134,13 @@ public class Request implements Serializable {
 
     public void setRequestReason(RequestReason requestReason) {
         this.requestReason = requestReason;
+    }
+
+    public String getAdditionalInfo() {
+        return additionalInfo;
+    }
+
+    public void setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
     }
 }

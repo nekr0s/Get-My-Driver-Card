@@ -15,6 +15,7 @@ import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Reason;
 import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
+import com.example.nekr0s.get_my_driver_card.utils.enums.RequestReason;
 import com.example.nekr0s.get_my_driver_card.views.create.adapter.ReasonsAdapter;
 import com.example.nekr0s.get_my_driver_card.views.create.base.UserHolder;
 
@@ -46,6 +47,7 @@ public class RenewFragment extends Fragment {
     Button mNextButton;
 
     private int mPreselectedIndex = -1;
+    private ReasonsAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,17 +56,17 @@ public class RenewFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        final ReasonsAdapter adapter = new ReasonsAdapter(getActivity(), Arrays.asList(
-                new Reason(false, getString(R.string.duetoexpire)),
-                new Reason(false, getString(R.string.card_has_expired)),
-                new Reason(false, getString(R.string.card_is_suspended)),
-                new Reason(false, getString(R.string.card_is_withdrawn))
+        mAdapter = new ReasonsAdapter(getActivity(), Arrays.asList(
+                new Reason(false, RequestReason.REASON_DUE_TO_EXPIRE, getString(R.string.duetoexpire)),
+                new Reason(false, RequestReason.REASON_EXPIRED, getString(R.string.card_has_expired)),
+                new Reason(false, RequestReason.REASON_SUSPENDED, getString(R.string.card_is_suspended)),
+                new Reason(false, RequestReason.REASON_WITHDRAWN, getString(R.string.card_is_withdrawn))
         ));
-        mRenewCheckboxList.setAdapter(adapter);
+        mRenewCheckboxList.setAdapter(mAdapter);
 
         mRenewCheckboxList
                 .setOnItemClickListener((parent, view1, position, id) ->
-                        checkBoxLogic(adapter.getItem(position), adapter, position));
+                        checkBoxLogic(mAdapter.getItem(position), mAdapter, position));
 
         return view;
     }
@@ -106,6 +108,7 @@ public class RenewFragment extends Fragment {
     void openNextActivity() {
         Intent intent = new Intent(getActivity(), PreviousCardInfoActivity.class);
         User user = ((UserHolder) getActivity()).getCurrentUser();
+        intent.putExtra(Constants.RENEWAL_REASON, mAdapter.getItem(mPreselectedIndex).getRequestReason());
         intent.putExtra(Constants.USER_OBJ_EXTRA, user);
         startActivity(intent);
     }

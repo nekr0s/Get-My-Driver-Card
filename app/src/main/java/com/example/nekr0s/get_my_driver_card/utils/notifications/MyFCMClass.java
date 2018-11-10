@@ -10,13 +10,17 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.example.nekr0s.get_my_driver_card.R;
+import com.example.nekr0s.get_my_driver_card.utils.enums.RequestStatus;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class MyFCMClass extends FirebaseMessagingService {
+
+    public static final String REQUEST_ACCEPT = "REQUEST_ACCEPT";
     private final String TAG = "JSA-FCM";
 
     @Override
@@ -30,7 +34,15 @@ public class MyFCMClass extends FirebaseMessagingService {
             Log.e(TAG, "Data: " + remoteMessage.getData());
         }
 
+        LocalBroadcastManager broadcaster = LocalBroadcastManager.getInstance(getBaseContext());
+
+
         sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
+
+        Intent intent = new Intent(REQUEST_ACCEPT);
+        intent.putExtra("requestId", Long.valueOf(remoteMessage.getData().get("requestId")));
+        intent.putExtra("requestStatus", RequestStatus.valueOf(remoteMessage.getData().get("requestStatus")));
+        broadcaster.sendBroadcast(intent);
     }
 
     private void sendNotification(String messageTitle, String messageBody) {
@@ -63,4 +75,5 @@ public class MyFCMClass extends FirebaseMessagingService {
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
+
 }

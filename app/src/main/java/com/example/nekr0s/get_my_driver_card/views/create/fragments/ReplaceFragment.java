@@ -81,7 +81,7 @@ public class ReplaceFragment extends Fragment {
             editTextPlaceLost.setVisibility(View.GONE);
         } else {
             reason.setSelected(true);
-            displayForms(reason.getReasonName());
+            displayForms(reason.getRequestReasonString());
         }
 
         adapter.update(position, reason);

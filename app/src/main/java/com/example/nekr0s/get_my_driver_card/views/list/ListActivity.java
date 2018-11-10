@@ -1,9 +1,13 @@
 package com.example.nekr0s.get_my_driver_card.views.list;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +26,7 @@ import com.example.nekr0s.get_my_driver_card.models.Request;
 import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.utils.enums.RequestStatus;
+import com.example.nekr0s.get_my_driver_card.utils.notifications.MyFCMClass;
 import com.example.nekr0s.get_my_driver_card.views.create.CardCreateActivity;
 import com.example.nekr0s.get_my_driver_card.views.list.recycler.RequestsAdapter;
 import com.example.nekr0s.get_my_driver_card.views.login.LoginActivity;
@@ -36,7 +41,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ListActivity extends AppCompatActivity implements ListContracts.View, RequestsAdapter.OnItemClickListener, AdapterView.OnItemSelectedListener {
+public class ListActivity extends AppCompatActivity implements ListContracts.View,
+        RequestsAdapter.OnItemClickListener, AdapterView.OnItemSelectedListener {
 
     private static final String TOPIC = "GetMyDriverCard";
     @BindView(R.id.userToolbar)
@@ -73,6 +79,7 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
     private User mUser;
     private ListContracts.Presenter mPresenter;
     private RequestsAdapter mRequestsAdapter;
+    private BroadcastReceiver mReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +116,31 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
         mDropDownSpinner.setAdapter(adapter);
         mDropDownSpinner.setOnItemSelectedListener(this);
 
+        // Receiver
+        mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                try {
+                    long requestId = intent.getLongExtra("requestId", 0);
+                    RequestStatus requestStatus = (RequestStatus) intent.getSerializableExtra("requestStatus");
+                    mRequestsAdapter.updateStatus(requestId, requestStatus);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver((mReceiver), new IntentFilter(MyFCMClass.REQUEST_ACCEPT));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
     }
 
     @Override
@@ -232,5 +264,6 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
             }
         }
     }
+
 }
 
