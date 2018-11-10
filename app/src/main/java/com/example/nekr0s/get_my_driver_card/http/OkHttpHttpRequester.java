@@ -96,8 +96,8 @@ public class OkHttpHttpRequester implements HttpRequester {
                 .build();
 
         OkHttpClient client = new OkHttpClient.Builder()
-//                .cookieJar(mCookieJar)
-//                .addInterceptor(interceptor)
+                .cookieJar(mCookieJar)
+                .addInterceptor(interceptor)
                 .build();
 
         Response response = client.newCall(request)

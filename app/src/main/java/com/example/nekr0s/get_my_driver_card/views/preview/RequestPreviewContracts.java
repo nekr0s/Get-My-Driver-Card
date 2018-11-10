@@ -21,6 +21,8 @@ public interface RequestPreviewContracts {
     interface View {
         void setPresenter(Presenter presenter);
 
+        void finishHim(Request request);
+
         void showLoading();
 
         void hideLoading();

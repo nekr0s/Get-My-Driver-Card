@@ -60,7 +60,7 @@ public class RequestPreviewPresenter implements RequestPreviewContracts.Presente
                 .observeOn(mSchedulerProvider.ui())
                 .doOnEach(x -> mView.hideLoading())
                 .doOnError(mView::showError)
-                .subscribe(s -> mView.navigateToList(request));
+                .subscribe(s -> mView.finishHim(s));
     }
 
     @Override

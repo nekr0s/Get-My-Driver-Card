@@ -1,6 +1,7 @@
 package com.example.nekr0s.get_my_driver_card.views.preview;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +36,7 @@ import static com.example.nekr0s.get_my_driver_card.views.signature.DeclarationA
 
 public class RequestPreviewActivity extends AppCompatActivity implements RequestPreviewContracts.View, AdapterView.OnItemSelectedListener {
 
+    public static final int AWAIT_STATUS_CHANGE = 1;
     @BindView(R.id.adminToolbar)
     android.support.v7.widget.Toolbar mAdminToolbar;
 
@@ -136,6 +138,7 @@ public class RequestPreviewActivity extends AppCompatActivity implements Request
                     R.array.status_array, android.R.layout.simple_spinner_item);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             mAdminSpinner.setAdapter(adapter);
+            mAdminSpinner.setSelection(0, false);
             mAdminSpinner.setOnItemSelectedListener(this);
             mOnlyAdminTextViewStatus.append(mRequest.getShortStatusString());
 
@@ -206,6 +209,15 @@ public class RequestPreviewActivity extends AppCompatActivity implements Request
     }
 
     @Override
+    public void finishHim(Request request) {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("requestId", request.getRequestId());
+        returnIntent.putExtra("requestStatus", request.getRequestStatus());
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
+    }
+
+    @Override
     public void showLoading() {
         Toast.makeText(this, "Loading..", Toast.LENGTH_LONG).show();
     }
@@ -231,10 +243,11 @@ public class RequestPreviewActivity extends AppCompatActivity implements Request
     @SuppressLint("SetTextI18n")
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String requestStatusString = parent.getItemAtPosition(position).toString();
+        String requestStatusString = "Request status: " + parent.getItemAtPosition(position).toString();
+        String check = mOnlyAdminTextViewStatus.getText().toString();
+        if (check.equals(requestStatusString)) return;
         mOnlyAdminTextViewStatus.setText("Request status: " + parent.getItemAtPosition(position));
-        if (mOnlyAdminTextViewStatus.getText().toString().endsWith(requestStatusString)) return;
-        switch (requestStatusString) {
+        switch (parent.getItemAtPosition(position).toString()) {
             case "NEW":
                 mRequest.setRequestStatus(RequestStatus.REQUEST_NEW);
                 break;

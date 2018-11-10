@@ -1,7 +1,9 @@
 package com.example.nekr0s.get_my_driver_card.views.list;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +21,7 @@ import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Request;
 import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
+import com.example.nekr0s.get_my_driver_card.utils.enums.RequestStatus;
 import com.example.nekr0s.get_my_driver_card.views.create.CardCreateActivity;
 import com.example.nekr0s.get_my_driver_card.views.list.recycler.RequestsAdapter;
 import com.example.nekr0s.get_my_driver_card.views.login.LoginActivity;
@@ -112,7 +115,9 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
     protected void onResume() {
         super.onResume();
         mPresenter.subscribe(this);
-        if (mRequestsAdapter.getItemCount() > 0) return;
+        if (mRequestsAdapter.getItemCount() > 0) {
+            return;
+        }
         if (mUser.getRoles().size() > 1) {
             mFloatingActionMenu.setVisibility(View.GONE);
             mPresenter.loadRequestsAdmin();
@@ -191,7 +196,7 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
         Intent intent = new Intent(this, RequestPreviewActivity.class);
         intent.putExtra(RequestPreviewActivity.FROM_LIST, request);
         if (mUser.getRoles().size() > 1) intent.putExtra(RequestPreviewActivity.IS_ADMIN, true);
-        startActivity(intent);
+        startActivityForResult(intent, RequestPreviewActivity.AWAIT_STATUS_CHANGE);
     }
 
     @Override
@@ -214,6 +219,17 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == RequestPreviewActivity.AWAIT_STATUS_CHANGE) {
+            if (resultCode == Activity.RESULT_OK) {
+                long requestId = data.getLongExtra("requestId", 0);
+                RequestStatus requestStatus = (RequestStatus) data.getSerializableExtra("requestStatus");
+                mRequestsAdapter.updateStatus(requestId, requestStatus);
+            }
+        }
     }
 }
 

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Request;
+import com.example.nekr0s.get_my_driver_card.utils.enums.RequestStatus;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -84,20 +85,14 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ItemVi
         notifyDataSetChanged();
     }
 
-//    public void sortByDate() {
-//        Collections.sort(datestring, new Comparator<String>() {
-//            DateFormat f = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-//
-//            @Override
-//            public int compare(String o1, String o2) {
-//                try {
-//                    return f.parse(o1).compareTo(f.parse(o2));
-//                } catch (ParseException e) {
-//                    throw new IllegalArgumentException(e);
-//                }
-//            }
-//        });
-//    }
+    public void updateStatus(long requestId, RequestStatus requestStatus) {
+        for (Request request : mRequests) {
+            if (request.getRequestId() == requestId) {
+                request.setRequestStatus(requestStatus);
+            }
+        }
+        notifyDataSetChanged();
+    }
 
     protected static class ItemViewHolder extends RecyclerView.ViewHolder {
 
