@@ -83,7 +83,7 @@ public class PreviousCardInfoActivity extends AppCompatActivity implements UserH
 //
 //            switch (i) {
 //                case 0:
-//                    if (errorCodes.get(0).equals(ErrorCode.COUNTRY_OK))
+//                      if (errorCodes.get(0).equals(ErrorCode.COUNTRY_OK))
 //                        mTIL_previous_eu_country_of_issuing.setError(null);
 //                    else {
 //                        mTIL_previous_eu_country_of_issuing.setError(errorCodes

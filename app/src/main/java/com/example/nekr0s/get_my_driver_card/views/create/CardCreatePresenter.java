@@ -69,4 +69,16 @@ public class CardCreatePresenter implements CardCreateContracts.Presenter {
         errorCodes.add(mValidator.isValid(allFields.get("email")));
         return errorCodes;
     }
+
+    @Override
+    public Set<ErrorCode> checkFieldsExchange(Map<String, String> allFields) {
+
+        Set<ErrorCode> errorCodes = new HashSet<>();
+
+        errorCodes.add(mNameValidator.isEuCountryOfIssuingValid(allFields.get("countryOfIssuing")));
+        errorCodes.add(mDigitsValidator.isTachNumberValid(allFields.get("tachNumber")));
+        errorCodes.add(mNameValidator.isLicenseCountryOfIssuingValid(allFields.get("licenseCountry")));
+        errorCodes.add(mDigitsValidator.isLicenseNumberValid(allFields.get("licenseNumber")));
+        return errorCodes;
+    }
 }

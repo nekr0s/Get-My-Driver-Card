@@ -3,6 +3,7 @@ package com.example.nekr0s.get_my_driver_card.views.create.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,21 +13,21 @@ import android.widget.Button;
 
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
-import com.example.nekr0s.get_my_driver_card.validator.DigitsValidator;
-import com.example.nekr0s.get_my_driver_card.validator.base.NameValidator;
-import com.example.nekr0s.get_my_driver_card.validator.NamesValidator;
-import com.example.nekr0s.get_my_driver_card.validator.base.ValidatorDigits;
+import com.example.nekr0s.get_my_driver_card.views.create.CardCreateContracts;
+import com.example.nekr0s.get_my_driver_card.views.create.CardCreatePresenter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class ExchangeFragment extends Fragment {
+public class ExchangeFragment extends Fragment implements CardCreateContracts.View {
 
 
     public ExchangeFragment() {
@@ -48,9 +49,8 @@ public class ExchangeFragment extends Fragment {
     @BindView(R.id.exchange_next_button)
     Button mNextButton;
 
-    private List<ErrorCode> errorCodes = new ArrayList<>();
-    private final NameValidator mNameValidator = new NamesValidator();
-    private final ValidatorDigits mDigitsValidator = new DigitsValidator();
+    private Set<ErrorCode> errorCodes = new HashSet<>();
+    private CardCreateContracts.Presenter mPresenter;
 
 
     public static Fragment newInstance() {
@@ -79,16 +79,11 @@ public class ExchangeFragment extends Fragment {
     @OnClick(R.id.exchange_next_button)
     void openNextFragment() {
 
-        errorCodes.add(mNameValidator.isEuCountryOfIssuingValid(Objects.requireNonNull(mTIL_eu_country_of_issuing
-                .getEditText()).getText().toString().trim()));
-        errorCodes.add(mDigitsValidator.isTachNumberValid(Objects.requireNonNull(mTIL_tachograph_card_number
-                .getEditText()).getText().toString().trim()));
-        errorCodes.add(mNameValidator.isLicenseCountryOfIssuingValid(Objects.requireNonNull(mTIL_driver_licence_country
-                .getEditText()).getText().toString().trim()));
-        errorCodes.add(mDigitsValidator.isLicenseNumberValid(Objects.requireNonNull(mTIL_driving_licence_number
-                .getEditText()).getText().toString().trim()));
+        errorCodes = mPresenter.checkFieldsExchange(getAllFieldsString());
 
-        if (setErrors(errorCodes)) {
+        setRegisterErrors(getAllTils());
+
+        if (allErrorCodesOk()) {
             NewCardFragment nextFrag = new NewCardFragment();
             Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, nextFrag, "newCardFragment")
@@ -96,53 +91,90 @@ public class ExchangeFragment extends Fragment {
                     .addToBackStack(ExchangeFragment.class.getName())
                     .commit();
         }
+
     }
 
-    public boolean setErrors(List<ErrorCode> errors) {
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mPresenter = new CardCreatePresenter(getContext());
+    }
 
-        int errorCount = 0;
+    @Override
+    public void setPresenter(CardCreateContracts.Presenter presenter) {
 
-        for (int i = 0; i < 3; i++) {
+    }
 
-            switch (i) {
-                case 0:
-                    if (errorCodes.get(0).equals(ErrorCode.COUNTRY_OK))
-                        mTIL_eu_country_of_issuing.setError(null);
-                    else {
-                        mTIL_eu_country_of_issuing.setError(errorCodes
-                                .get(0).getLabel(Objects.requireNonNull(getContext())));
-                        errorCount++;
-                    }
+    @Override
+    public void setRegisterErrors(Map<String, TextInputLayout> tils) {
+        for (ErrorCode errorCode : errorCodes) {
+            switch (errorCode) {
+                case COUNTRY_NULL:
+                case COUNTRY_INVALID:
+                case COUNTRY_TOO_LONG:
+                    mTIL_eu_country_of_issuing.setError(errorCode.getLabel(getContext()));
+                    break;
+                case COUNTRY_OK:
+                    mTIL_eu_country_of_issuing.setError(null);
+                    break;
+                case TACH_NULL:
+                case TACH_NOT_VALID:
+                    mTIL_tachograph_card_number.setError(errorCode.getLabel(getContext()));
+                    break;
+                case TACH_OK:
+                    mTIL_tachograph_card_number.setError(null);
+                    break;
+                case LICENSE_COUNTRY_ISSUER_NULL:
+                case LICENSE_COUNTRY_ISSUER_INVALID:
+                    mTIL_driver_licence_country.setError(errorCode.getLabel(getContext()));
+                    break;
+                case LICENSE_COUNTRY_ISSUER_OK:
+                    mTIL_driver_licence_country.setError(null);
+                    break;
 
-                case 1:
-                    if (errorCodes.get(1).equals(ErrorCode.TACH_OK))
-                        mTIL_tachograph_card_number.setError(null);
-                    else {
-                        mTIL_tachograph_card_number.setError(errorCodes.get(1)
-                                .getLabel(Objects.requireNonNull(getContext())));
-                        errorCount++;
-                    }
-                case 2:
-                    if (errorCodes.get(2).equals(ErrorCode.LICENSE_COUNTRY_ISSUER_OK))
-                        mTIL_driver_licence_country.setError(null);
-                    else {
-                        mTIL_driver_licence_country.setError(errorCodes.get(2)
-                                .getLabel(Objects.requireNonNull(getContext())));
-                        errorCount++;
-                    }
-                case 3:
-                    if (errorCodes.get(3).equals(ErrorCode.LICENSE_NUMBER_OK))
-                        mTIL_driving_licence_number.setError(null);
-                    else {
-                        mTIL_driving_licence_number.setError(errorCodes.get(3)
-                                .getLabel(Objects.requireNonNull(getContext())));
-                        errorCount++;
+                case LICENSE_NUMBER_NULL:
+                case LICENSE_NUMBER_INVALID:
+                    mTIL_driving_licence_number.setError(errorCode.getLabel(getContext()));
+                    break;
+                case LICENSE_NUMBER_OK:
+                    mTIL_driving_licence_number.setError(null);
+                    break;
 
-                    }
             }
 
         }
-        errors.clear();
-        return errorCount == 0;
     }
+
+    private boolean allErrorCodesOk() {
+        return errorCodes.contains(ErrorCode.COUNTRY_OK) && errorCodes.contains(ErrorCode.TACH_OK) &&
+                errorCodes.contains(ErrorCode.LICENSE_COUNTRY_ISSUER_OK)
+                && errorCodes.contains(ErrorCode.LICENSE_NUMBER_OK);
+
+    }
+
+    private Map<String, String> getAllFieldsString() {
+
+        Map<String, TextInputLayout> tils = getAllTils();
+
+        Map<String, String> tilsToString = new HashMap<>();
+
+        tilsToString.put("countryOfIssuing", tils.get("countryOfIssuing").getEditText().getText().toString().trim());
+        tilsToString.put("tachNumber", tils.get("tachNumber").getEditText().getText().toString().trim());
+        tilsToString.put("licenseCountry", tils.get("licenseCountry").getEditText().getText().toString().trim());
+        tilsToString.put("licenseNumber", tils.get("licenseNumber").getEditText().getText().toString().trim());
+
+        return tilsToString;
+    }
+
+    private Map<String, TextInputLayout> getAllTils() {
+        Map<String, TextInputLayout> allTills = new HashMap<>();
+        allTills.put("countryOfIssuing", mTIL_eu_country_of_issuing);
+        allTills.put("tachNumber", mTIL_tachograph_card_number);
+        allTills.put("licenseCountry", mTIL_driver_licence_country);
+        allTills.put("licenseNumber", mTIL_driving_licence_number);
+
+        return allTills;
+    }
+
+
 }
