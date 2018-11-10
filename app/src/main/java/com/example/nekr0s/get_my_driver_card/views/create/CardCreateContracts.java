@@ -1,11 +1,19 @@
 package com.example.nekr0s.get_my_driver_card.views.create;
 
+import android.support.design.widget.TextInputLayout;
+
 import com.example.nekr0s.get_my_driver_card.models.Request;
+import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
+
+import java.util.Map;
+import java.util.Set;
 
 public interface CardCreateContracts {
 
     interface View {
         void setPresenter(Presenter presenter);
+
+        void setRegisterErrors(Set<ErrorCode> errors, Map<String, TextInputLayout> tils);
 
     }
 
@@ -13,6 +21,9 @@ public interface CardCreateContracts {
         void subscribe(View view);
 
         void unsubscribe();
+
+        Set<ErrorCode> checkFields(Map<String, String> allFields);
+
 
         void save(Request request);
     }

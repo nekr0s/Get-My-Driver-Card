@@ -1,7 +1,6 @@
 package com.example.nekr0s.get_my_driver_card.views.create.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -12,12 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.nekr0s.get_my_driver_card.R;
-import com.example.nekr0s.get_my_driver_card.models.Request;
-import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.models.UserInfo;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
-import com.example.nekr0s.get_my_driver_card.utils.enums.RequestStatus;
-import com.example.nekr0s.get_my_driver_card.utils.enums.RequestType;
 import com.example.nekr0s.get_my_driver_card.validator.DateValidator;
 import com.example.nekr0s.get_my_driver_card.validator.DigitsValidator;
 import com.example.nekr0s.get_my_driver_card.validator.EmailValidator;
@@ -27,11 +22,11 @@ import com.example.nekr0s.get_my_driver_card.validator.base.Validator;
 import com.example.nekr0s.get_my_driver_card.validator.base.ValidatorDate;
 import com.example.nekr0s.get_my_driver_card.validator.base.ValidatorDigits;
 import com.example.nekr0s.get_my_driver_card.views.create.CardCreateContracts;
-import com.example.nekr0s.get_my_driver_card.views.create.base.UserHolder;
-import com.example.nekr0s.get_my_driver_card.views.create.documents.DocumentsActivity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,7 +70,7 @@ public class NewCardFragment extends Fragment implements CardCreateContracts.Vie
     @BindView(R.id.new_card_next_button)
     Button mNextButton;
     private CardCreateContracts.Presenter mPresenter;
-    private List<ErrorCode> errorCodes = new ArrayList<>();
+    private Set<ErrorCode> errorCodes = new HashSet<>();
 
 
     private final ValidatorDate mDateValidator = new DateValidator();
@@ -118,25 +113,19 @@ public class NewCardFragment extends Fragment implements CardCreateContracts.Vie
     @OnClick(R.id.new_card_next_button)
     void openDocumentsActivity() {
 
-        // NOT LIKE THIS
-//        errorCodes.add(mNameValidator.isFirstNameValid(mTIL_firstName.getEditText().getText().toString().trim()));
-//        errorCodes.add(mNameValidator.isFirstNameCyrValid(mTIL_firstName_cyrillic.getEditText().getText().toString().trim()));
-//        errorCodes.add(mNameValidator.isLastNameValid(mTIL_lastName.getEditText().getText().toString().trim()));
-//        errorCodes.add(mNameValidator.isLastNameCyrValid(mTIL_lastName_cyrillic.getEditText().getText().toString().trim()));
-//        errorCodes.add(mDigitsValidator.isPersonalNumberValid(mTIL_personalNumber.getEditText().getText().toString().trim()));
-//        errorCodes.add(mNameValidator.isAddressValid(mTIL_address.getEditText().getText().toString().trim()));
-//        errorCodes.add(mDigitsValidator.isPhoneNumberValid(mTIL_phoneNumber.getEditText().getText().toString().trim()));
-//        errorCodes.add(mDateValidator.isDateValid(mTIL_dateOfBirth.getEditText().getText().toString().trim()));
-//        errorCodes.add(mValidator.isValid(mTIL_email_address.getEditText().getText().toString().trim()));
+        errorCodes = mPresenter.checkFields(getAllFieldsString());
 
-//        if (setErrors(errorCodes)) {
-        Intent intent = new Intent(getActivity(), DocumentsActivity.class);
-        User user = ((UserHolder) getActivity()).getCurrentUser();
-        user.setUserInfo(createUserInfoFromFields());
-        Request request = new Request(RequestStatus.REQUEST_NEW, RequestType.TYPE_NEW, null, user);
-        intent.putExtra(DocumentsActivity.REQUEST_SO_FAR, request);
-        startActivity(intent);
-//        }
+        setRegisterErrors(errorCodes, getAllTils());
+
+
+        // TODO: 11/10/2018 Check is all fields are okay and continue , fix the nullPointer
+//        Intent intent = new Intent(getActivity(), DocumentsActivity.class);
+//        User user = ((UserHolder) getActivity()).getCurrentUser();
+//        user.setUserInfo(createUserInfoFromFields());
+//        Request request = new Request(RequestStatus.REQUEST_NEW, RequestType.TYPE_NEW, null, user);
+//        intent.putExtra(DocumentsActivity.REQUEST_SO_FAR, request);
+//        startActivity(intent);
+
 
     }
 
@@ -157,83 +146,115 @@ public class NewCardFragment extends Fragment implements CardCreateContracts.Vie
 
     }
 
-//    public boolean setErrors(List<ErrorCode> errors) {
-//
-//        int errorCount = 0;
-//
-//        for (int i = 0; i < errors.size(); i++) {
-//
-//            switch (errors.get(i)) {
-//                case NAME_OK:
-//                    if (errorCodes.get(0).equals(NAME_OK)) mTIL_firstName.setError(null);
-//                    else {
-//                        mTIL_firstName.setError(errorCodes.get(0).getLabel(Objects.requireNonNull(getContext())));
-//                        errorCount++;
-//                    }
-//
-//                case 1:
-//                    if (errorCodes.get(1).equals(CYR_NAME_OK))
-//                        mTIL_firstName_cyrillic.setError(null);
-//                    else {
-//                        mTIL_firstName_cyrillic.setError(errorCodes.get(1).getLabel(Objects.requireNonNull(getContext())));
-//                        errorCount++;
-//                    }
-//
-//                case 2:
-//                    if (errorCodes.get(2).equals(LAST_NAME_OK)) mTIL_lastName.setError(null);
-//                    else {
-//                        mTIL_lastName.setError(errorCodes.get(2).getLabel(Objects.requireNonNull(getContext())));
-//                        errorCount++;
-//                    }
-//
-//                case 3:
-//                    if (errorCodes.get(3).equals(CYR_LAST_NAME_OK))
-//                        mTIL_lastName_cyrillic.setError(null);
-//                    else {
-//                        mTIL_lastName_cyrillic.setError(errorCodes.get(3).getLabel(Objects.requireNonNull(getContext())));
-//                        errorCount++;
-//                    }
-//                case 4:
-//                    if (errorCodes.get(4).equals(ID_OK)) mTIL_personalNumber.setError(null);
-//                    else {
-//                        mTIL_personalNumber.setError(errorCodes.get(4).getLabel(Objects.requireNonNull(getContext())));
-//                        errorCount++;
-//                    }
-//
-//                case 5:
-//                    if (errorCodes.get(5).equals(ADDRESS_OK)) mTIL_address.setError(null);
-//                    else {
-//                        mTIL_address.setError(errorCodes.get(5).getLabel(Objects.requireNonNull(getContext())));
-//                        errorCount++;
-//                    }
-//
-//                case 6:
-//                    if (errorCodes.get(6).equals(PHONE_OK)) mTIL_phoneNumber.setError(null);
-//                    else {
-//                        mTIL_phoneNumber.setError(errorCodes.get(6).getLabel(Objects.requireNonNull(getContext())));
-//                        errorCount++;
-//                    }
-//
-//                case 7:
-//                    if (errorCodes.get(7).equals(DATE_OK)) mTIL_dateOfBirth.setError(null);
-//                    else {
-//                        mTIL_dateOfBirth.setError(errorCodes.get(7).getLabel(Objects.requireNonNull(getContext())));
-//                        errorCount++;
-//                    }
-//
-//                case 8:
-//                    if (errorCodes.get(8).equals(EMAIL_OK)) mTIL_email_address.setError(null);
-//                    else {
-//                        mTIL_email_address.setError(errorCodes.get(8).getLabel(Objects.requireNonNull(getContext())));
-//                        errorCount++;
-//                    }
-//            }
-//            errors.clear();
-//
-//            return errorCount == 0;
-//        }
-//        return true;
-//    }
+    @Override
+    public void setRegisterErrors(Set<ErrorCode> errors, Map<String, TextInputLayout> tils) {
+
+        for (ErrorCode errorCode : errors) {
+            switch (errorCode) {
+                case NAME_NULL:
+                case NAME_NOT_VALID:
+                case NAME_TOO_LONG:
+                    tils.get("firstName").setError(errorCode.getLabel(getContext()));
+                    break;
+                case NAME_OK:
+                    tils.get("firstName").setError(null);
+                    break;
+                case CYR_NAME_NULL:
+                case CYR_NAME_TOO_LONG:
+                case CYR_NAME_NOT_IN_CYRILLIC:
+                    tils.get("firstNameCyr").setError(errorCode.getLabel(getContext()));
+                    break;
+                case CYR_NAME_OK:
+                    tils.get("firstNameCyr").setError(null);
+                    break;
+                case LAST_NAME_NULL:
+                case LAST_NAME_NOT_VALID:
+                case LAST_NAME_TOO_LONG:
+                    tils.get("lastName").setError(errorCode.getLabel(getContext()));
+                    break;
+                case LAST_NAME_OK:
+                    tils.get("lastName").setError(null);
+                    break;
+                case CYR_LAST_NAME_NULL:
+                case CYR_LAST_NAME_TOO_LONG:
+                case CYR_LAST_NAME_NOT_IN_CYRILLIC:
+                    tils.get("lastNameCyr").setError(errorCode.getLabel(getContext()));
+                    break;
+                case CYR_LAST_NAME_OK:
+                    tils.get("lastNameCyr").setError(null);
+                    break;
+                case ID_NULL:
+                case ID_TOO_LONG:
+                case ID_INVALID:
+                    tils.get("personalNumber").setError(errorCode.getLabel(getContext()));
+                    break;
+                case ID_OK:
+                    tils.get("personalNumber").setError(null);
+                    break;
+                case ADDRESS_TOO_LONG:
+                case ADDRESS_NULL:
+                    tils.get("address").setError(errorCode.getLabel(getContext()));
+                    break;
+                case ADDRESS_OK:
+                    tils.get("address").setError(null);
+                    break;
+                case PHONE_NULL:
+                case PHONE_TOO_LONG:
+                case PHONE_INVALID:
+                    tils.get("phone").setError(errorCode.getLabel(getContext()));
+                    break;
+                case PHONE_OK:
+                    tils.get("phone").setError(null);
+                    break;
+                case DATE_NULL:
+                case DATE_INVALID:
+                    tils.get("dateOfBirth").setError(errorCode.getLabel(getContext()));
+                    break;
+                case DATE_OK:
+                    tils.get("dateOfBirth").setError(null);
+                    break;
+                case EMAIL_CARD_NULL:
+                case EMAIL_INVALID:
+                case EMAIL_TOO_LONG:
+                    tils.get("email").setError(errorCode.getLabel(getContext()));
+                    break;
+                case EMAIL_OK:
+                    tils.get("email").setError(null);
+                    break;
+
+            }
+        }
+    }
+
+    private Map<String, String> getAllFieldsString() {
+        Map<String, String> allFields = new HashMap<>();
+        allFields.put("firstName", mTIL_firstName.getEditText().getText().toString().trim());
+        allFields.put("firstNameCyr", mTIL_firstName_cyrillic.getEditText().getText().toString().trim());
+        allFields.put("lastName", mTIL_lastName.getEditText().getText().toString().trim());
+        allFields.put("lastNameCyr", mTIL_lastName_cyrillic.getEditText().getText().toString().trim());
+        allFields.put("personalNumber", mTIL_personalNumber.getEditText().getText().toString().trim());
+        allFields.put("address", mTIL_address.getEditText().getText().toString().trim());
+        allFields.put("phoneNumber", mTIL_phoneNumber.getEditText().getText().toString().trim());
+        allFields.put("dateOfBirth", mTIL_dateOfBirth.getEditText().getText().toString().trim());
+        allFields.put("email", mTIL_email_address.getEditText().getText().toString().trim());
+        return allFields;
+    }
+
+    private Map<String, TextInputLayout> getAllTils() {
+        Map<String, TextInputLayout> allTills = new HashMap<>();
+        allTills.put("firstName", mTIL_firstName);
+        allTills.put("firstNameCyr", mTIL_firstName_cyrillic);
+        allTills.put("lastName", mTIL_lastName);
+        allTills.put("lastNameCyr", mTIL_lastName_cyrillic);
+        allTills.put("personalNumber", mTIL_personalNumber);
+        allTills.put("address", mTIL_address);
+        allTills.put("phoneNumber", mTIL_phoneNumber);
+        allTills.put("dateOfBirth", mTIL_dateOfBirth);
+        allTills.put("email", mTIL_email_address);
+        return allTills;
+    }
+
+
 
 
 }

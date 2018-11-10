@@ -222,6 +222,8 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
                 case PASSWORD_NULL:
                 case PASSWORD_TOO_SIMPLE:
                     tils.get("password_one").setError(errorCode.getLabel(getBaseContext()));
+                    tils.get("password_two").setError(errorCode.getLabel(getBaseContext()));
+                    break;
                 case PASSWORDS_DONT_MATCH:
                     tils.get("password_one").setError(null);
                     tils.get("password_two").setError(errorCode.getLabel(getBaseContext()));
@@ -253,45 +255,5 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
         startActivity(intent);
         finish();
     }
-
-//    public boolean setErrors(List<ErrorCode> errors, TextInputLayout username,
-//                             TextInputLayout password, TextInputLayout confirmPassword) {
-//
-//        int errorCount = 0;
-//
-//        for (int i = 0; i < 2; i++) {
-//
-//            switch (i) {
-//                case 0:
-//                    if (errors.get(0).equals(ErrorCode.USERNAME_OK))
-//                        username.setError(null);
-//                    else {
-//                        username.setError(errors
-//                                .get(0).getLabel(Objects.requireNonNull(getBaseContext())));
-//                        errorCount++;
-//                    }
-//
-//                case 1:
-//                    if (errors.get(1).equals(ErrorCode.PASSWORD_OK))
-//                        password.setError(null);
-//                    else {
-//                        password.setError(errors.get(1)
-//                                .getLabel(Objects.requireNonNull(getBaseContext())));
-//                        errorCount++;
-//                    }
-//                case 2:
-//                    if (errors.get(2).equals(ErrorCode.PASSWORD_OK))
-//                        confirmPassword.setError(null);
-//                    else {
-//                        confirmPassword.setError(errors.get(2)
-//                                .getLabel(Objects.requireNonNull(getBaseContext())));
-//                        errorCount++;
-//                    }
-//            }
-//
-//        }
-//        errors.clear();
-//        return errorCount == 0;
-//    }
 
 }
