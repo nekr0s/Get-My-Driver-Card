@@ -51,9 +51,24 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ItemVi
         this.mOnRequestClickListener = onRequestClickListener;
     }
 
+    // TODO: Needs fixing
     public void sortByStatus() {
         mRequests.sort(Comparator.comparing(Request::getRequestStatus));
         notifyDataSetChanged();
+    }
+
+    public void sortByType() {
+        mRequests.sort(Comparator.comparing(Request::getRequestStatus));
+        notifyDataSetChanged();
+    }
+
+    public void sortByDate() {
+        mRequests.sort(Comparator.comparing(Request::getRequestId));
+        notifyDataSetChanged();
+    }
+
+    public boolean isEmpty() {
+        return mRequests.isEmpty();
     }
 
     public void clear() {
@@ -109,9 +124,9 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ItemVi
         void bind(Request request) {
             mRequest = request;
 
-            mId.append(" " + String.valueOf(mRequest.getRequestId()));
-            mType.append(" " + mRequest.getRequestType());
-            mStatus.append(" " + mRequest.getStatusString());
+            mId.setText("Request ID: " + String.valueOf(mRequest.getRequestId()));
+            mType.setText("Type: " + mRequest.getRequestType());
+            mStatus.setText("Status: " + mRequest.getStatusString());
             mStatusColor.setColorFilter(mRequest.color());
         }
 

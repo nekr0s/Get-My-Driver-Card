@@ -10,16 +10,7 @@ import android.widget.FrameLayout;
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
-import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
-import com.example.nekr0s.get_my_driver_card.validator.DateValidator;
-import com.example.nekr0s.get_my_driver_card.validator.DigitsValidator;
-import com.example.nekr0s.get_my_driver_card.validator.NamesValidator;
-import com.example.nekr0s.get_my_driver_card.validator.base.NameValidator;
-import com.example.nekr0s.get_my_driver_card.validator.base.ValidatorDigits;
 import com.example.nekr0s.get_my_driver_card.views.create.base.UserHolder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,10 +38,10 @@ public class PreviousCardInfoActivity extends AppCompatActivity implements UserH
     Button mNextButton;
 
     private User mCurrentUser;
-    private List<ErrorCode> errorCodes = new ArrayList<>();
-    private final NameValidator mNameValidator = new NamesValidator();
-    private final ValidatorDigits mDigitsValidator = new DigitsValidator();
-    private final DateValidator mDateValidator = new DateValidator();
+//    private List<ErrorCode> errorCodes = new ArrayList<>();
+//    private final NameValidator mNameValidator = new NamesValidator();
+//    private final ValidatorDigits mDigitsValidator = new DigitsValidator();
+//    private final DateValidator mDateValidator = new DateValidator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

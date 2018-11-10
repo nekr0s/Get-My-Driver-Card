@@ -38,7 +38,6 @@ public class CardCreateActivity extends AppCompatActivity implements UserHolder 
         mLoggedInUser = (User) intent.getSerializableExtra(CURRENT_USER);
 
         openFragment(whichButtonIsClicked);
-
     }
 
     private void openFragment(String fragmentName) {

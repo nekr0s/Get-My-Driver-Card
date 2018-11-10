@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,13 +63,14 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
     @BindView(R.id.spinner_id)
     Spinner mDropDownSpinner;
 
+    @BindView(R.id.spinner_layout)
+    RelativeLayout mSpinnerLayout;
+
 
     private User mUser;
     private ListContracts.Presenter mPresenter;
     private RequestsAdapter mRequestsAdapter;
-    private ListContracts.Navigator mNavigator;
 
-    //    Translator translator = new Translator();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,6 +162,7 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
 
     @Override
     public void showEmptyRequestList() {
+        mSpinnerLayout.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.GONE);
         mEmptyListTextView.setVisibility(View.VISIBLE);
     }
@@ -198,17 +201,17 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (mRequestsAdapter.isEmpty()) return;
         String item = parent.getItemAtPosition(position).toString();
         switch (item) {
             case "STATUS":
                 mRequestsAdapter.sortByStatus();
-                Toast.makeText(this, "Status", Toast.LENGTH_SHORT).show();
                 break;
             case "DATE":
-                Toast.makeText(this, "Date", Toast.LENGTH_SHORT).show();
+                mRequestsAdapter.sortByDate();
                 break;
             case "TYPE":
-                Toast.makeText(this, "Type", Toast.LENGTH_SHORT).show();
+                mRequestsAdapter.sortByType();
                 break;
         }
     }
