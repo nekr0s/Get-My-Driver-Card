@@ -95,6 +95,8 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
             mUser = request.getUser();
         }
 
+        mFloatingActionMenu.bringToFront();
+
         // Toolbar
         setSupportActionBar(toolbar);
         ImageView i = toolbar.findViewById(R.id.toolbar_logout);
