@@ -81,4 +81,17 @@ public class CardCreatePresenter implements CardCreateContracts.Presenter {
         errorCodes.add(mDigitsValidator.isLicenseNumberValid(allFields.get("licenseNumber")));
         return errorCodes;
     }
+
+    @Override
+    public Set<ErrorCode> checkFieldsPreviousCard(Map<String, String> allFields) {
+
+        Set<ErrorCode> errorCodes = new HashSet<>();
+
+        errorCodes.add(mNameValidator.isEuCountryOfIssuingValid(allFields.get("countryOfIssuing")));
+        errorCodes.add(mNameValidator.isIssuerAuthorityValid(allFields.get("authorityIssuer")));
+        errorCodes.add(mDigitsValidator.isTachNumberValid(allFields.get("tachNumber")));
+        errorCodes.add(mDateValidator.isDateValid(allFields.get("dateOfExpiry")));
+
+        return errorCodes;
+    }
 }

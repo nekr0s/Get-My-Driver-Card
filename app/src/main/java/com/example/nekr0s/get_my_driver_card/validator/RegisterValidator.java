@@ -10,9 +10,7 @@ import java.util.regex.Pattern;
 public class RegisterValidator implements ValidatorLogin {
 
     private Pattern pattern;
-    private Pattern patterntwo;
     private Matcher matcher;
-    private Matcher matchertwo;
 
 
     private static final String PASSWORD_PATTERN =
