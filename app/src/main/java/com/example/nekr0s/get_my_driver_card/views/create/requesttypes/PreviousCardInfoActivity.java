@@ -6,6 +6,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Request;
@@ -27,12 +28,16 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 public class PreviousCardInfoActivity extends AppCompatActivity implements UserHolder, CardCreateContracts.View {
 
 
     @BindView(R.id.fragment_containertwo)
     FrameLayout mLayout;
+
+    @BindView(R.id.previous_header_text)
+    TextView mTextView;
 
     @BindView(R.id.previous_eu_country_of_issuing)
     TextInputLayout mTIL_previous_eu_country_of_issuing;
@@ -115,6 +120,15 @@ public class PreviousCardInfoActivity extends AppCompatActivity implements UserH
     @Override
     public void setPresenter(CardCreateContracts.Presenter presenter) {
 
+    }
+
+    @OnLongClick(R.id.previous_header_text)
+    boolean setSampleDate() {
+        mTIL_previous_eu_country_of_issuing.getEditText().setText("Bulgaria");
+        mTIL_previous_tachograph_card_number.getEditText().setText("5169439408");
+        mTIL_issuing_authority.getEditText().setText("MVR SOFIA");
+        mTIL_date_of_expiry.getEditText().setText("04.08.2017");
+        return true;
     }
 
     @Override

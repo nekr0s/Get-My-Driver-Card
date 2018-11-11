@@ -102,7 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginEnd="25dp"
-        android:background="@drawable/rounded_button"
+        android:background="@drawable/next_button"
         android:enabled="true"
         android:paddingStart="5dp"
         android:paddingTop="10dp"

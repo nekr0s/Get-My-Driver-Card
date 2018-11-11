@@ -175,12 +175,17 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
                     .checkCredentials(tilUsernameRegister.getEditText().getText().toString().trim(),
                             tilPasswordRegister.getEditText().getText().toString().trim(),
                             tilPasswordConfirm.getEditText().getText().toString().trim());
-            if (errorCodes.contains(ErrorCode.USERNAME_OK) && errorCodes.contains(ErrorCode.PASSWORD_OK)) {
-                User user = new User(tilUsernameRegister.getEditText().getText().toString(),
-                        tilPasswordRegister.getEditText().getText().toString());
-                mPresenter.register(user);
-            } else
-                setRegisterErrors(errorCodes, tils);
+            //COMMENTED FOR TESTS
+//            if (errorCodes.contains(ErrorCode.USERNAME_OK) && errorCodes.contains(ErrorCode.PASSWORD_OK)) {
+//                User user = new User(tilUsernameRegister.getEditText().getText().toString(),
+//                        tilPasswordRegister.getEditText().getText().toString());
+//                mPresenter.register(user);
+//            } else
+//                setRegisterErrors(errorCodes, tils);
+
+            Intent intent = new Intent(this, ListActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 

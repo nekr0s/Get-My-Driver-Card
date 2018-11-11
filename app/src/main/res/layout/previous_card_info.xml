@@ -17,13 +17,14 @@
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/exchange_text"
+        android:id="@+id/previous_header_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="20dp"
         android:background="@color/Onyx50percent"
         android:padding="16dp"
+        android:longClickable="true"
         android:text="@string/previous_card_info_header_msg"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -109,7 +110,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:background="@drawable/rounded_button"
+        android:background="@drawable/next_button"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="15dp"
         android:enabled="true"

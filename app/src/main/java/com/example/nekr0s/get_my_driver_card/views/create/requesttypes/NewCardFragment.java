@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Request;
@@ -33,6 +34,7 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 public class NewCardFragment extends Fragment implements CardCreateContracts.View {
 
@@ -47,6 +49,9 @@ public class NewCardFragment extends Fragment implements CardCreateContracts.Vie
         fragment.setArguments(bundle);
         return fragment;
     }
+
+    @BindView(R.id.text_view_new_card)
+    TextView mtextView;
 
     @BindView(R.id.first_name)
     TextInputLayout mTIL_firstName;
@@ -148,6 +153,20 @@ public class NewCardFragment extends Fragment implements CardCreateContracts.Vie
             intent.putExtra(DocumentsActivity.REQUEST_SO_FAR, mRequest);
             startActivity(intent);
         }
+    }
+
+    @OnLongClick(R.id.text_view_new_card)
+    boolean setSampleData() {
+        mTIL_firstName.getEditText().setText("Peter");
+        mTIL_firstName_cyrillic.getEditText().setText("Петър");
+        mTIL_lastName.getEditText().setText("Ivanov");
+        mTIL_lastName_cyrillic.getEditText().setText("Иванов");
+        mTIL_personalNumber.getEditText().setText("9204278945");
+        mTIL_address.getEditText().setText("Mladost 1 ulica Petko Voivoda 25 , ap 3");
+        mTIL_phoneNumber.getEditText().setText("+359 88 195 546");
+        mTIL_dateOfBirth.getEditText().setText("22.05.2014");
+        mTIL_email_address.getEditText().setText("testEmail@gmail.com");
+        return true;
     }
 
     private boolean allErrorCodesOk() {

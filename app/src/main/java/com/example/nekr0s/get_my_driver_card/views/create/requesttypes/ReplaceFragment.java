@@ -81,9 +81,11 @@ public class ReplaceFragment extends Fragment {
             reason.setSelected(false);
             mEditTextLostDate.setVisibility(View.GONE);
             mEditTextLostPlace.setVisibility(View.GONE);
+            reactivateButton(false);
         } else {
             reason.setSelected(true);
             displayForms(reason.getRequestReasonString());
+            reactivateButton(true);
         }
 
         adapter.update(position, reason);
@@ -127,5 +129,10 @@ public class ReplaceFragment extends Fragment {
             intent.putExtra(Constants.REPLACE_PLACE_LOST_OR_STOLEN, mEditTextLostPlace.getText().toString().trim());
         }
         startActivity(intent);
+    }
+
+    private void reactivateButton(boolean isSelected) {
+        if (isSelected) mNextButton.setEnabled(true);
+        else mNextButton.setEnabled(false);
     }
 }

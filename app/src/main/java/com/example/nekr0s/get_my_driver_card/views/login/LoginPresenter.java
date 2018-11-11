@@ -82,4 +82,5 @@ public class LoginPresenter implements LoginContracts.Presenter {
         errorCodes.add(mLoginValidator.isPasswordValid(pass, passConf));
         return errorCodes;
     }
+
 }

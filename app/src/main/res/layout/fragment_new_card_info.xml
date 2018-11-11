@@ -15,6 +15,7 @@
         tools:context=".views.create.CardCreateActivity">
 
         <TextView
+            android:id="@+id/text_view_new_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -22,6 +23,7 @@
             android:background="@color/Onyx50percent"
             android:padding="16dp"
             android:text="@string/new_card_screen_message"
+            android:longClickable="true"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -197,7 +199,7 @@
             android:layout_gravity="end"
             android:layout_marginEnd="25dp"
             android:layout_marginBottom="15dp"
-            android:background="@drawable/rounded_button"
+            android:background="@drawable/next_button"
             android:paddingStart="5dp"
             android:paddingTop="10dp"
             android:paddingEnd="5dp"
