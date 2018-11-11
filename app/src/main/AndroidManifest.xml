@@ -51,15 +51,9 @@
         <activity android:name=".views.list.ListActivity" />
         <activity android:name=".views.create.CardCreateActivity" />
         <activity android:name=".views.create.requesttypes.PreviousCardInfoActivity" />
-        <activity
-            android:name=".views.signature.SignatureActivity"
-            android:theme="@style/CustomActivityAnimation" />
-        <activity
-            android:name=".views.signature.DeclarationActivity"
-            android:theme="@style/CustomActivityAnimation" />
-        <activity
-            android:name=".views.create.documents.DocumentsActivity"
-            android:theme="@style/CustomActivityAnimation" />
+        <activity android:name=".views.signature.SignatureActivity" />
+        <activity android:name=".views.signature.DeclarationActivity" />
+        <activity android:name=".views.create.documents.DocumentsActivity" />
         <activity android:name=".views.preview.RequestPreviewActivity" />
 
         <service android:name=".utils.notifications.MyFCMClass">
