@@ -25,6 +25,7 @@ import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Request;
 import com.example.nekr0s.get_my_driver_card.models.Role;
 import com.example.nekr0s.get_my_driver_card.models.User;
+import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.utils.enums.RequestStatus;
 import com.example.nekr0s.get_my_driver_card.utils.notifications.MyFCMClass;
 import com.example.nekr0s.get_my_driver_card.views.create.CardCreateActivity;
@@ -95,13 +96,13 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
         LinearLayoutManager mContactsViewLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mContactsViewLayoutManager);
 
-//        // Get intent
-//        mUser = (User) getIntent().getSerializableExtra(Constants.USER_OBJ_EXTRA);
-//
-//        // Subscribe for notifications
-//        if (!mUser.getRoles().contains(new Role(1, "ROLE_ADMIN"))) {
-//            FirebaseMessaging.getInstance().subscribeToTopic(mUser.getUsername());
-//        }
+        // Get intent
+        mUser = (User) getIntent().getSerializableExtra(Constants.USER_OBJ_EXTRA);
+
+        // Subscribe for notifications
+        if (!mUser.getRoles().contains(new Role(1, "ROLE_ADMIN"))) {
+            FirebaseMessaging.getInstance().subscribeToTopic(mUser.getUsername());
+        }
 
         mFloatingActionMenu.bringToFront();
 
@@ -148,13 +149,13 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
     protected void onResume() {
         super.onResume();
         mPresenter.subscribe(this);
-//        if (mRequestsAdapter.getItemCount() > 0) {
-//            return;
-//        }
-//        if (mUser.getRoles().size() > 1) {
-//            mFloatingActionMenu.setVisibility(View.GONE);
-//            mPresenter.loadRequestsAdmin();
-//        } else mPresenter.loadRequestsUser(mUser.getId());
+        if (mRequestsAdapter.getItemCount() > 0) {
+            return;
+        }
+        if (mUser.getRoles().size() > 1) {
+            mFloatingActionMenu.setVisibility(View.GONE);
+            mPresenter.loadRequestsAdmin();
+        } else mPresenter.loadRequestsUser(mUser.getId());
     }
 
     @Override
