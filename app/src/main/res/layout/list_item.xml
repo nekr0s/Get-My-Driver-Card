@@ -9,14 +9,29 @@
     app:cardBackgroundColor="@color/white90percent"
     todo_card:cardUseCompatPadding="true">
 
-    <ImageView
-        android:id="@+id/status_color"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="7dp"
-        android:src="@android:color/holo_green_light"
-        todo_card:ignore="ContentDescription" />
+    <RelativeLayout
+        android:id="@+id/relative_layout_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/status_color"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="7dp"
+            android:src="@android:color/holo_green_light"
+            todo_card:ignore="ContentDescription" />
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/request_icon" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/linear_layout"
