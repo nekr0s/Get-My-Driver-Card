@@ -10,7 +10,6 @@
 
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
@@ -264,12 +263,32 @@
             android:text="@string/additional_info_preview"
             android:textSize="17sp" />
 
+        <ImageView
+            android:id="@+id/id_photo_container"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_below="@id/preview_additional_info"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:scaleType="fitCenter" />
+
+        <ImageView
+            android:id="@+id/driverlicense_photo_container"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_below="@id/preview_additional_info"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="10dp"
+            android:scaleType="fitCenter" />
 
         <Button
             android:id="@+id/request_preview_submit_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/preview_additional_info"
+            android:layout_below="@id/id_photo_container"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="15dp"

@@ -21,7 +21,7 @@ import com.google.firebase.messaging.RemoteMessage;
 public class MyFCMClass extends FirebaseMessagingService {
 
     public static final String REQUEST_ACCEPT = "REQUEST_ACCEPT";
-    private final String TAG = "JSA-FCM";
+    private final String TAG = "GetMyDriverCardNotification";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -50,7 +50,7 @@ public class MyFCMClass extends FirebaseMessagingService {
         Intent intent = new Intent(this, ListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                0);
+                PendingIntent.FLAG_ONE_SHOT);
 
         String channelId = getString(R.string.default_notification_channel_id);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

@@ -146,6 +146,7 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
 
     @OnClick(R.id.button_login_custom)
     void customLoginClicked() {
+//        mPresenter.login(mUsernameEditText.getText().toString(), mPasswordEditText.getText().toString());
         mSmartLogin = SmartLoginFactory.build(LoginType.CustomLogin);
         mSmartLogin.login(mConfig);
     }

@@ -122,7 +122,7 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
         intent.putExtra(DeclarationActivity.ALMOST_READY_REQUEST, mRequestSoFar);
         intent.putExtra(DeclarationActivity.SELFIE_BYTESTRING, mSelfieByteString);
         intent.putExtra(DeclarationActivity.PERSONAL_ID_BYTESTRING, mPersonalIdByteString);
-        intent.putExtra(DeclarationActivity.DRIVER_LICENSE_BYTESTRING, mPersonalIdByteString);
+        intent.putExtra(DeclarationActivity.DRIVER_LICENSE_BYTESTRING, mDriverLicenseByteString);
         if (mPreviousCardByteString != null)
             intent.putExtra(DeclarationActivity.PREVIOUS_CARD_BYTESTRING, mPreviousCardByteString);
         startActivity(intent);
@@ -183,7 +183,7 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
                 mDriverLicenseByteString = encodedString;
                 break;
             case "Add previous card":
-                mAddLicense.setImageURI(uri);
+                mAddPreviousCard.setImageURI(uri);
                 mPreviousCardByteString = encodedString;
                 break;
         }

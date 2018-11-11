@@ -59,6 +59,12 @@ public class RequestPreviewActivity extends AppCompatActivity implements Request
     @BindView(R.id.signature_container)
     ImageView mSignatureContainer;
 
+    @BindView(R.id.id_photo_container)
+    ImageView mIdPhotoContainer;
+
+    @BindView(R.id.driverlicense_photo_container)
+    ImageView mDriverLicensePhotoContainer;
+
     @BindView(R.id.preview_header)
     TextView mHeaderMsg;
 
@@ -176,6 +182,10 @@ public class RequestPreviewActivity extends AppCompatActivity implements Request
                 .getAttachment().getFaceShot()));
         mSignatureContainer.setImageBitmap(mPresenter.convertStringBytesToBitmap(mRequest
                 .getAttachment().getSignature()));
+        mIdPhotoContainer.setImageBitmap(mPresenter.convertStringBytesToBitmap(mRequest
+                .getAttachment().getIdShot()));
+        mDriverLicensePhotoContainer.setImageBitmap(mPresenter.convertStringBytesToBitmap(mRequest
+                .getAttachment().getDriverLicense()));
         mCyrName.setText(mRequest.getUser().getUserInfo().getFirstNameCyrillic());
         mCyrSurname.setText(mRequest.getUser().getUserInfo().getLastNameCyrillic());
         mName.setText(mRequest.getUser().getUserInfo().getFirstName());
