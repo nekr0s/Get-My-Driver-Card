@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Role implements Serializable {
     private int roleId;
-    private String role;
+    private String roleName;
 
     public Role() {
         // keep empty
@@ -12,7 +12,7 @@ public class Role implements Serializable {
 
     public Role(int roleId, String role) {
         this.roleId = roleId;
-        this.role = role;
+        this.roleName = role;
     }
 
     public int getRoleId() {
@@ -23,11 +23,11 @@ public class Role implements Serializable {
         this.roleId = roleId;
     }
 
-    public String getRole() {
-        return role;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }

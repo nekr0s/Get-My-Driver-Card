@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.example.nekr0s.get_my_driver_card.GetMyDriverCardApplication;
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Request;
+import com.example.nekr0s.get_my_driver_card.models.Role;
 import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.utils.enums.RequestStatus;
@@ -44,7 +45,6 @@ import butterknife.OnClick;
 public class ListActivity extends AppCompatActivity implements ListContracts.View,
         RequestsAdapter.OnItemClickListener, AdapterView.OnItemSelectedListener {
 
-    private static final String TOPIC = "GetMyDriverCard";
     @BindView(R.id.userToolbar)
     android.support.v7.widget.Toolbar toolbar;
 
@@ -88,9 +88,6 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
 
         ButterKnife.bind(this);
 
-        // Subscribe for notifications
-        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
-
         // Presenter
         mPresenter = new ListPresenter(this);
         mRequestsAdapter = new RequestsAdapter();
@@ -101,6 +98,11 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
 
         // Get intent
         mUser = (User) getIntent().getSerializableExtra(Constants.USER_OBJ_EXTRA);
+
+        // Subscribe for notifications
+        if (!mUser.getRoles().contains(new Role(1, "ROLE_ADMIN"))) {
+            FirebaseMessaging.getInstance().subscribeToTopic(mUser.getUsername());
+        }
 
         mFloatingActionMenu.bringToFront();
 
@@ -216,7 +218,9 @@ public class ListActivity extends AppCompatActivity implements ListContracts.Vie
     }
 
     private boolean logoutCurrentUser() {
-        FirebaseMessaging.getInstance().unsubscribeFromTopic(TOPIC);
+        if (!mUser.getRoles().contains(new Role(1, "ROLE_ADMIN")))
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(mUser.getUsername());
+
         GetMyDriverCardApplication.getCookieJar(this).clear();
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);

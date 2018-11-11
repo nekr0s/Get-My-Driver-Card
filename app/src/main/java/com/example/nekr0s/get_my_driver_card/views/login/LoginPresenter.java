@@ -55,6 +55,7 @@ public class LoginPresenter implements LoginContracts.Presenter {
         Disposable disposable = Observable
                 .create((ObservableOnSubscribe<User>) emitter -> {
                     User currentUser = mUsersService.login(username, password);
+                    if (currentUser == null) throw new Exception("Wrong credentials.");
                     emitter.onNext(currentUser);
                     emitter.onComplete();
                 })

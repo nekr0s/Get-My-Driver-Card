@@ -36,20 +36,21 @@ public class MyFCMClass extends FirebaseMessagingService {
 
         LocalBroadcastManager broadcaster = LocalBroadcastManager.getInstance(getBaseContext());
 
-
+        // If not admin
         sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
-
         Intent intent = new Intent(REQUEST_ACCEPT);
         intent.putExtra("requestId", Long.valueOf(remoteMessage.getData().get("requestId")));
         intent.putExtra("requestStatus", RequestStatus.valueOf(remoteMessage.getData().get("requestStatus")));
         broadcaster.sendBroadcast(intent);
+
+
     }
 
     private void sendNotification(String messageTitle, String messageBody) {
         Intent intent = new Intent(this, ListActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+                0);
 
         String channelId = getString(R.string.default_notification_channel_id);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
