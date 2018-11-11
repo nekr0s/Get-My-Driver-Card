@@ -120,7 +120,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ItemVi
             mRequest = request;
 
             mId.setText("Request ID: " + String.valueOf(mRequest.getRequestId()));
-            mType.setText("Type: " + mRequest.getRequestType());
+            mType.setText("Type: " + mRequest.getRequestTypeString());
             mStatus.setText("Status: " + mRequest.getStatusString());
             mStatusColor.setColorFilter(mRequest.color());
         }

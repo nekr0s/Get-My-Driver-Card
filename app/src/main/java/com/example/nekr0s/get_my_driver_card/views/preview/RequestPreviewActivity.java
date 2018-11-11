@@ -19,6 +19,7 @@ import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Attachment;
 import com.example.nekr0s.get_my_driver_card.models.Request;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
+import com.example.nekr0s.get_my_driver_card.utils.enums.RequestReason;
 import com.example.nekr0s.get_my_driver_card.utils.enums.RequestStatus;
 import com.example.nekr0s.get_my_driver_card.utils.enums.RequestType;
 import com.example.nekr0s.get_my_driver_card.views.list.ListActivity;
@@ -164,7 +165,7 @@ public class RequestPreviewActivity extends AppCompatActivity implements Request
         mRequest.setAttachment(new Attachment(mSelfieByteString, mPersonalIdByteString,
                 mSignatureByteString, mDriverLicenseByteString));
 
-        if (mRequest.getRequestType().equals(RequestType.TYPE_EXCHANGE)) {
+        if (mRequest.getRequestTypeString().equals(RequestType.TYPE_EXCHANGE)) {
             String mPreviousCardByteString = intent.getStringExtra(PREVIOUS_CARD_BYTESTRING);
             mRequest.getAttachment().setPreviousEuCard(mPreviousCardByteString);
         }
@@ -183,7 +184,32 @@ public class RequestPreviewActivity extends AppCompatActivity implements Request
         mBirthDate.setText(mRequest.getUser().getUserInfo().getDateOfBirth());
         mPhoneNumber.setText(mRequest.getUser().getUserInfo().getPhoneNumber());
         mEmail.setText(mRequest.getUser().getUserInfo().getEmail());
-        mAdditionalInfo.setText("TODO");
+        if (mRequest.getRequestType() != RequestType.TYPE_NEW)
+            displayAdditionalInfo();
+        else mAdditionalInfo.setVisibility(View.GONE);
+    }
+
+    private void displayAdditionalInfo() {
+        StringBuilder sb = new StringBuilder();
+        mAdditionalInfo.append("\n");
+        sb.append("Request type: ").append(mRequest.getRequestTypeString()).append("\n");
+        sb.append("Request reason: ").append(mRequest.getRequestReasonString()).append("\n");
+        if (mRequest.getRequestType() == RequestType.TYPE_EXCHANGE) {
+            sb.append("Country of issuing: ").append(mRequest.getCurrentCountryOfIssuing()).append("\n");
+            sb.append("Driver License Country of Issuing: ").append(mRequest.getCurrentDriverLicenseCountryOfIssuing()).append("\n");
+            sb.append("Driver License number: ").append(mRequest.getCurrentDriverLicenseNumber()).append("\n");
+            sb.append("Tachograph card number: ").append(mRequest.getCurrentTachCardNum()).append("\n");
+        }
+        sb.append("Country of Issuing: ").append(mRequest.getPreviousCountryOfIssuing()).append("\n");
+        sb.append("Issuing Authority: ").append(mRequest.getPreviousIssuingAuthority()).append("\n");
+        sb.append("Date of Expiry: ").append(mRequest.getPreviousDateOfExpiry()).append("\n");
+        sb.append("Previous Tachograph card number: ").append(mRequest.getPreviousTachCardNum()).append("\n");
+        if (mRequest.getRequestReason() == RequestReason.REASON_LOST ||
+                mRequest.getRequestReason() == RequestReason.REASON_STOLEN) {
+            sb.append("I've lost my card on: ").append(mRequest.getPreviousLostDate()).append("\n");
+            sb.append("Near: ").append(mRequest.getPreviousLostPlace()).append("\n");
+        }
+        mAdditionalInfo.append(sb);
     }
 
     @Override

@@ -72,7 +72,7 @@ public class DeclarationActivity extends Activity {
         mSelfieByteString = intent.getStringExtra(SELFIE_BYTESTRING);
         mPersonalIdByteString = intent.getStringExtra(PERSONAL_ID_BYTESTRING);
         mDriverLicenseByteString = intent.getStringExtra(DRIVER_LICENSE_BYTESTRING);
-        if (mRequestSoFar.getRequestType().equals(RequestType.TYPE_EXCHANGE))
+        if (mRequestSoFar.getRequestTypeString().equals(RequestType.TYPE_EXCHANGE))
             mPreviousCardByteString = intent.getStringExtra(PREVIOUS_CARD_BYTESTRING);
 
         //disable button if checkbox is not checked else enable button
@@ -118,7 +118,7 @@ public class DeclarationActivity extends Activity {
             intent.putExtra(DRIVER_LICENSE_BYTESTRING, mDriverLicenseByteString);
             intent.putExtra(SIGNATURE_BYTESTRING, mSignatureByteString);
             intent.putExtra(RequestPreviewActivity.BUTTON_VISIBLE, true);
-            if (mRequestSoFar.getRequestType().equals(RequestType.TYPE_EXCHANGE))
+            if (mRequestSoFar.getRequestTypeString().equals(RequestType.TYPE_EXCHANGE))
                 intent.putExtra(PREVIOUS_CARD_BYTESTRING, mPreviousCardByteString);
             startActivity(intent);
             finish();

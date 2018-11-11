@@ -99,6 +99,18 @@ public class PreviousCardInfoActivity extends AppCompatActivity implements UserH
 
         if (allErrorCodesOk()) {
             Request request = new Request(RequestStatus.REQUEST_NEW, mRequestType, mRequestReason, mCurrentUser);
+            request.setPreviousCountryOfIssuing(mTIL_previous_eu_country_of_issuing.getEditText()
+                    .getText().toString().trim());
+            request.setPreviousDateOfExpiry(mTIL_date_of_expiry.getEditText().getText()
+                    .toString().trim());
+            request.setPreviousIssuingAuthority(mTIL_issuing_authority.getEditText().getText()
+                    .toString().trim());
+            request.setPreviousTachCardNum(mTIL_previous_tachograph_card_number.getEditText().getText()
+                    .toString().trim());
+            if (mRequestType == RequestType.TYPE_REPLACE) {
+                request.setPreviousLostDate(mPreviousLostDate);
+                request.setPreviousLostPlace(mPreviousLostPlace);
+            }
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constants.FROM_PREVIOUS_TO_NEWCARD, request);
             NewCardFragment nextFragment = NewCardFragment.newInstance(bundle);

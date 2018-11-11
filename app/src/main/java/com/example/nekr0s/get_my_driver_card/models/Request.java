@@ -116,7 +116,7 @@ public class Request implements Serializable {
         return "INVALID";
     }
 
-    public String getRequestType() {
+    public String getRequestTypeString() {
         switch (requestType) {
             case TYPE_NEW:
                 return "Brand new card";
@@ -128,6 +128,10 @@ public class Request implements Serializable {
                 return "Renew card";
         }
         return "Invalid";
+    }
+
+    public RequestType getRequestType() {
+        return requestType;
     }
 
     public String getRequestDate() {
@@ -245,5 +249,35 @@ public class Request implements Serializable {
 
     public void setRequestDate(String requestDate) {
         this.requestDate = requestDate;
+    }
+
+    public String getRequestReasonString() {
+        if (requestReason == null) return "Creating a new card.";
+        switch (requestReason) {
+            case REASON_LOST:
+                return "Lost my card.";
+            case REASON_STOLEN:
+                return "My card got stolen.";
+            case REASON_DAMAGED:
+                return "My card got damaged.";
+            case REASON_EXPIRED:
+                return "My card has expired.";
+            case REASON_SUSPENDED:
+                return "My card got suspended.";
+            case REASON_WITHDRAWN:
+                return "My card got withdrawn.";
+            case REASON_NAME_CHANGE:
+                return "I wanted to change my name.";
+            case REASON_PHOTO_CHANGE:
+                return "I wanted to change my photo.";
+            case REASON_DUE_TO_EXPIRE:
+                return "My card is about to expire.";
+            case REASON_ADDRESS_CHANGE:
+                return "I wanted to change my address.";
+            case REASON_MALFUNCTIONING:
+                return "My card is malfunctioning.";
+            default:
+                return "Creating a new card.";
+        }
     }
 }
