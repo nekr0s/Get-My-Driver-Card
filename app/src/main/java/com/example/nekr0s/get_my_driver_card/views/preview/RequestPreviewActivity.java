@@ -186,7 +186,10 @@ public class RequestPreviewActivity extends AppCompatActivity implements Request
         mEmail.setText(mRequest.getUser().getUserInfo().getEmail());
         if (mRequest.getRequestType() != RequestType.TYPE_NEW)
             displayAdditionalInfo();
-        else mAdditionalInfo.setVisibility(View.GONE);
+        else {
+            mAdditionalInfo.setVisibility(View.GONE);
+            mIconInfo.setVisibility(View.GONE);
+        }
     }
 
     private void displayAdditionalInfo() {

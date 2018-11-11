@@ -79,13 +79,13 @@ public class Request implements Serializable {
     public int color() {
         switch (requestStatus) {
             case REQUEST_APPROVED:
-                return Color.GREEN;
+                return Color.rgb(125, 189, 0);
             case REQUEST_WAITING:
-                return Color.YELLOW;
+                return Color.rgb(220, 246, 0);
             case REQUEST_DISAPPROVED:
-                return Color.RED;
+                return Color.rgb(255, 91, 0);
         }
-        return Color.CYAN;
+        return Color.rgb(101, 156, 239);
     }
 
     public String getStatusString() {

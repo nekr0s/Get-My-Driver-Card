@@ -181,10 +181,6 @@ public class LoginActivity extends AppCompatActivity implements SmartLoginCallba
                 mPresenter.register(user);
             } else
                 setRegisterErrors(errorCodes, tils);
-
-            Intent intent = new Intent(this, ListActivity.class);
-            startActivity(intent);
-            finish();
         });
     }
 

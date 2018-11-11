@@ -51,7 +51,7 @@ public class NewCardFragment extends Fragment implements CardCreateContracts.Vie
     }
 
     @BindView(R.id.text_view_new_card)
-    TextView mtextView;
+    TextView mTextViewNewCard;
 
     @BindView(R.id.first_name)
     TextInputLayout mTIL_firstName;
@@ -115,7 +115,8 @@ public class NewCardFragment extends Fragment implements CardCreateContracts.Vie
         View view = inflater.inflate(R.layout.fragment_new_card_info, container, false);
 
         // Try to get bundle from PreviousCardInfoActivity
-        mRequest = (Request) getArguments().getSerializable(Constants.FROM_PREVIOUS_TO_NEWCARD);
+        if (getArguments() != null)
+            mRequest = (Request) getArguments().getSerializable(Constants.FROM_PREVIOUS_TO_NEWCARD);
 
         ButterKnife.bind(this, view);
 

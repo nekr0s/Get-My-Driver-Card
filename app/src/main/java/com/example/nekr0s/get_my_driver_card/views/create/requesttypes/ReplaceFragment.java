@@ -41,7 +41,7 @@ public class ReplaceFragment extends Fragment {
     Button mNextButton;
 
     private int mPreselectedIndex = -1;
-    final ReasonsAdapter mAdapter = new ReasonsAdapter(getActivity());
+    private ReasonsAdapter mAdapter;
 
 
     public ReplaceFragment() {
@@ -61,6 +61,7 @@ public class ReplaceFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
+        mAdapter = new ReasonsAdapter(getActivity());
         listView.setAdapter(mAdapter);
 
         listView
