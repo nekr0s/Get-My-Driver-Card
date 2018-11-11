@@ -1,4 +1,4 @@
-package com.example.nekr0s.get_my_driver_card.views.create.fragments;
+package com.example.nekr0s.get_my_driver_card.views.create.requesttypes;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Request;
 import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.models.UserInfo;
+import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
 import com.example.nekr0s.get_my_driver_card.utils.enums.RequestStatus;
 import com.example.nekr0s.get_my_driver_card.utils.enums.RequestType;
@@ -34,11 +35,17 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class NewCardFragment extends Fragment implements CardCreateContracts.View {
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
+    private Request mRequest;
 
     public NewCardFragment() {
         // Required empty public constructor
+    }
+
+    public static NewCardFragment newInstance(Bundle bundle) {
+        NewCardFragment fragment = new NewCardFragment();
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @BindView(R.id.first_name)
@@ -102,6 +109,9 @@ public class NewCardFragment extends Fragment implements CardCreateContracts.Vie
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_card_info, container, false);
 
+        // Try to get bundle from PreviousCardInfoActivity
+        mRequest = (Request) getArguments().getSerializable(Constants.FROM_PREVIOUS_TO_NEWCARD);
+
         ButterKnife.bind(this, view);
 
         return view;
@@ -127,10 +137,15 @@ public class NewCardFragment extends Fragment implements CardCreateContracts.Vie
 
         if (allErrorCodesOk()) {
             Intent intent = new Intent(getActivity(), DocumentsActivity.class);
-            User user = ((UserHolder) getActivity()).getCurrentUser();
-            user.setUserInfo(createUserInfoFromFields());
-            Request request = new Request(RequestStatus.REQUEST_NEW, RequestType.TYPE_NEW, null, user);
-            intent.putExtra(DocumentsActivity.REQUEST_SO_FAR, request);
+            UserInfo userInfo = createUserInfoFromFields();
+            if (mRequest == null) {
+                User user = ((UserHolder) getActivity()).getCurrentUser();
+                user.setUserInfo(userInfo);
+                mRequest = new Request(RequestStatus.REQUEST_NEW, RequestType.TYPE_NEW, null, user);
+            } else {
+                mRequest.getUser().setUserInfo(userInfo);
+            }
+            intent.putExtra(DocumentsActivity.REQUEST_SO_FAR, mRequest);
             startActivity(intent);
         }
     }

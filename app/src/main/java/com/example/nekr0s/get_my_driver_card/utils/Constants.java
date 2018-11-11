@@ -28,4 +28,9 @@ public class Constants {
     public static final String CREATED_REQUEST_OBJ = "HELLO_REQUEST";
     public static final String BASE_SERVER_URL = "http://192.168.0.101:9090/api";
     public static final String RENEWAL_REASON = "RENEWAL_REASON";
+    public static final String REPLACE_REASON = "REPLACE_REASON";
+    public static final String REPLACE_DATE_LOST_OR_STOLEN = "DATE_LOSTORSTOLEN";
+    public static final String REPLACE_PLACE_LOST_OR_STOLEN = "PLACE_LOSTORSTOLEN";
+    public static final String REQUEST_TYPE = "REQUEST_TYPE";
+    public static final String FROM_PREVIOUS_TO_NEWCARD = "FROM_PREVIOUS_TO_NEWCARD";
 }

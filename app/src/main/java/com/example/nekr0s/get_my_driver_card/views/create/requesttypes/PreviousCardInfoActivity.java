@@ -1,4 +1,4 @@
-package com.example.nekr0s.get_my_driver_card.views.create.fragments;
+package com.example.nekr0s.get_my_driver_card.views.create.requesttypes;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,9 +8,13 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.example.nekr0s.get_my_driver_card.R;
+import com.example.nekr0s.get_my_driver_card.models.Request;
 import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.utils.enums.ErrorCode;
+import com.example.nekr0s.get_my_driver_card.utils.enums.RequestReason;
+import com.example.nekr0s.get_my_driver_card.utils.enums.RequestStatus;
+import com.example.nekr0s.get_my_driver_card.utils.enums.RequestType;
 import com.example.nekr0s.get_my_driver_card.views.create.CardCreateContracts;
 import com.example.nekr0s.get_my_driver_card.views.create.CardCreatePresenter;
 import com.example.nekr0s.get_my_driver_card.views.create.base.UserHolder;
@@ -48,6 +52,11 @@ public class PreviousCardInfoActivity extends AppCompatActivity implements UserH
     private User mCurrentUser;
     private Set<ErrorCode> errorCodes = new HashSet<>();
     private CardCreateContracts.Presenter mPresenter;
+    private String mPreviousLostDate;
+    private String mPreviousLostPlace;
+    private RequestReason mRequestReason;
+    private RequestReason mReplaceReason;
+    private RequestType mRequestType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +67,22 @@ public class PreviousCardInfoActivity extends AppCompatActivity implements UserH
 
         mPresenter = new CardCreatePresenter(getBaseContext());
 
-
         // Get logged in  user
         Intent intent = getIntent();
         mCurrentUser = (User) intent.getSerializableExtra(Constants.USER_OBJ_EXTRA);
+
+        // Get RequestType
+        mRequestType = (RequestType) intent.getSerializableExtra(Constants.REQUEST_TYPE);
+
+        // Get Renew reason, MAY BE NULL
+        mRequestReason = (RequestReason) intent.getSerializableExtra(Constants.RENEWAL_REASON);
+
+        // Get Replace Reason, MAY BE NULL
+        mReplaceReason = (RequestReason) intent.getSerializableExtra(Constants.REPLACE_REASON);
+        if (mReplaceReason == RequestReason.REASON_LOST || mReplaceReason == RequestReason.REASON_STOLEN) {
+            mPreviousLostDate = intent.getStringExtra(Constants.REPLACE_DATE_LOST_OR_STOLEN);
+            mPreviousLostPlace = intent.getStringExtra(Constants.REPLACE_PLACE_LOST_OR_STOLEN);
+        }
     }
 
     @OnClick(R.id.previous_card_next_button)
@@ -72,10 +93,12 @@ public class PreviousCardInfoActivity extends AppCompatActivity implements UserH
         setRegisterErrors(getAllTils());
 
         if (allErrorCodesOk()) {
-
-            NewCardFragment nextFrag = new NewCardFragment();
+            Request request = new Request(RequestStatus.REQUEST_NEW, mRequestType, mRequestReason, mCurrentUser);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Constants.FROM_PREVIOUS_TO_NEWCARD, request);
+            NewCardFragment nextFragment = NewCardFragment.newInstance(bundle);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_containertwo, nextFrag, "newCardFragment")
+                    .replace(R.id.fragment_containertwo, nextFragment, "newCardFragment")
                     .addToBackStack(null)
                     .commit();
         }

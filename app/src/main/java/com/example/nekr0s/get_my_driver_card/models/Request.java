@@ -15,7 +15,18 @@ public class Request implements Serializable {
     private RequestStatus requestStatus;
     private RequestType requestType;
     private RequestReason requestReason;
-    private String additionalInfo;
+    private String lostDate;
+    private String lostPlace;
+    private String previousCountryOfIssuing;
+    private String previousIssuingAuthority;
+    private String previousTachCardNum;
+    private String previousDateOfExpiry;
+    private String previousLostDate;
+    private String previousLostPlace;
+    private String currentCountryOfIssuing;
+    private String currentTachCardNum;
+    private String currentDriverLicenseCountryOfIssuing;
+    private String currentDriverLicenseNumber;
     private String requestDate;
     private Attachment attachment;
     private User user;
@@ -136,11 +147,103 @@ public class Request implements Serializable {
         this.requestReason = requestReason;
     }
 
-    public String getAdditionalInfo() {
-        return additionalInfo;
+    public String getLostDate() {
+        return lostDate;
     }
 
-    public void setAdditionalInfo(String additionalInfo) {
-        this.additionalInfo = additionalInfo;
+    public void setLostDate(String lostDate) {
+        this.lostDate = lostDate;
+    }
+
+    public String getLostPlace() {
+        return lostPlace;
+    }
+
+    public void setLostPlace(String lostPlace) {
+        this.lostPlace = lostPlace;
+    }
+
+    public String getPreviousCountryOfIssuing() {
+        return previousCountryOfIssuing;
+    }
+
+    public void setPreviousCountryOfIssuing(String previousCountryOfIssuing) {
+        this.previousCountryOfIssuing = previousCountryOfIssuing;
+    }
+
+    public String getPreviousIssuingAuthority() {
+        return previousIssuingAuthority;
+    }
+
+    public void setPreviousIssuingAuthority(String previousIssuingAuthority) {
+        this.previousIssuingAuthority = previousIssuingAuthority;
+    }
+
+    public String getPreviousTachCardNum() {
+        return previousTachCardNum;
+    }
+
+    public void setPreviousTachCardNum(String previousTachCardNum) {
+        this.previousTachCardNum = previousTachCardNum;
+    }
+
+    public String getPreviousDateOfExpiry() {
+        return previousDateOfExpiry;
+    }
+
+    public void setPreviousDateOfExpiry(String previousDateOfExpiry) {
+        this.previousDateOfExpiry = previousDateOfExpiry;
+    }
+
+    public String getPreviousLostDate() {
+        return previousLostDate;
+    }
+
+    public void setPreviousLostDate(String previousLostDate) {
+        this.previousLostDate = previousLostDate;
+    }
+
+    public String getPreviousLostPlace() {
+        return previousLostPlace;
+    }
+
+    public void setPreviousLostPlace(String previousLostPlace) {
+        this.previousLostPlace = previousLostPlace;
+    }
+
+    public String getCurrentCountryOfIssuing() {
+        return currentCountryOfIssuing;
+    }
+
+    public void setCurrentCountryOfIssuing(String currentCountryOfIssuing) {
+        this.currentCountryOfIssuing = currentCountryOfIssuing;
+    }
+
+    public String getCurrentTachCardNum() {
+        return currentTachCardNum;
+    }
+
+    public void setCurrentTachCardNum(String currentTachCardNum) {
+        this.currentTachCardNum = currentTachCardNum;
+    }
+
+    public String getCurrentDriverLicenseCountryOfIssuing() {
+        return currentDriverLicenseCountryOfIssuing;
+    }
+
+    public void setCurrentDriverLicenseCountryOfIssuing(String currentDriverLicenseCountryOfIssuing) {
+        this.currentDriverLicenseCountryOfIssuing = currentDriverLicenseCountryOfIssuing;
+    }
+
+    public String getCurrentDriverLicenseNumber() {
+        return currentDriverLicenseNumber;
+    }
+
+    public void setCurrentDriverLicenseNumber(String currentDriverLicenseNumber) {
+        this.currentDriverLicenseNumber = currentDriverLicenseNumber;
+    }
+
+    public void setRequestDate(String requestDate) {
+        this.requestDate = requestDate;
     }
 }

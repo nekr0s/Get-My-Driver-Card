@@ -1,4 +1,4 @@
-package com.example.nekr0s.get_my_driver_card.views.create.fragments;
+package com.example.nekr0s.get_my_driver_card.views.create.requesttypes;
 
 
 import android.os.Bundle;

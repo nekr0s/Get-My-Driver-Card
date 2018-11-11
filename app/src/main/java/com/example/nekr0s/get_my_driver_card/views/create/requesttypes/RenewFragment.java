@@ -1,4 +1,4 @@
-package com.example.nekr0s.get_my_driver_card.views.create.fragments;
+package com.example.nekr0s.get_my_driver_card.views.create.requesttypes;
 
 
 import android.content.Intent;
@@ -16,6 +16,7 @@ import com.example.nekr0s.get_my_driver_card.models.Reason;
 import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
 import com.example.nekr0s.get_my_driver_card.utils.enums.RequestReason;
+import com.example.nekr0s.get_my_driver_card.utils.enums.RequestType;
 import com.example.nekr0s.get_my_driver_card.views.create.adapter.ReasonsAdapter;
 import com.example.nekr0s.get_my_driver_card.views.create.base.UserHolder;
 
@@ -109,6 +110,7 @@ public class RenewFragment extends Fragment {
         Intent intent = new Intent(getActivity(), PreviousCardInfoActivity.class);
         User user = ((UserHolder) getActivity()).getCurrentUser();
         intent.putExtra(Constants.RENEWAL_REASON, mAdapter.getItem(mPreselectedIndex).getRequestReason());
+        intent.putExtra(Constants.REQUEST_TYPE, RequestType.TYPE_RENEW);
         intent.putExtra(Constants.USER_OBJ_EXTRA, user);
         startActivity(intent);
     }

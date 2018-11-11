@@ -1,4 +1,4 @@
-package com.example.nekr0s.get_my_driver_card.views.create.fragments;
+package com.example.nekr0s.get_my_driver_card.views.create.requesttypes;
 
 
 import android.content.Intent;
@@ -15,6 +15,8 @@ import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Reason;
 import com.example.nekr0s.get_my_driver_card.models.User;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
+import com.example.nekr0s.get_my_driver_card.utils.enums.RequestReason;
+import com.example.nekr0s.get_my_driver_card.utils.enums.RequestType;
 import com.example.nekr0s.get_my_driver_card.views.create.adapter.ReasonsAdapter;
 import com.example.nekr0s.get_my_driver_card.views.create.base.UserHolder;
 
@@ -30,15 +32,16 @@ public class ReplaceFragment extends Fragment {
     ListView listView;
 
     @BindView(R.id.replace_date)
-    EditText editTextDateLost;
+    EditText mEditTextLostDate;
 
     @BindView(R.id.replace_place)
-    EditText editTextPlaceLost;
+    EditText mEditTextLostPlace;
 
     @BindView(R.id.replace_reason_button)
     Button mNextButton;
 
     private int mPreselectedIndex = -1;
+    final ReasonsAdapter mAdapter = new ReasonsAdapter(getActivity());
 
 
     public ReplaceFragment() {
@@ -58,12 +61,11 @@ public class ReplaceFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        final ReasonsAdapter adapter = new ReasonsAdapter(getActivity());
-        listView.setAdapter(adapter);
+        listView.setAdapter(mAdapter);
 
         listView
                 .setOnItemClickListener((adapterView, view1, position, id)
-                        -> checkBoxLogic(adapter.getItem(position), adapter, position));
+                        -> checkBoxLogic(mAdapter.getItem(position), mAdapter, position));
 
         return view;
     }
@@ -77,8 +79,8 @@ public class ReplaceFragment extends Fragment {
     private void checkBoxLogic(Reason reason, ReasonsAdapter adapter, int position) {
         if (reason.isSelected()) {
             reason.setSelected(false);
-            editTextDateLost.setVisibility(View.GONE);
-            editTextPlaceLost.setVisibility(View.GONE);
+            mEditTextLostDate.setVisibility(View.GONE);
+            mEditTextLostPlace.setVisibility(View.GONE);
         } else {
             reason.setSelected(true);
             displayForms(reason.getRequestReasonString());
@@ -103,19 +105,27 @@ public class ReplaceFragment extends Fragment {
 
     private void displayForms(String reasonName) {
         if (isLostOrStolen(reasonName)) {
-            editTextDateLost.setVisibility(View.VISIBLE);
-            editTextPlaceLost.setVisibility(View.VISIBLE);
+            mEditTextLostDate.setVisibility(View.VISIBLE);
+            mEditTextLostPlace.setVisibility(View.VISIBLE);
         } else {
-            editTextDateLost.setVisibility(View.GONE);
-            editTextPlaceLost.setVisibility(View.GONE);
+            mEditTextLostDate.setVisibility(View.GONE);
+            mEditTextLostPlace.setVisibility(View.GONE);
         }
     }
 
+    // TODO: have to get that intent in PreviousCardInfoActivity;
     @OnClick(R.id.replace_reason_button)
     void openNextActivity() {
         Intent intent = new Intent(getActivity(), PreviousCardInfoActivity.class);
         User user = ((UserHolder) getActivity()).getCurrentUser();
         intent.putExtra(Constants.USER_OBJ_EXTRA, user);
+        intent.putExtra(Constants.REQUEST_TYPE, RequestType.TYPE_REPLACE);
+        RequestReason requestReason = mAdapter.getItem(mPreselectedIndex).getRequestReason();
+        intent.putExtra(Constants.REPLACE_REASON, requestReason);
+        if (requestReason == RequestReason.REASON_LOST || requestReason == RequestReason.REASON_STOLEN) {
+            intent.putExtra(Constants.REPLACE_DATE_LOST_OR_STOLEN, mEditTextLostDate.getText().toString().trim());
+            intent.putExtra(Constants.REPLACE_PLACE_LOST_OR_STOLEN, mEditTextLostPlace.getText().toString().trim());
+        }
         startActivity(intent);
     }
 }
