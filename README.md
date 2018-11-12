@@ -64,8 +64,7 @@ If you are tired of waiting in lines and keen on saving some time when you need 
 - the app is translated in English and Bulgarian
 
 **<h1>Images: </h1>**
-[Imgur](https://i.imgur.com/dXYyp1M.png)
-![alt text](https://im2.ezgif.com/tmp/ezgif-2-65e667362563.gif) ![alt text](https://im2.ezgif.com/tmp/ezgif-2-dfcbc0616de3.gif)
+![Imgur](https://i.imgur.com/dXYyp1M.png) ![Imgur](https://i.imgur.com/c2Ga88C.png) ![Imgur](https://i.imgur.com/ILFNGGp.png)
 
 **<h1>Project url:</h1>** 
 **FRONT-END** https://github.com/nekr0s/Get-My-Driver-Card 
