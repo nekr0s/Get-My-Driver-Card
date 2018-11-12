@@ -7,7 +7,7 @@
     <string name="password">Парола</string>
     <string name="sign_in">Вход</string>
     <string name="no_account">Нямаш акаунт? Направи си</string>
-    <string name="or_line">------------------- Или ------------------</string>
+    <string name="or_line">------------------- или ------------------</string>
     <string name="password_criteria">Трябва да съдържа числа,букви и поне 1 специален символ</string>
     <string name="valid_email_address">Моля въведете валиден имейл адрес.</string>
     <string name="request_id">Номер на заявка:</string>

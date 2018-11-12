@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Request;
-import com.example.nekr0s.get_my_driver_card.utils.PhotoEncodeHelper;
 import com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -29,10 +28,10 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
 
     static final int REQUEST_IMAGE_CAPTURE = 143;
 
-    private String mSelfieByteString;
-    private String mPersonalIdByteString;
-    private String mDriverLicenseByteString;
-    private String mPreviousCardByteString;
+    private String mSelfieUriString;
+    private String mPersonalIdUriString;
+    private String mDriverLicenseUriString;
+    private String mPreviousCardUriString;
 
 
     @BindView(R.id.documents_header)
@@ -114,17 +113,17 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
 
     @OnClick(R.id.documents_next_button)
     void openDeclarationActivity() {
-        if (mPersonalIdByteString == null || mSelfieByteString == null || mDriverLicenseByteString == null) {
+        if (mPersonalIdUriString == null || mSelfieUriString == null || mDriverLicenseUriString == null) {
             Toast.makeText(this, "Please provide all pictures.", Toast.LENGTH_SHORT).show();
             return;
         }
         Intent intent = new Intent(this, DeclarationActivity.class);
         intent.putExtra(DeclarationActivity.ALMOST_READY_REQUEST, mRequestSoFar);
-        intent.putExtra(DeclarationActivity.SELFIE_BYTESTRING, mSelfieByteString);
-        intent.putExtra(DeclarationActivity.PERSONAL_ID_BYTESTRING, mPersonalIdByteString);
-        intent.putExtra(DeclarationActivity.DRIVER_LICENSE_BYTESTRING, mDriverLicenseByteString);
-        if (mPreviousCardByteString != null)
-            intent.putExtra(DeclarationActivity.PREVIOUS_CARD_BYTESTRING, mPreviousCardByteString);
+        intent.putExtra(DeclarationActivity.SELFIE_URISTRING, mSelfieUriString);
+        intent.putExtra(DeclarationActivity.PERSONAL_ID_URISTRING, mPersonalIdUriString);
+        intent.putExtra(DeclarationActivity.DRIVER_LICENSE_URISTRING, mDriverLicenseUriString);
+        if (mPreviousCardUriString != null)
+            intent.putExtra(DeclarationActivity.PREVIOUS_CARD_URISTRING, mPreviousCardUriString);
         startActivity(intent);
         finish();
     }
@@ -167,24 +166,23 @@ public class DocumentsActivity extends AppCompatActivity implements DocumentsCon
     public void fillIcon(String whichButton) throws FileNotFoundException {
         // For attachments
         Uri uri = mPresenter.getCurrentUri();
-        String encodedString = PhotoEncodeHelper.getByteString(uri, this);
-
+        String uriString = uri.toString();
         switch (whichButton) {
             case "Capture Photo":
                 mSelfieIcon.setImageURI(uri);
-                mSelfieByteString = encodedString;
+                mSelfieUriString = uriString;
                 break;
             case "Add Personal ID":
                 mAddIdIcon.setImageURI(uri);
-                mPersonalIdByteString = encodedString;
+                mPersonalIdUriString = uriString;
                 break;
             case "Add driver license":
                 mAddLicense.setImageURI(uri);
-                mDriverLicenseByteString = encodedString;
+                mDriverLicenseUriString = uriString;
                 break;
             case "Add previous card":
                 mAddPreviousCard.setImageURI(uri);
-                mPreviousCardByteString = encodedString;
+                mPreviousCardUriString = uriString;
                 break;
         }
     }

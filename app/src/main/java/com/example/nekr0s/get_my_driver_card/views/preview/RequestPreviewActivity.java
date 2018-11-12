@@ -3,6 +3,7 @@ package com.example.nekr0s.get_my_driver_card.views.preview;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -19,21 +20,24 @@ import com.example.nekr0s.get_my_driver_card.R;
 import com.example.nekr0s.get_my_driver_card.models.Attachment;
 import com.example.nekr0s.get_my_driver_card.models.Request;
 import com.example.nekr0s.get_my_driver_card.utils.Constants;
+import com.example.nekr0s.get_my_driver_card.utils.PhotoEncodeHelper;
 import com.example.nekr0s.get_my_driver_card.utils.enums.RequestReason;
 import com.example.nekr0s.get_my_driver_card.utils.enums.RequestStatus;
 import com.example.nekr0s.get_my_driver_card.utils.enums.RequestType;
 import com.example.nekr0s.get_my_driver_card.views.list.ListActivity;
+
+import java.io.FileNotFoundException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity.ALMOST_READY_REQUEST;
-import static com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity.DRIVER_LICENSE_BYTESTRING;
-import static com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity.PERSONAL_ID_BYTESTRING;
-import static com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity.PREVIOUS_CARD_BYTESTRING;
-import static com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity.SELFIE_BYTESTRING;
-import static com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity.SIGNATURE_BYTESTRING;
+import static com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity.DRIVER_LICENSE_URISTRING;
+import static com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity.PERSONAL_ID_URISTRING;
+import static com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity.PREVIOUS_CARD_URISTRING;
+import static com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity.SELFIE_URISTRING;
+import static com.example.nekr0s.get_my_driver_card.views.signature.DeclarationActivity.SIGNATURE_URISTRING;
 
 public class RequestPreviewActivity extends AppCompatActivity implements RequestPreviewContracts.View, AdapterView.OnItemSelectedListener {
 
@@ -137,7 +141,13 @@ public class RequestPreviewActivity extends AppCompatActivity implements Request
         Intent intent = getIntent();
         // It's either from List or Creation
         if (intent.getSerializableExtra(FROM_LIST) != null) getFromList(intent);
-        else getFromCreation(intent);
+        else {
+            try {
+                getFromCreation(intent);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
         // If admin - display admin panel
         if (intent.getBooleanExtra(IS_ADMIN, false)) {
             mAdminToolbar.setVisibility(View.VISIBLE);
@@ -161,19 +171,28 @@ public class RequestPreviewActivity extends AppCompatActivity implements Request
         mRequest = (Request) intent.getSerializableExtra(FROM_LIST);
     }
 
-    private void getFromCreation(Intent intent) {
+    private void getFromCreation(Intent intent) throws FileNotFoundException {
         mRequest = (Request) intent.getSerializableExtra(ALMOST_READY_REQUEST);
-        String mSelfieByteString = intent.getStringExtra(SELFIE_BYTESTRING);
-        String mPersonalIdByteString = intent.getStringExtra(PERSONAL_ID_BYTESTRING);
-        String mDriverLicenseByteString = intent.getStringExtra(DRIVER_LICENSE_BYTESTRING);
-        String mSignatureByteString = intent.getStringExtra(SIGNATURE_BYTESTRING);
+        String mSelfieUriString = intent.getStringExtra(SELFIE_URISTRING);
+        String mSelfieEncodedString = PhotoEncodeHelper
+                .getByteString(Uri.parse(mSelfieUriString), this);
+        String mPersonalIdUriString = intent.getStringExtra(PERSONAL_ID_URISTRING);
+        String mPersonalIdEncodedString = PhotoEncodeHelper
+                .getByteString(Uri.parse(mPersonalIdUriString), this);
+        String mDriverLicenseUriString = intent.getStringExtra(DRIVER_LICENSE_URISTRING);
+        String mDriverLicenseEncodedString = PhotoEncodeHelper
+                .getByteString(Uri.parse(mDriverLicenseUriString), this);
+        String mSignatureUriString = intent.getStringExtra(SIGNATURE_URISTRING);
+        String mSignatureEncodedString = PhotoEncodeHelper
+                .getByteString(Uri.parse(mSignatureUriString), this);
 
-        mRequest.setAttachment(new Attachment(mSelfieByteString, mPersonalIdByteString,
-                mSignatureByteString, mDriverLicenseByteString));
+        mRequest.setAttachment(new Attachment(mSelfieEncodedString, mPersonalIdEncodedString,
+                mSignatureEncodedString, mDriverLicenseEncodedString));
 
         if (mRequest.getRequestTypeString().equals(RequestType.TYPE_EXCHANGE)) {
-            String mPreviousCardByteString = intent.getStringExtra(PREVIOUS_CARD_BYTESTRING);
-            mRequest.getAttachment().setPreviousEuCard(mPreviousCardByteString);
+            String mPreviousCardUriString = intent.getStringExtra(PREVIOUS_CARD_URISTRING);
+            mRequest.getAttachment().setPreviousEuCard(PhotoEncodeHelper
+                    .getByteString(Uri.parse(mPreviousCardUriString), this));
         }
     }
 

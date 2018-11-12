@@ -26,7 +26,7 @@ public class Constants {
     // Server address - change depending on situation
 //    public static final String BASE_SERVER_URL = "http://10.145.113.71:9090/api";
     public static final String CREATED_REQUEST_OBJ = "HELLO_REQUEST";
-    public static final String BASE_SERVER_URL = "http://192.168.0.101:9090/api";
+    public static final String BASE_SERVER_URL = "http://10.145.113.71:9090/api";
     public static final String RENEWAL_REASON = "RENEWAL_REASON";
     public static final String REPLACE_REASON = "REPLACE_REASON";
     public static final String REPLACE_DATE_LOST_OR_STOLEN = "DATE_LOSTORSTOLEN";
