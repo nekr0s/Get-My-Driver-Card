@@ -68,7 +68,5 @@ If you are tired of waiting in lines and keen on saving some time when you need 
 ![alt text](https://gyazo.com/49b4bc9bed8bb9bce28154150458631d)
 ![alt text](https://gyazo.com/892a10cf9fe5899b722cc3c64980b212)
 ![alt text](https://gyazo.com/77222a23d4fe056a21a2b4413bf807f8)
-![alt text](https://scontent-sof1-1.xx.fbcdn.net/v/t1.15752-9/46035858_488294041695988_6844044868805722112_n.png?_nc_cat=103&_nc_ht=scontent-sof1-1.xx&oh=7bb7ccdb24e1e1e0a675351f5fe8570d&oe=5C79F9D8)
-![alt text](https://im2.ezgif.com/tmp/ezgif-2-ba232ffce6bb.gif)
-**<h1>Project url:</h1>** **FRONT-END** https://github.com/nekr0s/Get-My-Driver-Card
+**<h1>Project url:</h1>** **FRONT-END** https://github.com/nekr0s/Get-My-Driver-Card /n
                           **BACK-END** https://github.com/nekr0s/Spring-GetMyDriverCard
