@@ -64,10 +64,7 @@ If you are tired of waiting in lines and keen on saving some time when you need 
 - the app is translated in English and Bulgarian
 
 **<h1>Images: </h1>**
-![alt text](https://imgur.com/dXYyp1M)
-![alt text](https://gyazo.com/49b4bc9bed8bb9bce28154150458631d)
-![alt text](https://gyazo.com/892a10cf9fe5899b722cc3c64980b212)
-![alt text](https://gyazo.com/77222a23d4fe056a21a2b4413bf807f8)
+![Imgur Image](https://imgur.com/dXYyp1M)
 ![alt text](https://im2.ezgif.com/tmp/ezgif-2-65e667362563.gif) ![alt text](https://im2.ezgif.com/tmp/ezgif-2-dfcbc0616de3.gif)
 
 **<h1>Project url:</h1>** 
