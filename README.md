@@ -64,7 +64,7 @@ If you are tired of waiting in lines and keen on saving some time when you need 
 - the app is translated in English and Bulgarian
 
 **<h1>Images: </h1>**
-![alt text](https://gyazo.com/4690f5320223d6670e80dd5f2189a5ff)
+![alt text](https://ibb.co/kkVNJV)
 ![alt text](https://gyazo.com/49b4bc9bed8bb9bce28154150458631d)
 ![alt text](https://gyazo.com/892a10cf9fe5899b722cc3c64980b212)
 ![alt text](https://gyazo.com/77222a23d4fe056a21a2b4413bf807f8)
