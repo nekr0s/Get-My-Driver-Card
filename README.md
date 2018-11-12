@@ -70,5 +70,6 @@ If you are tired of waiting in lines and keen on saving some time when you need 
 ![alt text](https://gyazo.com/77222a23d4fe056a21a2b4413bf807f8)
 
 ![alt text](https://im2.ezgif.com/tmp/ezgif-2-65e667362563.gif) ![alt text](https://im2.ezgif.com/tmp/ezgif-2-dfcbc0616de3.gif)
-**<h1>Project url:</h1>** **FRONT-END** https://github.com/nekr0s/Get-My-Driver-Card /n
-                          **BACK-END** https://github.com/nekr0s/Spring-GetMyDriverCard
+**<h1>Project url:</h1>** 
+**FRONT-END** https://github.com/nekr0s/Get-My-Driver-Card 
+**BACK-END** https://github.com/nekr0s/Spring-GetMyDriverCard
