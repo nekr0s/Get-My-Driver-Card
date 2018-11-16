@@ -2,7 +2,7 @@
 
 **<h1>Project name:</h1>** "GetMyDriverCard"
 
-**<h1>Overall:</h1>**
+**<h1>Summary:</h1>**
  
  *The android application "GetMyDriverCard" was created for Telerik Academy final project assignment.The front-end part in Android is compatible with Android 8.0 Oreo and above and  follows the MVP pattern and SOLID Principles.The backend side of this project was built with Spring and Hibernate for relational database access with MySQL.*
 
